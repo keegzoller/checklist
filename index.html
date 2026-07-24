@@ -171,14 +171,13 @@ h2{font-size:38px;font-weight:700}
 /* Real Vermac project photo behind a maroon gradient overlay for legibility
    (design.md §6.2, §7). Swap for an even higher-res hero or muted video later. */
 .hero::before{content:'';position:absolute;inset:0;background:
-  linear-gradient(115deg,rgba(28,12,15,.94) 0%,rgba(88,39,47,.88) 46%,rgba(110,49,58,.74) 100%),
-  radial-gradient(1200px 600px at 82% -10%,rgba(166,43,52,.34),transparent 60%),
-  repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 22px);z-index:0}
+  linear-gradient(100deg,rgba(20,9,11,.88) 0%,rgba(45,18,24,.64) 34%,rgba(70,30,37,.30) 62%,rgba(88,39,47,.06) 100%),
+  radial-gradient(1100px 560px at 90% 0%,rgba(166,43,52,.15),transparent 62%);z-index:0}
 .hero .container{position:relative;z-index:1}
 .hero-content{max-width:720px}
 .hero .eyebrow{color:#f0b7bc}
-.hero h1{color:#fff;font-size:clamp(34px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:700;margin-bottom:20px}
-.hero .sub{font-size:clamp(17px,2.2vw,20px);color:#f3e7e6;max-width:56ch;margin-bottom:32px}
+.hero h1{color:#fff;font-size:clamp(34px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:700;margin-bottom:20px;text-shadow:0 2px 20px rgba(15,6,8,.38)}
+.hero .sub{font-size:clamp(17px,2.2vw,20px);color:#f6ecea;max-width:56ch;margin-bottom:32px;text-shadow:0 1px 12px rgba(15,6,8,.34)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px}
 .trust-line{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14px;color:#e6d3d4}
 .trust-line span{display:inline-flex;align-items:center;gap:7px}
@@ -336,6 +335,12 @@ h2{font-size:38px;font-weight:700}
 .field textarea{resize:vertical;min-height:110px}
 .quote-form .btn{width:100%;margin-top:6px}
 .form-note{font-size:13px;color:var(--gray-400);margin-top:14px;text-align:center}
+/* Homeowner / Builder audience toggle */
+.aud-toggle{display:flex;background:var(--gray-100);border-radius:var(--radius-pill);padding:5px;margin-bottom:24px;gap:4px}
+.aud-toggle button{flex:1;border:none;background:transparent;font-family:var(--font-head);font-weight:600;font-size:15px;color:var(--brand-maroon);padding:11px 14px;border-radius:var(--radius-pill);cursor:pointer;transition:background .2s ease,color .2s ease}
+.aud-toggle button[aria-selected="true"]{background:var(--brand-accent);color:#fff;box-shadow:0 4px 12px rgba(166,43,52,.28)}
+.aud-form{display:none}
+.aud-form.active{display:block}
 
 /* ============================================================
    17. FOOTER
@@ -564,26 +569,8 @@ h2{font-size:38px;font-weight:700}
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">Our Work</span>
-      <h2>See the Transformation</h2>
-      <p class="lead">Drag the handle to compare before and after. New siding doesn't just protect your home — it transforms it.</p>
-    </div>
-
-    <div class="ba-wrap reveal">
-      <!-- PLACEHOLDER before/after imagery. Replace both image sources with real
-           Vermac project photos (same crop/angle) before launch (info.md §3). -->
-      <div class="ba-slider" id="baSlider">
-        <img class="ba-layer ba-after" alt="After: home with freshly installed siding"
-             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'><defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23c9d7e2'/><stop offset='1' stop-color='%23eef1f4'/></linearGradient></defs><rect width='1600' height='900' fill='url(%23a)'/><rect x='300' y='300' width='1000' height='500' fill='%2358272F'/><polygon points='300,300 800,120 1300,300' fill='%236E313A'/><g stroke='%23431d24' stroke-width='4'><line x1='300' y1='360' x2='1300' y2='360'/><line x1='300' y1='430' x2='1300' y2='430'/><line x1='300' y1='500' x2='1300' y2='500'/><line x1='300' y1='570' x2='1300' y2='570'/><line x1='300' y1='640' x2='1300' y2='640'/><line x1='300' y1='710' x2='1300' y2='710'/></g><rect x='720' y='560' width='160' height='240' fill='%23A62B34'/><text x='800' y='860' font-family='sans-serif' font-size='30' fill='%2358272F' text-anchor='middle'>AFTER — replace with real project photo</text></svg>">
-        <div class="ba-before-clip" id="baClip">
-          <img class="ba-before" alt="Before: home with old, weathered siding"
-             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'><defs><linearGradient id='b' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23a9a29a'/><stop offset='1' stop-color='%23cfc9c0'/></linearGradient></defs><rect width='1600' height='900' fill='url(%23b)'/><rect x='300' y='300' width='1000' height='500' fill='%23726b60'/><polygon points='300,300 800,120 1300,300' fill='%235c554b'/><g stroke='%23574f45' stroke-width='4'><line x1='300' y1='380' x2='1300' y2='380'/><line x1='300' y1='470' x2='1300' y2='470'/><line x1='300' y1='560' x2='1300' y2='560'/><line x1='300' y1='650' x2='1300' y2='650'/><line x1='300' y1='740' x2='1300' y2='740'/></g><rect x='720' y='560' width='160' height='240' fill='%234a4339'/><text x='800' y='860' font-family='sans-serif' font-size='30' fill='%233d372f' text-anchor='middle'>BEFORE — replace with real project photo</text></svg>">
-        </div>
-        <span class="ba-tag before">Before</span>
-        <span class="ba-tag after">After</span>
-        <div class="ba-handle" id="baHandle"><span class="ba-knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/><polyline points="9 6 15 12 9 18"/></svg></span></div>
-        <input class="ba-range" id="baRange" type="range" min="0" max="100" value="50" aria-label="Before and after comparison slider">
-      </div>
-      <p class="ba-caption">Example slider — swap in a matched Vermac before/after pair when ready. Fully keyboard-operable (use arrow keys).</p>
+      <h2>Recent Projects</h2>
+      <p class="lead">A look at real siding, remodel, and construction work across Saratoga County — tap any photo to see it up close.</p>
     </div>
 
     <!-- Real Vermac project photos. Click any photo to enlarge.
@@ -795,8 +782,8 @@ h2{font-size:38px;font-weight:700}
     <div class="contact-grid">
       <div class="contact-info reveal">
         <span class="eyebrow">Get a Free Quote</span>
-        <h2>Let's Talk About Your Project</h2>
-        <p class="lead" style="font-size:18px">Tell us a little about what you need and we'll get right back to you. Prefer to talk? Call anytime — you'll reach a local team, not a call center.</p>
+        <h2>Homeowners &amp; Builders — Let's Talk</h2>
+        <p class="lead" style="font-size:18px">Vermac works with both <strong>homeowners</strong> planning a project and <strong>builders &amp; GCs</strong> who need a dependable siding crew for the homes they build. Pick the option that fits and we'll get right back to you. Prefer to talk? Call anytime — you'll reach a local team, not a call center.</p>
 
         <div class="contact-detail">
           <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
@@ -817,46 +804,73 @@ h2{font-size:38px;font-weight:700}
         </div>
       </div>
 
-      <!-- Wired for Netlify Forms: on deploy, Netlify auto-detects this form and
-           captures submissions. To email them to vermacconstruction1@gmail.com, add a
-           notification in Netlify: Site settings → Forms → Form notifications → Email.
-           (info.md §10, design.md §12) -->
-      <form class="quote-form reveal" name="quote" method="POST"
-            data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
-        <input type="hidden" name="form-name" value="quote">
-        <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
-        <div class="field">
-          <label for="name">Name <span class="req">*</span></label>
-          <input type="text" id="name" name="name" autocomplete="name" required>
+      <!-- Two intake forms (Homeowner + Builder/GC), toggled by the segmented control.
+           Both are wired for Netlify Forms — unique name, hidden form-name, honeypot.
+           To receive leads: Netlify → Site configuration → Forms → notifications → Email
+           → vermacconstruction1@gmail.com (add one for each form). -->
+      <div class="quote-form reveal">
+        <div class="aud-toggle" role="tablist" aria-label="Who are you?">
+          <button type="button" role="tab" id="tab-homeowner" aria-controls="form-homeowner" aria-selected="true">I'm a Homeowner</button>
+          <button type="button" role="tab" id="tab-builder" aria-controls="form-builder" aria-selected="false">I'm a Builder / GC</button>
         </div>
-        <div class="field">
-          <label for="phone">Phone <span class="req">*</span></label>
-          <input type="tel" id="phone" name="phone" autocomplete="tel" required>
-        </div>
-        <div class="field">
-          <label for="email">Email <span class="req">*</span></label>
-          <input type="email" id="email" name="email" autocomplete="email" required>
-        </div>
-        <div class="field">
-          <label for="town">Town / Address</label>
-          <input type="text" id="town" name="town" autocomplete="address-level2">
-        </div>
-        <div class="field">
-          <label for="service">Service needed</label>
-          <select id="service" name="service">
-            <option value="Siding">Siding</option>
-            <option value="Remodel/Addition">Remodel / Addition</option>
-            <option value="In-House Job">In-House Job</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="message">Message / project details</label>
-          <textarea id="message" name="message"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Request My Free Quote</button>
-        <p class="form-note">We'll reply as soon as we can. Your info is only used to contact you about your project.</p>
-      </form>
+
+        <!-- HOMEOWNER -->
+        <form class="aud-form active" id="form-homeowner" name="homeowner-project" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html"
+              role="tabpanel" aria-labelledby="tab-homeowner">
+          <input type="hidden" name="form-name" value="homeowner-project">
+          <input type="hidden" name="inquiry-type" value="Homeowner">
+          <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
+          <div class="field"><label for="h-name">Name <span class="req">*</span></label><input type="text" id="h-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="h-phone">Phone <span class="req">*</span></label><input type="tel" id="h-phone" name="phone" autocomplete="tel" required></div>
+          <div class="field"><label for="h-email">Email <span class="req">*</span></label><input type="email" id="h-email" name="email" autocomplete="email" required></div>
+          <div class="field"><label for="h-town">Town / Address</label><input type="text" id="h-town" name="town" autocomplete="address-level2"></div>
+          <div class="field"><label for="h-service">What do you need?</label>
+            <select id="h-service" name="service">
+              <option value="Siding installation or replacement">Siding installation or replacement</option>
+              <option value="Remodel / Addition">Remodel / Addition</option>
+              <option value="In-House / General job">In-House / General job</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field"><label for="h-message">Project details</label><textarea id="h-message" name="message" placeholder="Tell us about your home and what you're looking for."></textarea></div>
+          <button type="submit" class="btn btn-primary">Request My Free Quote</button>
+          <p class="form-note">We'll reply as soon as we can. Your info is only used to contact you about your project.</p>
+        </form>
+
+        <!-- BUILDER / GC -->
+        <form class="aud-form" id="form-builder" name="builder-project" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html"
+              role="tabpanel" aria-labelledby="tab-builder" hidden>
+          <input type="hidden" name="form-name" value="builder-project">
+          <input type="hidden" name="inquiry-type" value="Builder / GC">
+          <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
+          <div class="field"><label for="b-company">Company / Business name <span class="req">*</span></label><input type="text" id="b-company" name="company" autocomplete="organization" required></div>
+          <div class="field"><label for="b-name">Contact name <span class="req">*</span></label><input type="text" id="b-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="b-phone">Phone <span class="req">*</span></label><input type="tel" id="b-phone" name="phone" autocomplete="tel" required></div>
+          <div class="field"><label for="b-email">Email <span class="req">*</span></label><input type="email" id="b-email" name="email" autocomplete="email" required></div>
+          <div class="field"><label for="b-location">Project location / town</label><input type="text" id="b-location" name="location"></div>
+          <div class="field"><label for="b-scope">Scope</label>
+            <select id="b-scope" name="scope">
+              <option value="Siding — single home">Siding — single home</option>
+              <option value="Siding — multiple homes / development">Siding — multiple homes / development</option>
+              <option value="Ongoing / subcontract partnership">Ongoing / subcontract partnership</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field"><label for="b-timeline">Timeline</label>
+            <select id="b-timeline" name="timeline">
+              <option value="ASAP">ASAP</option>
+              <option value="1–3 months">1–3 months</option>
+              <option value="3–6 months">3–6 months</option>
+              <option value="Just planning ahead">Just planning ahead</option>
+            </select>
+          </div>
+          <div class="field"><label for="b-message">Project details</label><textarea id="b-message" name="message" placeholder="Number of homes, addresses / development name, and what you need from us."></textarea></div>
+          <button type="submit" class="btn btn-primary">Send Builder Inquiry</button>
+          <p class="form-note">We'll get back to you fast — we're set up to be a reliable siding sub for builders &amp; GCs.</p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -1102,6 +1116,22 @@ h2{font-size:38px;font-weight:700}
       if(e.key === "Escape") lbClose();
       else if(e.key === "ArrowLeft") lbOpen(idx-1);
       else if(e.key === "ArrowRight") lbOpen(idx+1);
+    });
+  }
+
+  /* Homeowner / Builder form toggle */
+  var audTabs = document.querySelectorAll(".aud-toggle button");
+  if(audTabs.length){
+    audTabs.forEach(function(tab){
+      tab.addEventListener("click", function(){
+        audTabs.forEach(function(t){
+          var sel = t === tab;
+          t.setAttribute("aria-selected", sel ? "true" : "false");
+          var panel = document.getElementById(t.getAttribute("aria-controls"));
+          panel.classList.toggle("active", sel);
+          if(sel){ panel.removeAttribute("hidden"); } else { panel.setAttribute("hidden",""); }
+        });
+      });
     });
   }
 
