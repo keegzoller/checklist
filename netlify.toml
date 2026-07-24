@@ -1,0 +1,20 @@
+# Netlify configuration for the Vermac Construction static site.
+# No build step — the site is plain HTML/CSS/JS served from the repo root.
+
+[build]
+  publish = "."
+
+# Long-cache the optimized images (they're content-hashed by filename in practice;
+# swap a filename to bust the cache).
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Sensible security headers.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"

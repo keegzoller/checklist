@@ -22,11 +22,28 @@ and **`PLACEHOLDER`** to find the items the client must supply or verify:
 - Full service-area town list; live social media URLs
 - Financing options, if any
 
-## Making the quote form work
+## Deploy (Netlify)
 
-The contact form posts to a placeholder endpoint. Point its `action=` at a form
-handler (Formspree, Netlify Forms, or a small serverless function) that emails
-submissions to `vermacconstruction1@gmail.com`.
+The site is static — no build step. `netlify.toml` sets the publish directory to
+the repo root.
+
+1. Netlify → **Add new site → Import from GitHub** → pick this repo → deploy.
+2. **Domain:** Netlify → *Domain settings* → add `vermacconstruction.com`, then update
+   the DNS at the current registrar to the values Netlify shows. Email on
+   `vermacconstruction1@gmail.com` (Gmail) is unaffected — no MX changes needed.
+
+## The quote form (Netlify Forms)
+
+The contact form is wired for **Netlify Forms** (`data-netlify="true"`, a hidden
+`form-name`, and a honeypot). On deploy Netlify auto-detects it and captures
+submissions; successful submits redirect to `thank-you.html`.
+
+To get the submissions emailed to the client:
+**Netlify → Site settings → Forms → Form notifications → Add notification → Email**,
+sending to `vermacconstruction1@gmail.com`.
+
+(Not hosting on Netlify? Swap the form for a Formspree endpoint or a serverless
+handler instead.)
 
 ## Notes
 

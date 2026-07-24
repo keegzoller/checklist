@@ -813,10 +813,14 @@ h2{font-size:38px;font-weight:700}
         </div>
       </div>
 
-      <!-- Static form. To make submissions work, point action= at a form handler
-           (Formspree / Netlify Forms / serverless) that emails vermacconstruction1@gmail.com
-           (info.md §10, design.md §12). Placeholder endpoint below. -->
-      <form class="quote-form reveal" action="https://formspree.io/f/your-form-id" method="POST" novalidate>
+      <!-- Wired for Netlify Forms: on deploy, Netlify auto-detects this form and
+           captures submissions. To email them to vermacconstruction1@gmail.com, add a
+           notification in Netlify: Site settings → Forms → Form notifications → Email.
+           (info.md §10, design.md §12) -->
+      <form class="quote-form reveal" name="quote" method="POST"
+            data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
+        <input type="hidden" name="form-name" value="quote">
+        <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
         <div class="field">
           <label for="name">Name <span class="req">*</span></label>
           <input type="text" id="name" name="name" autocomplete="name" required>
