@@ -1,1355 +1,1109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaign Setup Tracker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --vc-black: #000000;
-            --vc-white: #ffffff;
-            --vc-gray-50: #fafafa;
-            --vc-gray-100: #f5f5f5;
-            --vc-gray-200: #e5e5e5;
-            --vc-gray-300: #d4d4d4;
-            --vc-gray-400: #a3a3a3;
-            --vc-gray-500: #737373;
-            --vc-gray-600: #525252;
-            --vc-gray-700: #404040;
-            --vc-gray-800: #262626;
-            --vc-gray-900: #171717;
-            --vc-accent: #0066ff;
-            --vc-accent-hover: #0052cc;
-            --vc-success: #10b981;
-            --vc-warning: #f59e0b;
-            --vc-error: #ef4444;
-            --vc-purple: #8b5cf6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-            background: var(--vc-gray-50);
-            color: var(--vc-black);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* Branding Header */
-        .brand-header {
-            background: linear-gradient(135deg, var(--vc-black) 0%, var(--vc-gray-900) 100%);
-            border-radius: 16px;
-            padding: 32px 40px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .brand-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--vc-white);
-            letter-spacing: -0.5px;
-        }
-
-        .brand-tagline {
-            color: var(--vc-gray-400);
-            font-size: 14px;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
-        .header {
-            background: var(--vc-white);
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 16px;
-            padding: 32px 40px;
-            margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 24px;
-            gap: 20px;
-        }
-
-        .header-info h1 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--vc-black);
-            letter-spacing: -0.5px;
-        }
-
-        .client-name {
-            font-size: 16px;
-            color: var(--vc-gray-600);
-            font-weight: 600;
-        }
-
-        .header-meta {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .launch-date {
-            font-size: 14px;
-            color: var(--vc-gray-600);
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
-
-        .launch-date strong {
-            color: var(--vc-black);
-            font-weight: 700;
-        }
-
-        .last-updated {
-            font-size: 12px;
-            color: var(--vc-gray-500);
-            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-            background: var(--vc-gray-100);
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        .progress-section {
-            background: var(--vc-gray-50);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .progress-bar-container {
-            background: var(--vc-gray-200);
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--vc-accent), #0052cc);
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .progress-text {
-            font-size: 14px;
-            color: var(--vc-gray-700);
-            font-weight: 600;
-        }
-
-        /* Campaign ID & Link */
-        .campaign-id {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 20px;
-            background: var(--vc-gray-50);
-            border-radius: 10px;
-            margin-top: 16px;
-            border: 1px solid var(--vc-gray-200);
-        }
-
-        .campaign-id-label {
-            font-size: 11px;
-            color: var(--vc-gray-500);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .campaign-id-value {
-            font-size: 13px;
-            font-family: 'SF Mono', monospace;
-            color: var(--vc-gray-700);
-            flex: 1;
-            user-select: all;
-        }
-
-        .copy-btn {
-            padding: 8px 16px;
-            background: var(--vc-black);
-            color: var(--vc-white);
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background: var(--vc-gray-800);
-            transform: translateY(-1px);
-        }
-
-        .copy-btn.copied {
-            background: var(--vc-success);
-        }
-
-        /* Tasks */
-        .tasks {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .task-card {
-            background: var(--vc-white);
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .task-card:hover {
-            border-color: var(--vc-gray-300);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .task-card.locked {
-            opacity: 0.5;
-            background: var(--vc-gray-50);
-        }
-        
-        .task-card.locked select,
-        .task-card.locked textarea {
-            cursor: not-allowed;
-            background: var(--vc-gray-100);
-        }
-
-        .task-card.locked::after {
-            content: '🔒';
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            font-size: 20px;
-            opacity: 0.3;
-        }
-
-        .task-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .task-number {
-            font-family: 'SF Mono', monospace;
-            font-size: 14px;
-            color: var(--vc-white);
-            font-weight: 700;
-            min-width: 40px;
-            height: 40px;
-            background: var(--vc-black);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .task-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--vc-black);
-            flex: 1;
-            letter-spacing: -0.3px;
-        }
-
-        .task-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .control-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--vc-gray-500);
-            font-weight: 700;
-        }
-
-        select {
-            padding: 12px 16px;
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 10px;
-            background: var(--vc-white);
-            color: var(--vc-black);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        select:hover {
-            border-color: var(--vc-gray-400);
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--vc-accent);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-        
-        select:disabled,
-        textarea:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background: var(--vc-gray-100);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            margin-left: auto;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .status-not-started { background: #f3f4f6; color: #6b7280; }
-        .status-in-progress { background: #fef3c7; color: #92400e; }
-        .status-waiting-access { background: #fed7aa; color: #9a3412; }
-        .status-waiting-approval { background: #f3e8ff; color: #6b21a8; }
-        .status-complete { background: #d1fae5; color: #065f46; }
-        .status-blocked { background: #fee2e2; color: #991b1b; }
-        .status-no { background: #fee2e2; color: #991b1b; }
-        .status-yes { background: #d1fae5; color: #065f46; }
-
-        .indicator-not-started { background: #9ca3af; }
-        .indicator-in-progress { background: #f59e0b; }
-        .indicator-waiting-access { background: #f97316; }
-        .indicator-waiting-approval { background: #8b5cf6; }
-        .indicator-complete { background: #10b981; }
-        .indicator-blocked { background: #ef4444; }
-        .indicator-no { background: #ef4444; }
-        .indicator-yes { background: #10b981; }
-
-        textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 10px;
-            background: var(--vc-white);
-            color: var(--vc-black);
-            font-size: 14px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            resize: vertical;
-            min-height: 80px;
-            transition: all 0.2s;
-        }
-
-        textarea:hover {
-            border-color: var(--vc-gray-400);
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--vc-accent);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-
-        textarea::placeholder {
-            color: var(--vc-gray-400);
-        }
-
-        .save-indicator {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            padding: 16px 24px;
-            background: var(--vc-black);
-            color: var(--vc-white);
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .save-indicator.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Confetti overlay */
-        #confettiCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .launch-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: var(--vc-white);
-            padding: 48px;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            z-index: 10000;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .launch-modal.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .launch-modal h2 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            color: var(--vc-black);
-        }
-
-        .launch-modal p {
-            font-size: 16px;
-            color: var(--vc-gray-600);
-            margin-bottom: 24px;
-        }
-
-        .launch-emoji {
-            font-size: 64px;
-            margin-bottom: 24px;
-            display: block;
-            animation: bounce 0.6s ease-in-out infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            opacity: 0;
-            transition: opacity 0.3s;
-            backdrop-filter: blur(4px);
-            pointer-events: none;
-            display: none;
-        }
-
-        .modal-backdrop.show {
-            opacity: 1;
-            pointer-events: all;
-            display: block;
-        }
-
-        /* Create New Campaign */
-        .create-section {
-            background: var(--vc-white);
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .create-section h2 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group.full {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--vc-gray-700);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input[type="text"],
-        input[type="date"] {
-            padding: 12px 16px;
-            border: 2px solid var(--vc-gray-200);
-            border-radius: 10px;
-            background: var(--vc-white);
-            color: var(--vc-black);
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        input:hover {
-            border-color: var(--vc-gray-400);
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--vc-accent);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-
-        .btn-primary {
-            padding: 14px 28px;
-            background: var(--vc-black);
-            color: var(--vc-white);
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 8px;
-        }
-
-        .btn-primary:hover {
-            background: var(--vc-gray-800);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-clear {
-            padding: 12px 24px;
-            background: transparent;
-            color: var(--vc-error);
-            border: 2px solid var(--vc-error);
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 16px;
-            width: 100%;
-        }
-        
-        .btn-clear:hover {
-            background: var(--vc-error);
-            color: var(--vc-white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-        }
-
-        .campaign-list {
-            margin-top: 32px;
-        }
-
-        .campaign-list h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--vc-gray-700);
-        }
-
-        .campaign-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: var(--vc-gray-50);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            transition: all 0.2s;
-            border: 2px solid var(--vc-gray-200);
-        }
-
-        .campaign-item:hover {
-            background: var(--vc-white);
-            border-color: var(--vc-gray-300);
-            transform: translateX(4px);
-        }
-
-        .campaign-item-info {
-            flex: 1;
-        }
-
-        .campaign-item-name {
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 4px;
-            color: var(--vc-black);
-        }
-
-        .campaign-item-client {
-            font-size: 13px;
-            color: var(--vc-gray-600);
-            font-weight: 500;
-        }
-
-        .campaign-item-link {
-            padding: 10px 20px;
-            background: var(--vc-black);
-            color: var(--vc-white);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            transition: all 0.2s;
-        }
-
-        .campaign-item-link:hover {
-            background: var(--vc-gray-800);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-            }
-
-            .header-meta {
-                text-align: left;
-            }
-
-            .task-controls {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     Vermac Construction Inc — Homepage
+     Built from design.md (visual system) + info.md (content).
+     Plain semantic HTML + CSS + vanilla JS. No build step.
+
+     BRAND COLORS were sampled from the client's actual logo
+     (deep maroon #58272F, red highlight, charcoal lettering on
+     white) — NOT the navy/orange default the design brief used
+     as a placeholder.
+
+     >>> BEFORE LAUNCH: search this file for "CONFIRM" and
+         "PLACEHOLDER" — items the client must verify or supply
+         (license #, address, hours, real reviews, real project
+         photos, exact town/brand list, financing). Do NOT
+         publish fabricated facts.
+     ============================================================ -->
+
+<title>Siding Contractor in Saratoga County, NY | Vermac Construction</title>
+<meta name="description" content="Vermac Construction Inc — Saratoga County's family-owned siding experts for 20+ years. Expert siding installation & replacement in Malta, Ballston Spa & across Saratoga County, NY. Get a free quote: 518-636-8008.">
+<meta name="theme-color" content="#58272F">
+<link rel="canonical" href="https://vermacconstruction.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vermac Construction — Saratoga County's Siding Experts">
+<meta property="og:description" content="Expert siding that protects your home for decades. Family-owned, 20+ years, serving all of Saratoga County, NY.">
+<meta property="og:locale" content="en_US">
+
+<!-- Fonts. For best Lighthouse, self-host with font-display:swap (design.md §11).
+     'Playfair Display' echoes the serif wordmark in the Vermac logo. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS — recolored to the real Vermac brand
+   ============================================================ */
+:root{
+  /* Brand (sampled from logo) */
+  --brand-maroon:#58272F;        /* primary brand — dark sections, headings, footer */
+  --brand-maroon-700:#6E313A;    /* lighter maroon for overlays/cards on dark */
+  --brand-accent:#A62B34;        /* action red — buttons, links, stat numbers, emphasis */
+  --brand-accent-hover:#86212A;  /* accent hover/active */
+
+  /* Neutrals (warmed slightly to sit with maroon) */
+  --white:#FFFFFF;
+  --off-white:#F8F4F3;
+  --gray-100:#ECE6E5;
+  --gray-400:#8C8285;
+  --gray-700:#43393B;
+  --ink:#201B1D;
+
+  /* Semantic */
+  --success:#2E9E5B;
+  --star-gold:#F5A623;
+
+  /* Layout */
+  --maxw:1200px;
+  --gutter:24px;
+  --radius-card:12px;
+  --radius-btn:8px;
+  --radius-pill:999px;
+  --shadow-card:0 8px 24px rgba(45,18,24,.10);
+  --shadow-card-hover:0 16px 40px rgba(45,18,24,.16);
+  --shadow-header:0 4px 20px rgba(45,18,24,.10);
+
+  /* Fonts */
+  --font-head:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --font-logo:'Playfair Display',Georgia,'Times New Roman',serif;
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);font-size:17px;line-height:1.6;
+  color:var(--gray-700);background:var(--white);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:var(--brand-accent-hover);text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-head);color:var(--brand-maroon);line-height:1.15}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+.skip-link{position:absolute;left:-999px;top:0;z-index:200;background:var(--brand-maroon);color:#fff;padding:12px 20px;border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:2px solid var(--brand-accent);outline-offset:3px;border-radius:4px}
+
+/* ============================================================
+   3. LAYOUT HELPERS
+   ============================================================ */
+.container{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+section{padding-block:96px}
+.section-alt{background:var(--off-white)}
+.eyebrow{font-family:var(--font-body);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--brand-accent);display:inline-block;margin-bottom:12px}
+.section-head{max-width:640px;margin-bottom:48px}
+.section-head.center{margin-inline:auto;text-align:center}
+h2{font-size:38px;font-weight:700}
+.lead{font-size:20px;color:var(--gray-700);margin-top:16px;max-width:60ch}
+.center .lead{margin-inline:auto}
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-head);font-weight:600;font-size:16px;letter-spacing:.02em;min-height:48px;padding:14px 28px;border-radius:var(--radius-btn);border:1.5px solid transparent;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease;text-align:center;white-space:nowrap}
+.btn-primary{background:var(--brand-accent);color:#fff;box-shadow:0 6px 16px rgba(166,43,52,.30)}
+.btn-primary:hover{background:var(--brand-accent-hover);transform:translateY(-2px);box-shadow:0 12px 24px rgba(166,43,52,.38)}
+.btn-secondary{background:transparent;color:var(--brand-maroon);border-color:var(--brand-maroon)}
+.btn-secondary:hover{background:var(--brand-maroon);color:#fff;transform:translateY(-2px)}
+.btn-on-dark{border-color:rgba(255,255,255,.7);color:#fff}
+.btn-on-dark:hover{background:#fff;color:var(--brand-maroon);border-color:#fff}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+
+/* ============================================================
+   5. HEADER / NAV
+   ============================================================ */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background .3s ease,box-shadow .3s ease,padding .3s ease;padding-block:18px}
+.site-header.scrolled{background:var(--white);box-shadow:var(--shadow-header);padding-block:10px}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+
+/* Official Vermac logo — white knockout over the hero, full-color on the white sticky header */
+.brand{display:inline-flex;align-items:center;line-height:0;text-decoration:none}
+.brand img{height:52px;width:auto;display:block;transition:height .3s ease}
+.scrolled .brand img{height:44px}
+.brand .logo-dark{display:none}
+.scrolled .brand .logo-dark{display:block}
+.scrolled .brand .logo-light{display:none}
+
+.nav{display:flex;align-items:center;gap:28px}
+.nav a.navlink{font-weight:500;font-size:16px;color:#fff;position:relative;padding:4px 0}
+.scrolled .nav a.navlink{color:var(--gray-700)}
+.nav a.navlink::after{content:'';position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--brand-accent);transition:width .22s ease}
+.nav a.navlink:hover::after,.nav a.navlink:focus-visible::after{width:100%}
+.nav a.navlink:hover{color:var(--brand-accent)}
+
+.header-cta{display:flex;align-items:center;gap:18px}
+.header-phone{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#fff;font-family:var(--font-head)}
+.scrolled .header-phone{color:var(--brand-maroon)}
+.header-phone svg{width:18px;height:18px;color:var(--brand-accent)}
+.scrolled .header-phone svg{color:var(--brand-accent)}
+.header-cta .btn{min-height:44px;padding:10px 22px}
+
+.mobile-controls{display:none;align-items:center;gap:8px}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:8px;border:none;background:rgba(255,255,255,.16);color:#fff}
+.scrolled .icon-btn{background:var(--gray-100);color:var(--brand-maroon)}
+.icon-btn svg{width:22px;height:22px}
+
+.mobile-menu{position:fixed;inset:0;z-index:150;background:var(--brand-maroon);transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:24px}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.mobile-menu nav{display:flex;flex-direction:column;gap:4px}
+.mobile-menu nav a{color:#fff;font-family:var(--font-head);font-weight:600;font-size:22px;padding:16px 8px;border-bottom:1px solid rgba(255,255,255,.12)}
+.mobile-menu nav a:hover{color:#f0c9cd}
+.mobile-menu .btn{margin-top:28px;width:100%}
+.mobile-menu .m-phone{margin-top:16px;text-align:center;color:#fff;font-weight:600;font-family:var(--font-head)}
+
+/* ============================================================
+   6. HERO
+   ============================================================ */
+.hero{position:relative;color:#fff;overflow:hidden;padding-top:170px;padding-bottom:110px;background:#3a171c url('images/hero-siding-home-saratoga-county.jpg') center 30%/cover no-repeat}
+/* Real Vermac project photo behind a maroon gradient overlay for legibility
+   (design.md §6.2, §7). Swap for an even higher-res hero or muted video later. */
+.hero::before{content:'';position:absolute;inset:0;background:
+  linear-gradient(115deg,rgba(28,12,15,.94) 0%,rgba(88,39,47,.88) 46%,rgba(110,49,58,.74) 100%),
+  radial-gradient(1200px 600px at 82% -10%,rgba(166,43,52,.34),transparent 60%),
+  repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 22px);z-index:0}
+.hero .container{position:relative;z-index:1}
+.hero-content{max-width:720px}
+.hero .eyebrow{color:#f0b7bc}
+.hero h1{color:#fff;font-size:clamp(34px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:700;margin-bottom:20px}
+.hero .sub{font-size:clamp(17px,2.2vw,20px);color:#f3e7e6;max-width:56ch;margin-bottom:32px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px}
+.trust-line{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14px;color:#e6d3d4}
+.trust-line span{display:inline-flex;align-items:center;gap:7px}
+.trust-line svg{width:16px;height:16px;color:#e79aa0}
+
+/* ============================================================
+   7. TRUST BAR
+   ============================================================ */
+.trust-bar{background:var(--white);border-bottom:1px solid var(--gray-100)}
+.trust-bar .container{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.trust-stat{text-align:center;padding:36px 20px;position:relative}
+.trust-stat + .trust-stat::before{content:'';position:absolute;left:0;top:28px;bottom:28px;width:1px;background:var(--gray-100)}
+.trust-stat .num{font-family:var(--font-head);font-weight:700;font-size:clamp(30px,4vw,44px);color:var(--brand-accent);line-height:1}
+.trust-stat .label{margin-top:8px;font-size:14px;font-weight:500;color:var(--gray-700)}
+
+/* ============================================================
+   8. SERVICE CARDS
+   ============================================================ */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-card);padding:32px;box-shadow:var(--shadow-card);transition:transform .2s ease,box-shadow .2s ease;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+.card .icon-wrap{width:56px;height:56px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;background:rgba(166,43,52,.12);color:var(--brand-accent);margin-bottom:20px}
+.card .icon-wrap svg{width:28px;height:28px}
+.card h3{font-size:22px;font-weight:600;margin-bottom:10px}
+.card p{font-size:16px;margin-bottom:18px;flex:1}
+.text-link{font-family:var(--font-head);font-weight:600;font-size:15px;color:var(--brand-accent-hover);display:inline-flex;align-items:center;gap:6px;align-self:flex-start}
+.text-link svg{width:16px;height:16px;transition:transform .2s ease}
+.text-link:hover svg{transform:translateX(4px)}
+
+/* ============================================================
+   9. WHY VERMAC
+   ============================================================ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.split-media{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);aspect-ratio:4/3;background:linear-gradient(135deg,var(--brand-maroon),var(--brand-maroon-700))}
+.split-media img{width:100%;height:100%;object-fit:cover}
+.benefit-list{display:flex;flex-direction:column;gap:18px;margin-top:24px}
+.benefit{display:flex;gap:14px;align-items:flex-start}
+.benefit .tick{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:rgba(46,158,91,.14);color:var(--success);display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.benefit .tick svg{width:15px;height:15px}
+.benefit b{color:var(--brand-maroon);font-family:var(--font-head);font-weight:600;display:block;font-size:17px}
+.benefit span{font-size:16px;color:var(--gray-700)}
+
+/* ============================================================
+   10. BEFORE / AFTER SLIDER
+   ============================================================ */
+.ba-wrap{max-width:900px;margin-inline:auto}
+.ba-slider{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);user-select:none;touch-action:pan-y;background:var(--gray-100)}
+.ba-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ba-after{z-index:1}
+.ba-before-clip{position:absolute;inset:0;z-index:2;width:50%;overflow:hidden}
+.ba-before-clip .ba-before{position:absolute;inset:0;height:100%;object-fit:cover}
+.ba-tag{position:absolute;bottom:14px;z-index:3;font-family:var(--font-head);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(28,12,15,.62);padding:6px 12px;border-radius:var(--radius-pill);backdrop-filter:blur(4px)}
+.ba-tag.before{left:14px}
+.ba-tag.after{right:14px}
+.ba-handle{position:absolute;top:0;bottom:0;left:50%;z-index:4;width:3px;background:#fff;transform:translateX(-50%)}
+.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;color:var(--brand-maroon)}
+.ba-knob svg{width:22px;height:22px}
+.ba-range{position:absolute;inset:0;z-index:5;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+.ba-caption{text-align:center;margin-top:18px;color:var(--gray-400);font-size:14px}
+
+/* Photo gallery grid + lightbox (design.md §5, §6.8) */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.gallery-grid figure{position:relative;margin:0;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);aspect-ratio:4/3;cursor:pointer;background:var(--gray-100)}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gallery-grid figure:hover img,.gallery-grid figure:focus-visible img{transform:scale(1.06)}
+.gallery-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px;color:#fff;font-size:13px;font-family:var(--font-head);font-weight:600;background:linear-gradient(transparent,rgba(28,12,15,.80));opacity:0;transition:opacity .25s ease}
+.gallery-grid figure:hover figcaption,.gallery-grid figure:focus-visible figcaption{opacity:1}
+.lightbox{position:fixed;inset:0;z-index:180;background:rgba(11,8,9,.93);display:none;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox .lb-stage{margin:0;max-width:92vw;max-height:88vh;text-align:center}
+.lightbox img{max-width:92vw;max-height:80vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox figcaption{color:#f3e7e6;font-family:var(--font-head);font-size:14px;margin-top:12px}
+.lb-btn{position:absolute;background:rgba(255,255,255,.12);border:none;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease}
+.lb-btn:hover{background:rgba(255,255,255,.24)}
+.lb-btn svg{width:26px;height:26px}
+.lb-close{top:20px;right:20px}
+.lb-prev{left:20px;top:50%;transform:translateY(-50%)}
+.lb-next{right:20px;top:50%;transform:translateY(-50%)}
+@media (max-width:768px){.gallery-grid{grid-template-columns:1fr 1fr;gap:10px}.lb-prev{left:8px}.lb-next{right:8px}.lb-btn{width:44px;height:44px}}
+
+/* ============================================================
+   11. MATERIALS GRID
+   ============================================================ */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.material{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);transition:transform .2s ease,box-shadow .2s ease}
+.material:hover{transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+.material .thumb{aspect-ratio:4/3;background:linear-gradient(135deg,var(--brand-maroon),var(--brand-maroon-700));position:relative}
+.material .thumb svg{position:absolute;inset:0;margin:auto;width:52px;height:52px;color:rgba(240,183,188,.92)}
+.material .body{padding:20px}
+.material h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.material p{font-size:15px;color:var(--gray-700)}
+.brand-note{margin-top:36px;text-align:center;font-size:15px;color:var(--gray-400);border:1px dashed var(--gray-100);border-radius:var(--radius-card);padding:18px 24px}
+
+/* ============================================================
+   12. CTA BAND
+   ============================================================ */
+.cta-band{background:var(--brand-maroon);color:#fff;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(800px 400px at 15% 120%,rgba(166,43,52,.42),transparent 60%)}
+.cta-band .container{position:relative;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.cta-band h2{color:#fff;font-size:32px;max-width:20ch}
+.cta-band p{color:#f3e7e6;margin-top:8px}
+.cta-band-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+
+/* ============================================================
+   13. REVIEWS
+   ============================================================ */
+.rating-badge{display:inline-flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-pill);padding:10px 20px;box-shadow:var(--shadow-card);margin-top:20px}
+.stars{display:inline-flex;gap:2px;color:var(--star-gold)}
+.stars svg{width:18px;height:18px}
+.rating-badge b{color:var(--brand-maroon);font-family:var(--font-head)}
+.review-card{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-card);padding:28px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:14px}
+.review-card .stars svg{width:16px;height:16px}
+.review-card blockquote{font-size:16px;color:var(--gray-700);line-height:1.65}
+.review-card .who{font-family:var(--font-head);font-weight:600;color:var(--brand-maroon);font-size:15px;margin-top:auto}
+.reviews-foot{text-align:center;margin-top:36px}
+
+/* ============================================================
+   14. SERVICE AREA
+   ============================================================ */
+.area-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+.town-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.town-pill{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-pill);padding:9px 18px;font-size:14px;font-weight:500;color:var(--brand-maroon);box-shadow:0 2px 6px rgba(45,18,24,.05)}
+.town-pill.primary{background:var(--brand-maroon);color:#fff;border-color:var(--brand-maroon)}
+.map-card{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);aspect-ratio:4/3;background:var(--brand-maroon);position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
+.map-card svg{width:64px;height:64px;color:#e79aa0;margin-bottom:12px}
+
+/* ============================================================
+   15. FAQ
+   ============================================================ */
+.faq{max-width:820px;margin-inline:auto}
+.faq-item{border-bottom:1px solid var(--gray-100)}
+.faq-q{width:100%;background:none;border:none;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 4px;font-family:var(--font-head);font-weight:600;font-size:19px;color:var(--brand-maroon)}
+.faq-q .chev{flex-shrink:0;color:var(--brand-accent);transition:transform .25s ease}
+.faq-q[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.faq-q .chev svg{width:22px;height:22px}
+.faq-a{overflow:hidden;max-height:0;transition:max-height .3s ease}
+.faq-a-inner{padding:0 4px 22px;color:var(--gray-700);font-size:16px}
+
+/* ============================================================
+   16. CONTACT / QUOTE FORM
+   ============================================================ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.contact-info h2{margin-bottom:16px}
+.contact-detail{display:flex;gap:14px;align-items:flex-start;margin-top:22px}
+.contact-detail .ci{width:44px;height:44px;flex-shrink:0;border-radius:12px;background:rgba(166,43,52,.12);color:var(--brand-accent);display:inline-flex;align-items:center;justify-content:center}
+.contact-detail .ci svg{width:22px;height:22px}
+.contact-detail b{display:block;font-family:var(--font-head);color:var(--brand-maroon);font-size:16px}
+.contact-detail a,.contact-detail span{color:var(--gray-700);font-size:16px}
+.quote-form{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-card);padding:32px;box-shadow:var(--shadow-card)}
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:600;font-size:14px;color:var(--brand-maroon);margin-bottom:6px}
+.field .req{color:var(--brand-accent)}
+.field input,.field select,.field textarea{width:100%;font-family:var(--font-body);font-size:16px;color:var(--ink);padding:12px 14px;border:1.5px solid var(--gray-100);border-radius:var(--radius-btn);background:var(--white);transition:border-color .18s ease,box-shadow .18s ease}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--brand-accent);box-shadow:0 0 0 3px rgba(166,43,52,.15)}
+.field textarea{resize:vertical;min-height:110px}
+.quote-form .btn{width:100%;margin-top:6px}
+.form-note{font-size:13px;color:var(--gray-400);margin-top:14px;text-align:center}
+
+/* ============================================================
+   17. FOOTER
+   ============================================================ */
+.site-footer{background:var(--brand-maroon);color:#f3e7e6}
+.footer-main{padding-block:64px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+.footer-main h4{color:#fff;font-size:16px;margin-bottom:18px;letter-spacing:.02em}
+.footer-col p{font-size:15px;color:#e6cccf;margin-top:14px;max-width:34ch}
+.footer-col ul{display:flex;flex-direction:column;gap:11px}
+.footer-col ul a{color:#e6cccf;font-size:15px}
+.footer-col ul a:hover{color:#fff}
+.footer-brand .wm{font-family:var(--font-logo);font-weight:700;font-size:26px;color:#fff;letter-spacing:.5px}
+.footer-brand .wm-sub{display:block;font-size:10px;letter-spacing:.24em;font-weight:600;color:#e6cccf;margin-top:4px}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.footer-social a{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.10);color:#fff;display:inline-flex;align-items:center;justify-content:center;transition:background .2s ease}
+.footer-social a:hover{background:var(--brand-accent)}
+.footer-social svg{width:18px;height:18px}
+.footer-contact a{color:#fff;font-weight:600;font-family:var(--font-head)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.14);padding-block:22px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center;font-size:13px;color:#d9bcc0}
+.footer-bottom a{color:#d9bcc0}
+.footer-bottom a:hover{color:#fff}
+
+/* ============================================================
+   18. MOBILE STICKY ACTION BAR
+   ============================================================ */
+.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;grid-template-columns:1fr 1fr;box-shadow:0 -4px 20px rgba(45,18,24,.20)}
+.mobile-bar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;font-family:var(--font-head);font-weight:600;font-size:16px;color:#fff}
+.mobile-bar .m-call{background:var(--brand-maroon)}
+.mobile-bar .m-quote{background:var(--brand-accent)}
+.mobile-bar svg{width:18px;height:18px}
+
+/* ============================================================
+   19. SCROLL REVEAL — only hides when JS is active (.js on <html>),
+   so content is always visible if JS is disabled/blocked.
+   ============================================================ */
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   20. RESPONSIVE
+   ============================================================ */
+@media (max-width:1100px){.footer-main{grid-template-columns:1fr 1fr}}
+@media (max-width:960px){
+  .nav,.header-cta{display:none}
+  .mobile-controls{display:flex}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:768px){
+  section{padding-block:56px}
+  h2{font-size:26px}
+  .grid-3{grid-template-columns:1fr}
+  .split,.area-grid,.contact-grid{grid-template-columns:1fr;gap:32px}
+  .trust-bar .container{grid-template-columns:repeat(2,1fr)}
+  .trust-stat + .trust-stat::before{display:none}
+  .trust-stat:nth-child(3)::before,.trust-stat:nth-child(4)::before{content:'';position:absolute;top:0;left:28px;right:28px;height:1px;background:var(--gray-100);width:auto}
+  .hero{padding-top:130px;padding-bottom:72px}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{width:100%}
+  .cta-band .container{flex-direction:column;text-align:center;align-items:center}
+  .cta-band-actions{justify-content:center}
+  .mobile-bar{display:grid}
+  body{padding-bottom:56px}
+  .footer-main{grid-template-columns:1fr;gap:32px}
+}
+@media (max-width:480px){.grid-4{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
 </head>
+
 <body>
-    <canvas id="confettiCanvas"></canvas>
-    
-    <div class="container">
-        <!-- Campaign Creation Interface (shown only on index) -->
-        <div id="createInterface" style="display: none;">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="brand-logo-text">VC SOLUTIONS</div>
-                </div>
-                <div class="brand-tagline">Campaign Operations Tracker</div>
-            </div>
-            
-            <div class="create-section">
-                <h2>Create New Campaign Tracker</h2>
-                <form id="createForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="campaignName">Campaign Name</label>
-                            <input type="text" id="campaignName" required placeholder="Q1 2025 Google Ads">
-                        </div>
-                        <div class="form-group">
-                            <label for="clientName">Client Name</label>
-                            <input type="text" id="clientName" required placeholder="Acme Corporation">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="launchDate">Target Launch Date</label>
-                            <input type="date" id="launchDate" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-primary">Create Campaign Tracker</button>
-                </form>
-            </div>
+<a class="skip-link" href="#main">Skip to content</a>
 
-            <div class="campaign-list" id="campaignList">
-                <h3>Active Campaigns</h3>
-                <div id="campaignListItems"></div>
-                <button id="clearCampaignsBtn" class="btn-clear" style="display: none;">Clear All Campaigns</button>
-            </div>
-        </div>
+<!-- ============================ HEADER ============================ -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Vermac Construction Inc — home">
+      <img class="logo-light" src="images/vermac-logo-white.png" alt="Vermac Construction Inc" width="97" height="52">
+      <img class="logo-dark" src="images/vermac-logo.png" alt="Vermac Construction Inc" width="97" height="52">
+    </a>
 
-        <!-- Campaign Tracker Interface -->
-        <div id="trackerInterface" style="display: none;">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="brand-logo-text">VC SOLUTIONS</div>
-                </div>
-                <div class="brand-tagline">Campaign Operations Tracker</div>
-            </div>
-            
-            <div class="header">
-                <div class="header-top">
-                    <div class="header-info">
-                        <h1 id="campaignNameDisplay">Campaign Name</h1>
-                        <div class="client-name" id="clientNameDisplay">Client Name</div>
-                    </div>
-                    <div class="header-meta">
-                        <div class="launch-date">
-                            Target Launch: <strong id="launchDateDisplay">TBD</strong>
-                        </div>
-                        <div class="last-updated" id="lastUpdated">Last updated: Never</div>
-                    </div>
-                </div>
-                
-                <div class="progress-section">
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-text" id="progressText">0 of 0 tasks complete</div>
-                </div>
+    <nav class="nav" aria-label="Primary">
+      <a class="navlink" href="#services">Services</a>
+      <a class="navlink" href="#gallery">Gallery</a>
+      <a class="navlink" href="#about">About</a>
+      <a class="navlink" href="#reviews">Reviews</a>
+      <a class="navlink" href="#contact">Contact</a>
+    </nav>
 
-                <div class="campaign-id">
-                    <span class="campaign-id-label">SHARE:</span>
-                    <span class="campaign-id-value" id="campaignUrl">Loading...</span>
-                    <button class="copy-btn" id="copyBtn">Copy Link</button>
-                </div>
-            </div>
-
-            <div class="tasks" id="tasksList"></div>
-        </div>
+    <div class="header-cta">
+      <a class="header-phone" href="tel:+15186368008" aria-label="Call Vermac Construction at 518-636-8008">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        518-636-8008
+      </a>
+      <a class="btn btn-primary" href="#contact">Get a Free Quote</a>
     </div>
 
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="launch-modal" id="launchModal">
-        <span class="launch-emoji">🎉</span>
-        <h2>Campaign Launched!</h2>
-        <p>All systems go. Your campaign is now live and ready to drive results.</p>
+    <div class="mobile-controls">
+      <a class="icon-btn" href="tel:+15186368008" aria-label="Call 518-636-8008">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <button class="icon-btn" id="menuOpen" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile slide-in menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-top">
+    <img src="images/vermac-logo-white.png" alt="Vermac Construction Inc" height="46" style="height:46px;width:auto">
+    <button class="icon-btn" id="menuClose" aria-label="Close menu" style="background:rgba(255,255,255,.16)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="btn btn-primary" href="#contact">Get a Free Quote</a>
+  <a class="m-phone" href="tel:+15186368008">Call 518-636-8008</a>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="eyebrow">Saratoga County's Siding Experts</span>
+      <h1>Expert Siding That Protects Your Home for Decades</h1>
+      <p class="sub">Family-owned and local for 20+ years. Vermac Construction installs and replaces siding that stands up to Upstate New York weather — stopping moisture, rot, and mold while boosting your home's efficiency and curb appeal.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Get a Free Quote</a>
+        <a class="btn btn-on-dark" href="#gallery">See Our Work</a>
+      </div>
+      <div class="trust-line">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>20+ years experience</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Family-owned &amp; local</span>
+        <!-- CONFIRM licensing/insurance before publishing this claim (info.md §2, §7) -->
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; insured</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TRUST BAR ============================ -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-stat reveal"><div class="num">20+</div><div class="label">Years of Experience</div></div>
+    <div class="trust-stat reveal"><div class="num">Saratoga</div><div class="label">County Local</div></div>
+    <div class="trust-stat reveal"><div class="num">25–50 yr</div><div class="label">Manufacturer Warranties</div></div>
+    <!-- CONFIRM licensing (info.md §7) -->
+    <div class="trust-stat reveal"><div class="num">Licensed</div><div class="label">&amp; Insured</div></div>
+  </div>
+</div>
+
+<!-- ============================ SERVICES ============================ -->
+<section id="services">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">What We Do</span>
+      <h2>Siding &amp; Construction, Done Right</h2>
+      <p class="lead">From full siding replacements to remodels, additions, and in-house construction jobs — one local team you can trust with your home.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card reveal">
+        <span class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 12h18"/><path d="M3 16h18"/></svg></span>
+        <h3>Siding Installation &amp; Replacement</h3>
+        <p>Our core trade. Professionally installed siding that can last 25–50 years — protecting your home from moisture, rot, and mold while improving energy efficiency and curb appeal.</p>
+        <a class="text-link" href="#contact">Get a free quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+      <article class="card reveal">
+        <span class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 20h20"/><path d="M4 20V8l8-5 8 5v12"/><path d="M9 20v-6h6v6"/></svg></span>
+        <h3>Remodels &amp; Additions</h3>
+        <!-- CONFIRM scope/examples (info.md §4.2) -->
+        <p>Planning to expand or refresh your home? We take on remodels and additions with the same craftsmanship, starting with a free 30-minute consultation to scope your project.</p>
+        <a class="text-link" href="#contact">Start a conversation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+      <article class="card reveal">
+        <span class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+        <h3>In-House &amp; General Jobs</h3>
+        <!-- CONFIRM what this covers — repairs, decks, trim, smaller builds (info.md §4.3) -->
+        <p>Beyond siding, we handle general in-house construction jobs. Not sure if your project fits? Give us a call — if we can help, we will, and we'll always be straight with you if we can't.</p>
+        <a class="text-link" href="tel:+15186368008">Call 518-636-8008 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY VERMAC ============================ -->
+<section id="about" class="section-alt">
+  <div class="container">
+    <div class="split">
+      <div class="split-media reveal">
+        <!-- Real Vermac team photo (pulled from the current site). Swap for a higher-res original when available. -->
+        <img src="images/vermac-team.jpg"
+             alt="The Vermac Construction team on a residential siding project in Saratoga County, NY"
+             loading="lazy">
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Why Vermac</span>
+        <h2>Local Neighbors You Can Trust With Your Home</h2>
+        <p class="lead" style="font-size:18px">Owned by Dan Vergine and rooted in Saratoga County for 20+ years, Vermac is a family-owned team that treats every home like it's our own — with honest advice and quality that lasts.</p>
+        <ul class="benefit-list">
+          <li class="benefit"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span><b>20+ years of experience</b>Established, proven, and here to stay — not a fly-by-night crew.</span></li>
+          <li class="benefit"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span><b>Local &amp; family-owned</b>Saratoga County neighbors serving neighbors, with real accountability.</span></li>
+          <li class="benefit"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span><b>Quality materials &amp; warranties</b>Premium siding backed by 25–50-year manufacturer warranties.</span></li>
+          <li class="benefit"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span><b>Protection that lasts</b>Proper installation stops moisture, rot, and mold — and boosts energy efficiency.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BEFORE / AFTER ============================ -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Our Work</span>
+      <h2>See the Transformation</h2>
+      <p class="lead">Drag the handle to compare before and after. New siding doesn't just protect your home — it transforms it.</p>
     </div>
 
-    <div class="save-indicator" id="saveIndicator">Saved</div>
+    <div class="ba-wrap reveal">
+      <!-- PLACEHOLDER before/after imagery. Replace both image sources with real
+           Vermac project photos (same crop/angle) before launch (info.md §3). -->
+      <div class="ba-slider" id="baSlider">
+        <img class="ba-layer ba-after" alt="After: home with freshly installed siding"
+             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'><defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23c9d7e2'/><stop offset='1' stop-color='%23eef1f4'/></linearGradient></defs><rect width='1600' height='900' fill='url(%23a)'/><rect x='300' y='300' width='1000' height='500' fill='%2358272F'/><polygon points='300,300 800,120 1300,300' fill='%236E313A'/><g stroke='%23431d24' stroke-width='4'><line x1='300' y1='360' x2='1300' y2='360'/><line x1='300' y1='430' x2='1300' y2='430'/><line x1='300' y1='500' x2='1300' y2='500'/><line x1='300' y1='570' x2='1300' y2='570'/><line x1='300' y1='640' x2='1300' y2='640'/><line x1='300' y1='710' x2='1300' y2='710'/></g><rect x='720' y='560' width='160' height='240' fill='%23A62B34'/><text x='800' y='860' font-family='sans-serif' font-size='30' fill='%2358272F' text-anchor='middle'>AFTER — replace with real project photo</text></svg>">
+        <div class="ba-before-clip" id="baClip">
+          <img class="ba-before" alt="Before: home with old, weathered siding"
+             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'><defs><linearGradient id='b' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23a9a29a'/><stop offset='1' stop-color='%23cfc9c0'/></linearGradient></defs><rect width='1600' height='900' fill='url(%23b)'/><rect x='300' y='300' width='1000' height='500' fill='%23726b60'/><polygon points='300,300 800,120 1300,300' fill='%235c554b'/><g stroke='%23574f45' stroke-width='4'><line x1='300' y1='380' x2='1300' y2='380'/><line x1='300' y1='470' x2='1300' y2='470'/><line x1='300' y1='560' x2='1300' y2='560'/><line x1='300' y1='650' x2='1300' y2='650'/><line x1='300' y1='740' x2='1300' y2='740'/></g><rect x='720' y='560' width='160' height='240' fill='%234a4339'/><text x='800' y='860' font-family='sans-serif' font-size='30' fill='%233d372f' text-anchor='middle'>BEFORE — replace with real project photo</text></svg>">
+        </div>
+        <span class="ba-tag before">Before</span>
+        <span class="ba-tag after">After</span>
+        <div class="ba-handle" id="baHandle"><span class="ba-knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/><polyline points="9 6 15 12 9 18"/></svg></span></div>
+        <input class="ba-range" id="baRange" type="range" min="0" max="100" value="50" aria-label="Before and after comparison slider">
+      </div>
+      <p class="ba-caption">Example slider — swap in a matched Vermac before/after pair when ready. Fully keyboard-operable (use arrow keys).</p>
+    </div>
 
-    <script>
-        // Template for standard campaign tasks
-        const TASK_TEMPLATE = [
-            { 
-                id: 1, 
-                title: 'Campaign Order Form Received', 
-                defaultOwner: 'NGM',
-                statusType: 'yesno',
-                isGatekeeper: true // This unlocks all other tasks
-            },
-            { 
-                id: 2, 
-                title: 'Geofence & Campaign Build Out', 
-                defaultOwner: 'NGM',
-                statusType: 'standard'
-            },
-            { 
-                id: 3, 
-                title: 'Tracking & Pixel Placement', 
-                defaultOwner: 'VC Solutions',
-                statusType: 'standard'
-            },
-            { 
-                id: 4, 
-                title: 'Creative Assets', 
-                defaultOwner: 'VC Solutions',
-                statusType: 'standard'
-            },
-            { 
-                id: 5, 
-                title: 'Audience & Targeting Configuration', 
-                defaultOwner: 'NGM',
-                statusType: 'standard'
-            },
-            { 
-                id: 6, 
-                title: 'Campaign Structure & Ad Groups Created', 
-                defaultOwner: 'NGM',
-                statusType: 'standard'
-            },
-            { 
-                id: 7, 
-                title: 'Budget Allocation & Bid Strategy Set', 
-                defaultOwner: 'NGM',
-                statusType: 'standard'
-            },
-            { 
-                id: 8, 
-                title: 'Client Approval & Ready to Launch', 
-                defaultOwner: 'VC Solutions',
-                statusType: 'standard'
-            },
-            { 
-                id: 9, 
-                title: 'Campaign Launched & Tap Clicks Dashboard Access Granted', 
-                defaultOwner: 'NGM',
-                statusType: 'yesno',
-                isFinalStep: true // Triggers confetti
-            }
-        ];
+    <!-- Real Vermac project photos (pulled from the current site). Click any photo to enlarge.
+         Add towns to the captions/alt for local SEO once confirmed with the client. -->
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <figure tabindex="0"><img src="images/gallery/siding-red-home-porch.jpg" alt="Home with new red siding and covered porch — Saratoga County, NY" loading="lazy"><figcaption>Siding &amp; exterior — Saratoga County, NY</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/siding-gray-ranch.jpg" alt="Ranch home with fresh gray siding and landscaped lawn" loading="lazy"><figcaption>Siding replacement</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/siding-installation-red-home.jpg" alt="Vermac crew installing siding on a two-story home" loading="lazy"><figcaption>Siding installation in progress</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/custom-home-front.jpg" alt="Custom-built home exterior by Vermac Construction" loading="lazy"><figcaption>Custom home exterior</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/custom-home-finished.jpg" alt="Newly finished custom home construction" loading="lazy"><figcaption>New home construction</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/covered-porch-framing.jpg" alt="Covered porch framing on a residential build" loading="lazy"><figcaption>Covered porch build</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/home-addition-progress.jpg" alt="Home addition under construction" loading="lazy"><figcaption>Home addition</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/breezeway-garage.jpg" alt="Finished breezeway and garage addition" loading="lazy"><figcaption>Breezeway &amp; garage</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/deck-and-staircase.jpg" alt="Custom exterior deck with staircase" loading="lazy"><figcaption>Deck &amp; staircase</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/interior-remodel.jpg" alt="Interior remodel with open staircase and hardwood floors" loading="lazy"><figcaption>Interior remodel</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/team-on-site.jpg" alt="A Vermac Construction team member on a job site" loading="lazy"><figcaption>On the job in Saratoga County</figcaption></figure>
+    </div>
 
-        const STATUS_OPTIONS_STANDARD = [
-            'Not Started',
-            'In Progress',
-            'Waiting on Access',
-            'Waiting on Approval',
-            'Complete',
-            'Blocked'
-        ];
+    <div style="text-align:center;margin-top:40px" class="reveal">
+      <a class="btn btn-secondary" href="#contact">Start Your Project</a>
+    </div>
+  </div>
+</section>
 
-        const STATUS_OPTIONS_YESNO = ['No', 'Yes'];
+<!-- ============================ MATERIALS ============================ -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Siding Materials</span>
+      <h2>Options Built to Last</h2>
+      <p class="lead">Quality siding, properly installed, can protect and beautify your home for 25–50 years. We'll help you choose the right material for your home and budget.</p>
+    </div>
+    <!-- CONFIRM which materials/brands Vermac actually installs & is certified for (info.md §4.4).
+         Show manufacturer logos ONLY for brands the client is authorized to install. -->
+    <div class="grid-4">
+      <article class="material reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
+        <div class="body"><h3>Vinyl Siding</h3><p>Affordable and low-maintenance, with a wide range of colors and styles.</p></div>
+      </article>
+      <article class="material reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2l9 4.5v9L12 22l-9-4.5v-9z"/><path d="M12 2v20"/></svg></div>
+        <div class="body"><h3>Fiber Cement</h3><p>Durable, fire-resistant, and a premium look that holds up for decades.</p></div>
+      </article>
+      <article class="material reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg></div>
+        <div class="body"><h3>Engineered Wood</h3><p>The warmth of a real wood look with added durability and easier upkeep.</p></div>
+      </article>
+      <article class="material reveal">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div>
+        <div class="body"><h3>Insulated &amp; Composite</h3><p>Added insulation and moisture protection for year-round efficiency.</p></div>
+      </article>
+    </div>
+    <p class="brand-note">We install trusted, warranty-backed manufacturer products. <strong>[Client to confirm exact brands &amp; certifications — e.g. James Hardie, LP SmartSide — before adding logos.]</strong></p>
+  </div>
+</section>
 
-        const OWNER_OPTIONS = ['NGM', 'VC Solutions', 'Client'];
+<!-- ============================ CTA BAND (mid) ============================ -->
+<section class="cta-band" style="padding-block:64px">
+  <div class="container">
+    <div>
+      <h2>Ready to protect and transform your home?</h2>
+      <p>Free, no-pressure quotes. Book a 30-minute consultation by phone or online.</p>
+    </div>
+    <div class="cta-band-actions">
+      <a class="btn btn-primary" href="#contact">Get a Free Quote</a>
+      <a class="btn btn-on-dark" href="tel:+15186368008">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        518-636-8008
+      </a>
+    </div>
+  </div>
+</section>
 
-        // Get campaign ID from URL
-        function getCampaignId() {
-            const hash = window.location.hash;
-            return hash ? hash.substring(1) : null;
-        }
+<!-- ============================ REVIEWS ============================ -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Reviews</span>
+      <h2>What Homeowners Say</h2>
+      <!-- PLACEHOLDER reviews. info.md §7: collect 5–10 REAL reviews (name + town) before launch.
+           Do not publish invented testimonials. The three cards below are layout placeholders. -->
+      <div class="rating-badge" style="margin-inline:auto">
+        <span class="stars" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+        </span>
+        <b>Reviews coming soon</b> — <span style="color:var(--gray-400);font-size:14px">gathering verified customer reviews</span>
+      </div>
+    </div>
 
-        // Show appropriate interface
-        function initializeInterface() {
-            const campaignId = getCampaignId();
-            
-            if (campaignId) {
-                document.getElementById('createInterface').style.display = 'none';
-                document.getElementById('trackerInterface').style.display = 'block';
-                loadCampaign(campaignId);
-            } else {
-                document.getElementById('createInterface').style.display = 'block';
-                document.getElementById('trackerInterface').style.display = 'none';
-                loadCampaignList();
-                
-                // Attach create form listener
-                const createForm = document.getElementById('createForm');
-                if (createForm && !createForm.dataset.listenerAttached) {
-                    createForm.addEventListener('submit', handleCreateCampaign);
-                    createForm.dataset.listenerAttached = 'true';
-                }
-                
-                // Attach clear button listener
-                const clearBtn = document.getElementById('clearCampaignsBtn');
-                if (clearBtn && !clearBtn.dataset.listenerAttached) {
-                    clearBtn.addEventListener('click', clearAllCampaigns);
-                    clearBtn.dataset.listenerAttached = 'true';
-                }
-                
-                // Attach copy button listener
-                const copyBtn = document.getElementById('copyBtn');
-                if (copyBtn && !copyBtn.dataset.listenerAttached) {
-                    copyBtn.addEventListener('click', handleCopyLink);
-                    copyBtn.dataset.listenerAttached = 'true';
-                }
-            }
-        }
-        
-        // Handle campaign creation
-        function handleCreateCampaign(e) {
-            e.preventDefault();
-            
-            const campaignName = document.getElementById('campaignName').value;
-            const clientName = document.getElementById('clientName').value;
-            const launchDate = document.getElementById('launchDate').value;
-            
-            const campaignId = generateCampaignId();
-            
-            const campaignData = {
-                id: campaignId,
-                name: campaignName,
-                client: clientName,
-                launchDate: launchDate,
-                createdAt: new Date().toISOString(),
-                lastUpdated: new Date().toISOString(),
-                tasks: TASK_TEMPLATE.map(task => ({
-                    ...task,
-                    status: task.statusType === 'yesno' ? 'No' : 'Not Started',
-                    owner: task.defaultOwner,
-                    notes: ''
-                }))
-            };
-            
-            saveCampaign(campaignId, campaignData);
-            
-            // Redirect to campaign tracker
-            window.location.hash = campaignId;
-            initializeInterface();
-        }
+    <div class="grid-3">
+      <article class="review-card reveal">
+        <span class="stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+        </span>
+        <blockquote>“[Placeholder — replace with a real customer review. e.g. a note on quality, professionalism, and the finished result.]”</blockquote>
+        <span class="who">— Customer Name, Town</span>
+      </article>
+      <article class="review-card reveal">
+        <span class="stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+        </span>
+        <blockquote>“[Placeholder — replace with a real customer review. e.g. how the new siding transformed their home and held up over time.]”</blockquote>
+        <span class="who">— Customer Name, Town</span>
+      </article>
+      <article class="review-card reveal">
+        <span class="stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15 9 22 9.3 16.5 13.8 18.5 21 12 16.8 5.5 21 7.5 13.8 2 9.3 9 9"/></svg>
+        </span>
+        <blockquote>“[Placeholder — replace with a real customer review. e.g. praise for local, honest, family-owned service.]”</blockquote>
+        <span class="who">— Customer Name, Town</span>
+      </article>
+    </div>
+    <div class="reviews-foot reveal">
+      <!-- CONFIRM Google review URL (info.md §7) -->
+      <a class="text-link" href="#contact">Leave us a review or read more →</a>
+    </div>
+  </div>
+</section>
 
-        // Generate unique campaign ID
-        function generateCampaignId() {
-            return 'camp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        }
+<!-- ============================ SERVICE AREA ============================ -->
+<section class="section-alt">
+  <div class="container">
+    <div class="area-grid">
+      <div class="reveal">
+        <span class="eyebrow">Service Area</span>
+        <h2>Proudly Serving All of Saratoga County, NY</h2>
+        <p class="lead" style="font-size:18px">Vermac Construction provides siding installation, replacement, remodels, and construction throughout Saratoga County — including Malta and Ballston Spa.</p>
+        <!-- CONFIRM exact town list with client (info.md §1) -->
+        <div class="town-list">
+          <span class="town-pill primary">Malta</span>
+          <span class="town-pill primary">Ballston Spa</span>
+          <span class="town-pill">Saratoga Springs</span>
+          <span class="town-pill">Clifton Park</span>
+          <span class="town-pill">Wilton</span>
+          <span class="town-pill">Stillwater</span>
+          <span class="town-pill">Mechanicville</span>
+          <span class="town-pill">Round Lake</span>
+          <span class="town-pill">Ballston Lake</span>
+          <span class="town-pill">Halfmoon</span>
+          <span class="town-pill">Milton</span>
+        </div>
+      </div>
+      <div class="map-card reveal">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div style="font-family:var(--font-head);font-weight:600;font-size:20px">Saratoga County, NY</div>
+          <div style="color:#e6cccf;font-size:15px;margin-top:6px">Malta · Ballston Spa · &amp; surrounding towns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Storage operations using localStorage
-        function saveCampaign(id, data) {
-            try {
-                localStorage.setItem(id, JSON.stringify(data));
-                
-                // Also maintain campaign list
-                const listJson = localStorage.getItem('campaign_list');
-                const list = listJson ? JSON.parse(listJson) : [];
-                
-                if (!list.some(c => c.id === id)) {
-                    list.push({
-                        id: id,
-                        name: data.name,
-                        client: data.client,
-                        launchDate: data.launchDate
-                    });
-                    localStorage.setItem('campaign_list', JSON.stringify(list));
-                } else {
-                    // Update existing entry
-                    const index = list.findIndex(c => c.id === id);
-                    list[index] = {
-                        id: id,
-                        name: data.name,
-                        client: data.client,
-                        launchDate: data.launchDate
-                    };
-                    localStorage.setItem('campaign_list', JSON.stringify(list));
-                }
-                
-                showSaveIndicator();
-            } catch (error) {
-                console.error('Save failed:', error);
-                alert('Save failed. Please try again.');
-            }
-        }
+<!-- ============================ FAQ ============================ -->
+<section>
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Common Questions</h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How long does new siding last?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Quality siding can last 25–50 years when it's properly installed and maintained. The material matters — but professional installation is what makes that lifespan (and the manufacturer's warranty) hold up.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you offer warranties?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <!-- CONFIRM Vermac workmanship guarantee wording (info.md §7) -->
+        <div class="faq-a"><div class="faq-a-inner">Yes — the premium manufacturers we install offer 25–50-year product warranties. Ask us about the specific coverage for your chosen material during your free consultation.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What areas do you serve?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">All of Saratoga County, NY — including Malta and Ballston Spa, plus surrounding towns like Saratoga Springs, Clifton Park, Wilton, and more.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What siding materials do you install?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <!-- CONFIRM material/brand list (info.md §4.4) -->
+        <div class="faq-a"><div class="faq-a-inner">We work with a range of quality siding materials — including vinyl, fiber cement, engineered wood, and insulated options. Tell us about your home and we'll recommend the best fit for your goals and budget.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How do I get a quote?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">It's easy and free. Call <a href="tel:+15186368008">518-636-8008</a> or fill out the quote form below to book a free 30-minute consultation. No pressure, no obligation.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you do more than siding?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Alongside our core siding work, we take on remodels, additions, and general in-house construction jobs. Ask us about your project.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Are you licensed and insured?</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <!-- CONFIRM licensing/insurance and add specifics (info.md §2, §7) -->
+        <div class="faq-a"><div class="faq-a-inner">[CONFIRM before launch — add Vermac's license number, insurance details, and any certifications here.]</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function loadCampaign(id) {
-            try {
-                const dataJson = localStorage.getItem(id);
-                if (!dataJson) {
-                    alert('Campaign not found');
-                    window.location.hash = '';
-                    initializeInterface();
-                    return;
-                }
-                const data = JSON.parse(dataJson);
-                renderCampaign(data);
-            } catch (error) {
-                console.error('Load failed:', error);
-                alert('Campaign not found');
-                window.location.hash = '';
-                initializeInterface();
-            }
-        }
+<!-- ============================ CONTACT / QUOTE ============================ -->
+<section id="contact" class="section-alt">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <span class="eyebrow">Get a Free Quote</span>
+        <h2>Let's Talk About Your Project</h2>
+        <p class="lead" style="font-size:18px">Tell us a little about what you need and we'll get right back to you. Prefer to talk? Call anytime — you'll reach a local team, not a call center.</p>
 
-        function loadCampaignList() {
-            try {
-                const listJson = localStorage.getItem('campaign_list');
-                const campaigns = listJson ? JSON.parse(listJson) : [];
-                
-                const container = document.getElementById('campaignListItems');
-                const clearBtn = document.getElementById('clearCampaignsBtn');
-                
-                if (campaigns.length === 0) {
-                    container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No campaigns yet. Create your first one above!</div>';
-                    if (clearBtn) clearBtn.style.display = 'none';
-                    return;
-                }
-                
-                if (clearBtn) clearBtn.style.display = 'block';
-                
-                container.innerHTML = campaigns.map(c => `
-                    <div class="campaign-item">
-                        <div class="campaign-item-info">
-                            <div class="campaign-item-name">${c.name}</div>
-                            <div class="campaign-item-client">${c.client}</div>
-                        </div>
-                        <a href="#${c.id}" class="campaign-item-link">Open Tracker</a>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Load list failed:', error);
-            }
-        }
-        
-        // Clear all campaigns
-        function clearAllCampaigns() {
-            if (confirm('⚠️ Are you sure you want to delete ALL campaigns?\n\nThis will permanently delete all campaign data and cannot be undone.')) {
-                // Get campaign list
-                const listJson = localStorage.getItem('campaign_list');
-                const campaigns = listJson ? JSON.parse(listJson) : [];
-                
-                // Delete each campaign
-                campaigns.forEach(campaign => {
-                    localStorage.removeItem(campaign.id);
-                });
-                
-                // Clear the campaign list
-                localStorage.removeItem('campaign_list');
-                
-                // Reload the list
-                loadCampaignList();
-                
-                alert('✓ All campaigns cleared successfully!');
-            }
-        }
+        <div class="contact-detail">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div><b>Call or text</b><a href="tel:+15186368008">518-636-8008</a></div>
+        </div>
+        <div class="contact-detail">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+          <div><b>Email</b><a href="mailto:vermacconstruction1@gmail.com">vermacconstruction1@gmail.com</a></div>
+        </div>
+        <div class="contact-detail">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><b>Service area</b><span>All of Saratoga County, NY — Malta, Ballston Spa &amp; surrounding towns</span></div>
+        </div>
+        <div class="contact-detail">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span>
+          <!-- CONFIRM business hours (info.md §2) -->
+          <div><b>Hours</b><span>[CONFIRM — e.g. Mon–Fri 8am–5pm]</span></div>
+        </div>
+      </div>
 
-        // Render campaign tracker
-        function renderCampaign(data) {
-            document.getElementById('campaignNameDisplay').textContent = data.name;
-            document.getElementById('clientNameDisplay').textContent = data.client;
-            document.getElementById('launchDateDisplay').textContent = new Date(data.launchDate).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            });
-            document.getElementById('lastUpdated').textContent = `Last updated: ${formatTimestamp(data.lastUpdated)}`;
-            
-            const url = window.location.href;
-            document.getElementById('campaignUrl').textContent = url;
-            
-            // Attach copy button listener
-            const copyBtn = document.getElementById('copyBtn');
-            if (copyBtn && !copyBtn.dataset.listenerAttached) {
-                copyBtn.addEventListener('click', handleCopyLink);
-                copyBtn.dataset.listenerAttached = 'true';
-            }
-            
-            updateProgress(data.tasks);
-            renderTasks(data.tasks, data.id);
-        }
+      <!-- Wired for Netlify Forms: on deploy, Netlify auto-detects this form and
+           captures submissions. To email them to vermacconstruction1@gmail.com, add a
+           notification in Netlify: Site settings → Forms → Form notifications → Email.
+           (info.md §10, design.md §12) -->
+      <form class="quote-form reveal" name="quote" method="POST"
+            data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
+        <input type="hidden" name="form-name" value="quote">
+        <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
+        <div class="field">
+          <label for="name">Name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="town">Town / Address</label>
+          <input type="text" id="town" name="town" autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="service">Service needed</label>
+          <select id="service" name="service">
+            <option value="Siding">Siding</option>
+            <option value="Remodel/Addition">Remodel / Addition</option>
+            <option value="In-House Job">In-House Job</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message / project details</label>
+          <textarea id="message" name="message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Request My Free Quote</button>
+        <p class="form-note">We'll reply as soon as we can. Your info is only used to contact you about your project.</p>
+      </form>
+    </div>
+  </div>
+</section>
 
-        // Render tasks
-        function renderTasks(tasks, campaignId) {
-            const container = document.getElementById('tasksList');
-            
-            // Check if gatekeeper (task 1) is unlocked
-            const gatekeeperTask = tasks.find(t => t.id === 1);
-            const isUnlocked = gatekeeperTask && gatekeeperTask.status === 'Yes';
-            
-            container.innerHTML = tasks.map((task, index) => {
-                const isLocked = task.id !== 1 && !isUnlocked;
-                const statusOptions = task.statusType === 'yesno' ? STATUS_OPTIONS_YESNO : STATUS_OPTIONS_STANDARD;
-                
-                return `
-                <div class="task-card ${isLocked ? 'locked' : ''}">
-                    <div class="task-header">
-                        <span class="task-number">${String(task.id).padStart(2, '0')}</span>
-                        <span class="task-title">${task.title}</span>
-                        <span class="status-badge status-${statusToClass(task.status)}">
-                            <span class="status-indicator indicator-${statusToClass(task.status)}"></span>
-                            ${task.status}
-                        </span>
-                    </div>
-                    
-                    <div class="task-controls">
-                        <div class="control-group">
-                            <label class="control-label">Status</label>
-                            <select data-task-id="${task.id}" data-field="status" ${isLocked ? 'disabled' : ''}>
-                                ${statusOptions.map(s => `<option value="${s}" ${s === task.status ? 'selected' : ''}>${s}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Owner</label>
-                            <select data-task-id="${task.id}" data-field="owner" disabled>
-                                ${OWNER_OPTIONS.map(o => `<option value="${o}" ${o === task.owner ? 'selected' : ''}>${o}</option>`).join('')}
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label class="control-label">Notes</label>
-                        <textarea 
-                            data-task-id="${task.id}" 
-                            data-field="notes" 
-                            placeholder="Add status notes, blockers, or updates..."
-                            ${isLocked ? 'disabled' : ''}
-                        >${task.notes}</textarea>
-                    </div>
-                </div>
-            `}).join('');
-            
-            // Attach event listeners
-            container.querySelectorAll('select[data-field="status"]:not([disabled]), textarea:not([disabled])').forEach(element => {
-                element.addEventListener('change', handleTaskUpdate);
-                if (element.tagName === 'TEXTAREA') {
-                    element.addEventListener('input', debounce(handleTaskUpdate, 500));
-                }
-            });
-        }
+<!-- ============================ FINAL CTA ============================ -->
+<section class="cta-band" style="padding-block:64px">
+  <div class="container">
+    <div>
+      <h2>Saratoga County's siding experts — for 20+ years.</h2>
+      <p>Local, family-owned, and built to last. Let's protect your home.</p>
+    </div>
+    <div class="cta-band-actions">
+      <a class="btn btn-primary" href="#contact">Get a Free Quote</a>
+      <a class="btn btn-on-dark" href="tel:+15186368008">Call 518-636-8008</a>
+    </div>
+  </div>
+</section>
+</main>
 
-        // Handle task updates
-        function handleTaskUpdate(e) {
-            const taskId = parseInt(e.target.dataset.taskId);
-            const field = e.target.dataset.field;
-            const value = e.target.value;
-            
-            const campaignId = getCampaignId();
-            const dataJson = localStorage.getItem(campaignId);
-            const data = JSON.parse(dataJson);
-            
-            const taskIndex = data.tasks.findIndex(t => t.id === taskId);
-            const oldValue = data.tasks[taskIndex][field];
-            data.tasks[taskIndex][field] = value;
-            data.lastUpdated = new Date().toISOString();
-            
-            saveCampaign(campaignId, data);
-            
-            // Update UI
-            document.getElementById('lastUpdated').textContent = `Last updated: ${formatTimestamp(data.lastUpdated)}`;
-            updateProgress(data.tasks);
-            
-            // Update status badge if status changed
-            if (field === 'status') {
-                const card = e.target.closest('.task-card');
-                const badge = card.querySelector('.status-badge');
-                const indicator = card.querySelector('.status-indicator');
-                
-                badge.className = `status-badge status-${statusToClass(value)}`;
-                indicator.className = `status-indicator indicator-${statusToClass(value)}`;
-                badge.innerHTML = `
-                    <span class="status-indicator indicator-${statusToClass(value)}"></span>
-                    ${value}
-                `;
-                
-                // If task 1 changed, re-render to lock/unlock tasks
-                if (taskId === 1) {
-                    renderTasks(data.tasks, campaignId);
-                }
-                
-                // Check if campaign is fully launched (task 9 set to Yes)
-                if (taskId === 9 && value === 'Yes' && oldValue !== 'Yes') {
-                    checkForLaunch(data.tasks);
-                }
-            }
-        }
-        
-        // Check if campaign should trigger launch celebration
-        function checkForLaunch(tasks) {
-            const finalTask = tasks.find(t => t.id === 9);
-            if (finalTask && finalTask.status === 'Yes') {
-                triggerLaunchCelebration();
-            }
-        }
-        
-        // Trigger confetti and modal
-        function triggerLaunchCelebration() {
-            // Show modal
-            const modal = document.getElementById('launchModal');
-            const backdrop = document.getElementById('modalBackdrop');
-            
-            backdrop.classList.add('show');
-            modal.classList.add('show');
-            
-            // Trigger confetti
-            launchConfetti();
-            
-            // Auto-hide after 4 seconds
-            setTimeout(() => {
-                modal.classList.remove('show');
-                backdrop.classList.remove('show');
-            }, 4000);
-        }
-        
-        // Confetti animation
-        function launchConfetti() {
-            const canvas = document.getElementById('confettiCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const confettiPieces = [];
-            const colors = ['#0066ff', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#000000'];
-            
-            // Create confetti pieces
-            for (let i = 0; i < 150; i++) {
-                confettiPieces.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 8 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    speedY: Math.random() * 3 + 2,
-                    speedX: Math.random() * 2 - 1,
-                    rotation: Math.random() * 360,
-                    rotationSpeed: Math.random() * 10 - 5
-                });
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                let stillFalling = false;
-                
-                confettiPieces.forEach(piece => {
-                    piece.y += piece.speedY;
-                    piece.x += piece.speedX;
-                    piece.rotation += piece.rotationSpeed;
-                    
-                    if (piece.y < canvas.height) {
-                        stillFalling = true;
-                    }
-                    
-                    ctx.save();
-                    ctx.translate(piece.x, piece.y);
-                    ctx.rotate((piece.rotation * Math.PI) / 180);
-                    ctx.fillStyle = piece.color;
-                    ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
-                    ctx.restore();
-                });
-                
-                if (stillFalling) {
-                    requestAnimationFrame(animate);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            }
-            
-            animate();
-        }
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-col footer-brand">
+      <img src="images/vermac-logo-white.png" alt="Vermac Construction Inc" style="height:58px;width:auto;margin-bottom:4px">
+      <p>Family-owned siding &amp; construction serving Saratoga County, NY for over 20 years. Expert siding that protects your home for decades.</p>
+      <!-- CONFIRM live social URLs (info.md §2) -->
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.8l-5-6.6L5.4 22H2.3l7.8-8.9L2 2h7l4.5 6zm-2.4 18h1.7L7.6 3.8H5.8z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2 3.77-2C20.4 8.7 22 11 22 14.3V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Siding Installation</a></li>
+        <li><a href="#services">Siding Replacement</a></li>
+        <li><a href="#services">Remodels &amp; Additions</a></li>
+        <li><a href="#services">In-House Jobs</a></li>
+        <li><a href="#gallery">Our Work</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Service Areas</h4>
+      <ul>
+        <li><a href="#contact">Malta, NY</a></li>
+        <li><a href="#contact">Ballston Spa, NY</a></li>
+        <li><a href="#contact">Saratoga Springs, NY</a></li>
+        <li><a href="#contact">Clifton Park, NY</a></li>
+        <li><a href="#contact">All of Saratoga County</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+15186368008">518-636-8008</a></li>
+        <li><a href="mailto:vermacconstruction1@gmail.com" style="font-weight:500;font-family:var(--font-body);color:#e6cccf">vermacconstruction1@gmail.com</a></li>
+        <!-- CONFIRM hours + whether to publish a street address (info.md §2) -->
+        <li style="color:#e6cccf">Hours: [CONFIRM]</li>
+      </ul>
+      <a class="btn btn-primary" href="#contact" style="margin-top:18px">Get a Free Quote</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span id="year">2025</span> Vermac Construction Inc. All rights reserved.</span>
+    <!-- CONFIRM license # (info.md §2) -->
+    <span>NY Lic. # [CONFIRM] · <a href="#">Privacy Policy</a></span>
+  </div>
+</footer>
 
-        // Update progress
-        function updateProgress(tasks) {
-            // Count tasks with status 'Complete' or 'Yes'
-            const completed = tasks.filter(t => t.status === 'Complete' || t.status === 'Yes').length;
-            const total = tasks.length;
-            const percentage = (completed / total) * 100;
-            
-            document.getElementById('progressBar').style.width = `${percentage}%`;
-            document.getElementById('progressText').textContent = `${completed} of ${total} tasks complete`;
-        }
+<!-- ============================ LIGHTBOX ============================ -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project photo viewer">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close photo viewer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <figure class="lb-stage"><img id="lbImg" src="" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
 
-        // Utility functions
-        function statusToClass(status) {
-            return status.toLowerCase().replace(/\s+/g, '-');
-        }
+<!-- ============================ MOBILE STICKY BAR ============================ -->
+<nav class="mobile-bar" aria-label="Quick actions">
+  <a class="m-call" href="tel:+15186368008">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Call Now
+  </a>
+  <a class="m-quote" href="#contact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Free Quote
+  </a>
+</nav>
 
-        function formatTimestamp(iso) {
-            const date = new Date(iso);
-            const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / 60000);
-            
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins}m ago`;
-            if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
-            
-            return date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit'
-            });
-        }
+<!-- ============================ JSON-LD SCHEMA ============================ -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"HomeAndConstructionBusiness",
+  "name":"Vermac Construction Inc",
+  "description":"Family-owned siding installation, replacement, remodels and construction serving Saratoga County, NY for 20+ years.",
+  "telephone":"+1-518-636-8008",
+  "email":"vermacconstruction1@gmail.com",
+  "url":"https://vermacconstruction.com/",
+  "areaServed":[
+    {"@type":"AdministrativeArea","name":"Saratoga County, NY"},
+    {"@type":"City","name":"Malta, NY"},
+    {"@type":"City","name":"Ballston Spa, NY"}
+  ],
+  "address":{"@type":"PostalAddress","addressRegion":"NY","addressCountry":"US"},
+  "founder":{"@type":"Person","name":"Dan Vergine"},
+  "knowsAbout":["Siding installation","Siding replacement","Home remodels","Additions"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"How long does new siding last?","acceptedAnswer":{"@type":"Answer","text":"Quality siding can last 25–50 years when properly installed and maintained."}},
+    {"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"All of Saratoga County, NY, including Malta and Ballston Spa and surrounding towns."}},
+    {"@type":"Question","name":"How do I get a quote?","acceptedAnswer":{"@type":"Answer","text":"Call 518-636-8008 or fill out the quote form to book a free 30-minute consultation."}},
+    {"@type":"Question","name":"Do you do more than siding?","acceptedAnswer":{"@type":"Answer","text":"Yes — siding is our core trade, and we also take on remodels, additions, and general in-house construction jobs."}}
+  ]
+}
+</script>
 
-        function debounce(func, wait) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
+<!-- ============================ JAVASCRIPT ============================ -->
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        function showSaveIndicator() {
-            const indicator = document.getElementById('saveIndicator');
-            indicator.classList.add('show');
-            setTimeout(() => indicator.classList.remove('show'), 2000);
-        }
+  /* Header shrink on scroll */
+  var header = document.getElementById("siteHeader");
+  function onScroll(){ header.classList.toggle("scrolled", window.scrollY > 80); }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
 
-        // Handle copy link
-        function handleCopyLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                
-                setTimeout(() => {
-                    btn.textContent = 'Copy Link';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
+  /* Mobile menu */
+  var menu = document.getElementById("mobileMenu");
+  var openBtn = document.getElementById("menuOpen");
+  var closeBtn = document.getElementById("menuClose");
+  function setMenu(open){
+    menu.classList.toggle("open", open);
+    menu.setAttribute("aria-hidden", open ? "false" : "true");
+    openBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.style.overflow = open ? "hidden" : "";
+    if(open){ menu.querySelector("a[href^='#']").focus(); }
+  }
+  openBtn.addEventListener("click", function(){ setMenu(true); });
+  closeBtn.addEventListener("click", function(){ setMenu(false); openBtn.focus(); });
+  menu.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", function(){ setMenu(false); }); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && menu.classList.contains("open")){ setMenu(false); openBtn.focus(); } });
 
-        // Initialize on load
-        window.addEventListener('hashchange', initializeInterface);
-        window.addEventListener('load', initializeInterface);
-    </script>
+  /* FAQ accordion (one open at a time) */
+  var qs = document.querySelectorAll(".faq-q");
+  qs.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var expanded = btn.getAttribute("aria-expanded") === "true";
+      qs.forEach(function(other){
+        other.setAttribute("aria-expanded","false");
+        other.nextElementSibling.style.maxHeight = null;
+      });
+      if(!expanded){
+        btn.setAttribute("aria-expanded","true");
+        var panel = btn.nextElementSibling;
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  });
+
+  /* Before/After slider (pointer + keyboard via range input) */
+  var slider = document.getElementById("baSlider");
+  if(slider){
+    var clip = document.getElementById("baClip");
+    var handle = document.getElementById("baHandle");
+    var range = document.getElementById("baRange");
+    var beforeImg = clip.querySelector(".ba-before");
+    function setPos(pct){
+      pct = Math.max(0, Math.min(100, pct));
+      clip.style.width = pct + "%";
+      handle.style.left = pct + "%";
+      var w = slider.getBoundingClientRect().width;
+      beforeImg.style.width = w + "px";
+      if(range.value != pct) range.value = pct;
+    }
+    range.addEventListener("input", function(){ setPos(parseFloat(range.value)); });
+    window.addEventListener("resize", function(){ setPos(parseFloat(range.value)); });
+    setPos(50);
+  }
+
+  /* Scroll reveal — enable hidden-state ONLY now that JS is confirmed running,
+     so content is never stuck invisible if scripts are disabled/blocked. */
+  document.documentElement.classList.add("js");
+  var reveals = document.querySelectorAll(".reveal");
+  if(reduceMotion || !("IntersectionObserver" in window)){
+    reveals.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add("in"); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.12, rootMargin:"0px 0px -40px 0px"});
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  /* Gallery lightbox */
+  var grid = document.getElementById("galleryGrid");
+  if(grid){
+    var figs = Array.prototype.slice.call(grid.querySelectorAll("figure"));
+    var lb = document.getElementById("lightbox");
+    var lbImg = document.getElementById("lbImg");
+    var lbCap = document.getElementById("lbCap");
+    var idx = 0, lastFocus = null;
+    function lbOpen(i){
+      idx = (i + figs.length) % figs.length;
+      var fig = figs[idx], im = fig.querySelector("img");
+      lbImg.src = im.src; lbImg.alt = im.alt;
+      lbCap.textContent = fig.querySelector("figcaption").textContent;
+      lb.classList.add("open"); lb.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      lastFocus = document.activeElement;
+      document.getElementById("lbClose").focus();
+    }
+    function lbClose(){
+      lb.classList.remove("open"); lb.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+      if(lastFocus){ lastFocus.focus(); }
+    }
+    figs.forEach(function(fig,i){
+      fig.addEventListener("click", function(){ lbOpen(i); });
+      fig.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); lbOpen(i); } });
+    });
+    document.getElementById("lbClose").addEventListener("click", lbClose);
+    document.getElementById("lbPrev").addEventListener("click", function(e){ e.stopPropagation(); lbOpen(idx-1); });
+    document.getElementById("lbNext").addEventListener("click", function(e){ e.stopPropagation(); lbOpen(idx+1); });
+    lb.addEventListener("click", function(e){ if(e.target === lb){ lbClose(); } });
+    document.addEventListener("keydown", function(e){
+      if(!lb.classList.contains("open")) return;
+      if(e.key === "Escape") lbClose();
+      else if(e.key === "ArrowLeft") lbOpen(idx-1);
+      else if(e.key === "ArrowRight") lbOpen(idx+1);
+    });
+  }
+
+  /* Footer year */
+  var y = document.getElementById("year");
+  if(y){ y.textContent = new Date().getFullYear(); }
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Setup Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vc-black: #000000;
+            --vc-white: #ffffff;
+            --vc-gray-50: #fafafa;
+            --vc-gray-100: #f5f5f5;
+            --vc-gray-200: #e5e5e5;
+            --vc-gray-300: #d4d4d4;
+            --vc-gray-400: #a3a3a3;
+            --vc-gray-500: #737373;
+            --vc-gray-600: #525252;
+            --vc-gray-700: #404040;
+            --vc-gray-800: #262626;
+            --vc-gray-900: #171717;
+            --vc-accent: #0066ff;
+            --vc-accent-hover: #0052cc;
+            --vc-success: #10b981;
+            --vc-warning: #f59e0b;
+            --vc-error: #ef4444;
+            --vc-purple: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: var(--vc-gray-50);
+            color: var(--vc-black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Branding Header */
+        .brand-header {
+            background: linear-gradient(135deg, var(--vc-black) 0%, var(--vc-gray-900) 100%);
+            border-radius: 16px;
+            padding: 32px 40px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--vc-white);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-tagline {
+            color: var(--vc-gray-400);
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            background: var(--vc-white);
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 16px;
+            padding: 32px 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 24px;
+            gap: 20px;
+        }
+
+        .header-info h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--vc-black);
+            letter-spacing: -0.5px;
+        }
+
+        .client-name {
+            font-size: 16px;
+            color: var(--vc-gray-600);
+            font-weight: 600;
+        }
+
+        .header-meta {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .launch-date {
+            font-size: 14px;
+            color: var(--vc-gray-600);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .launch-date strong {
+            color: var(--vc-black);
+            font-weight: 700;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: var(--vc-gray-500);
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            background: var(--vc-gray-100);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .progress-section {
+            background: var(--vc-gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            background: var(--vc-gray-200);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--vc-accent), #0052cc);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--vc-gray-700);
+            font-weight: 600;
+        }
+
+        /* Campaign ID & Link */
+        .campaign-id {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--vc-gray-50);
+            border-radius: 10px;
+            margin-top: 16px;
+            border: 1px solid var(--vc-gray-200);
+        }
+
+        .campaign-id-label {
+            font-size: 11px;
+            color: var(--vc-gray-500);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .campaign-id-value {
+            font-size: 13px;
+            font-family: 'SF Mono', monospace;
+            color: var(--vc-gray-700);
+            flex: 1;
+            user-select: all;
+        }
+
+        .copy-btn {
+            padding: 8px 16px;
+            background: var(--vc-black);
+            color: var(--vc-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--vc-gray-800);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background: var(--vc-success);
+        }
+
+        /* Tasks */
+        .tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .task-card {
+            background: var(--vc-white);
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .task-card:hover {
+            border-color: var(--vc-gray-300);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .task-card.locked {
+            opacity: 0.5;
+            background: var(--vc-gray-50);
+        }
+        
+        .task-card.locked select,
+        .task-card.locked textarea {
+            cursor: not-allowed;
+            background: var(--vc-gray-100);
+        }
+
+        .task-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 20px;
+            opacity: 0.3;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .task-number {
+            font-family: 'SF Mono', monospace;
+            font-size: 14px;
+            color: var(--vc-white);
+            font-weight: 700;
+            min-width: 40px;
+            height: 40px;
+            background: var(--vc-black);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--vc-black);
+            flex: 1;
+            letter-spacing: -0.3px;
+        }
+
+        .task-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--vc-gray-500);
+            font-weight: 700;
+        }
+
+        select {
+            padding: 12px 16px;
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 10px;
+            background: var(--vc-white);
+            color: var(--vc-black);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover {
+            border-color: var(--vc-gray-400);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--vc-accent);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+        
+        select:disabled,
+        textarea:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: var(--vc-gray-100);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-not-started { background: #f3f4f6; color: #6b7280; }
+        .status-in-progress { background: #fef3c7; color: #92400e; }
+        .status-waiting-access { background: #fed7aa; color: #9a3412; }
+        .status-waiting-approval { background: #f3e8ff; color: #6b21a8; }
+        .status-complete { background: #d1fae5; color: #065f46; }
+        .status-blocked { background: #fee2e2; color: #991b1b; }
+        .status-no { background: #fee2e2; color: #991b1b; }
+        .status-yes { background: #d1fae5; color: #065f46; }
+
+        .indicator-not-started { background: #9ca3af; }
+        .indicator-in-progress { background: #f59e0b; }
+        .indicator-waiting-access { background: #f97316; }
+        .indicator-waiting-approval { background: #8b5cf6; }
+        .indicator-complete { background: #10b981; }
+        .indicator-blocked { background: #ef4444; }
+        .indicator-no { background: #ef4444; }
+        .indicator-yes { background: #10b981; }
+
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 10px;
+            background: var(--vc-white);
+            color: var(--vc-black);
+            font-size: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.2s;
+        }
+
+        textarea:hover {
+            border-color: var(--vc-gray-400);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--vc-accent);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        textarea::placeholder {
+            color: var(--vc-gray-400);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            padding: 16px 24px;
+            background: var(--vc-black);
+            color: var(--vc-white);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Confetti overlay */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .launch-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--vc-white);
+            padding: 48px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .launch-modal.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .launch-modal h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--vc-black);
+        }
+
+        .launch-modal p {
+            font-size: 16px;
+            color: var(--vc-gray-600);
+            margin-bottom: 24px;
+        }
+
+        .launch-emoji {
+            font-size: 64px;
+            margin-bottom: 24px;
+            display: block;
+            animation: bounce 0.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            display: none;
+        }
+
+        .modal-backdrop.show {
+            opacity: 1;
+            pointer-events: all;
+            display: block;
+        }
+
+        /* Create New Campaign */
+        .create-section {
+            background: var(--vc-white);
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .create-section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--vc-gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            padding: 12px 16px;
+            border: 2px solid var(--vc-gray-200);
+            border-radius: 10px;
+            background: var(--vc-white);
+            color: var(--vc-black);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        input:hover {
+            border-color: var(--vc-gray-400);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--vc-accent);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--vc-black);
+            color: var(--vc-white);
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            background: var(--vc-gray-800);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-clear {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--vc-error);
+            border: 2px solid var(--vc-error);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 16px;
+            width: 100%;
+        }
+        
+        .btn-clear:hover {
+            background: var(--vc-error);
+            color: var(--vc-white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .campaign-list {
+            margin-top: 32px;
+        }
+
+        .campaign-list h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--vc-gray-700);
+        }
+
+        .campaign-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: var(--vc-gray-50);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            border: 2px solid var(--vc-gray-200);
+        }
+
+        .campaign-item:hover {
+            background: var(--vc-white);
+            border-color: var(--vc-gray-300);
+            transform: translateX(4px);
+        }
+
+        .campaign-item-info {
+            flex: 1;
+        }
+
+        .campaign-item-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--vc-black);
+        }
+
+        .campaign-item-client {
+            font-size: 13px;
+            color: var(--vc-gray-600);
+            font-weight: 500;
+        }
+
+        .campaign-item-link {
+            padding: 10px 20px;
+            background: var(--vc-black);
+            color: var(--vc-white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .campaign-item-link:hover {
+            background: var(--vc-gray-800);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+            }
+
+            .header-meta {
+                text-align: left;
+            }
+
+            .task-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confettiCanvas"></canvas>
+    
+    <div class="container">
+        <!-- Campaign Creation Interface (shown only on index) -->
+        <div id="createInterface" style="display: none;">
+            <div class="brand-header">
+                <div class="brand-logo">
+                    <div class="brand-logo-text">VC SOLUTIONS</div>
+                </div>
+                <div class="brand-tagline">Campaign Operations Tracker</div>
+            </div>
+            
+            <div class="create-section">
+                <h2>Create New Campaign Tracker</h2>
+                <form id="createForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="campaignName">Campaign Name</label>
+                            <input type="text" id="campaignName" required placeholder="Q1 2025 Google Ads">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientName">Client Name</label>
+                            <input type="text" id="clientName" required placeholder="Acme Corporation">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="launchDate">Target Launch Date</label>
+                            <input type="date" id="launchDate" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Campaign Tracker</button>
+                </form>
+            </div>
+
+            <div class="campaign-list" id="campaignList">
+                <h3>Active Campaigns</h3>
+                <div id="campaignListItems"></div>
+                <button id="clearCampaignsBtn" class="btn-clear" style="display: none;">Clear All Campaigns</button>
+            </div>
+        </div>
+
+        <!-- Campaign Tracker Interface -->
+        <div id="trackerInterface" style="display: none;">
+            <div class="brand-header">
+                <div class="brand-logo">
+                    <div class="brand-logo-text">VC SOLUTIONS</div>
+                </div>
+                <div class="brand-tagline">Campaign Operations Tracker</div>
+            </div>
+            
+            <div class="header">
+                <div class="header-top">
+                    <div class="header-info">
+                        <h1 id="campaignNameDisplay">Campaign Name</h1>
+                        <div class="client-name" id="clientNameDisplay">Client Name</div>
+                    </div>
+                    <div class="header-meta">
+                        <div class="launch-date">
+                            Target Launch: <strong id="launchDateDisplay">TBD</strong>
+                        </div>
+                        <div class="last-updated" id="lastUpdated">Last updated: Never</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0 of 0 tasks complete</div>
+                </div>
+
+                <div class="campaign-id">
+                    <span class="campaign-id-label">SHARE:</span>
+                    <span class="campaign-id-value" id="campaignUrl">Loading...</span>
+                    <button class="copy-btn" id="copyBtn">Copy Link</button>
+                </div>
+            </div>
+
+            <div class="tasks" id="tasksList"></div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="launch-modal" id="launchModal">
+        <span class="launch-emoji">🎉</span>
+        <h2>Campaign Launched!</h2>
+        <p>All systems go. Your campaign is now live and ready to drive results.</p>
+    </div>
+
+    <div class="save-indicator" id="saveIndicator">Saved</div>
+
+    <script>
+        // Template for standard campaign tasks
+        const TASK_TEMPLATE = [
+            { 
+                id: 1, 
+                title: 'Campaign Order Form Received', 
+                defaultOwner: 'NGM',
+                statusType: 'yesno',
+                isGatekeeper: true // This unlocks all other tasks
+            },
+            { 
+                id: 2, 
+                title: 'Geofence & Campaign Build Out', 
+                defaultOwner: 'NGM',
+                statusType: 'standard'
+            },
+            { 
+                id: 3, 
+                title: 'Tracking & Pixel Placement', 
+                defaultOwner: 'VC Solutions',
+                statusType: 'standard'
+            },
+            { 
+                id: 4, 
+                title: 'Creative Assets', 
+                defaultOwner: 'VC Solutions',
+                statusType: 'standard'
+            },
+            { 
+                id: 5, 
+                title: 'Audience & Targeting Configuration', 
+                defaultOwner: 'NGM',
+                statusType: 'standard'
+            },
+            { 
+                id: 6, 
+                title: 'Campaign Structure & Ad Groups Created', 
+                defaultOwner: 'NGM',
+                statusType: 'standard'
+            },
+            { 
+                id: 7, 
+                title: 'Budget Allocation & Bid Strategy Set', 
+                defaultOwner: 'NGM',
+                statusType: 'standard'
+            },
+            { 
+                id: 8, 
+                title: 'Client Approval & Ready to Launch', 
+                defaultOwner: 'VC Solutions',
+                statusType: 'standard'
+            },
+            { 
+                id: 9, 
+                title: 'Campaign Launched & Tap Clicks Dashboard Access Granted', 
+                defaultOwner: 'NGM',
+                statusType: 'yesno',
+                isFinalStep: true // Triggers confetti
+            }
+        ];
+
+        const STATUS_OPTIONS_STANDARD = [
+            'Not Started',
+            'In Progress',
+            'Waiting on Access',
+            'Waiting on Approval',
+            'Complete',
+            'Blocked'
+        ];
+
+        const STATUS_OPTIONS_YESNO = ['No', 'Yes'];
+
+        const OWNER_OPTIONS = ['NGM', 'VC Solutions', 'Client'];
+
+        // Get campaign ID from URL
+        function getCampaignId() {
+            const hash = window.location.hash;
+            return hash ? hash.substring(1) : null;
+        }
+
+        // Show appropriate interface
+        function initializeInterface() {
+            const campaignId = getCampaignId();
+            
+            if (campaignId) {
+                document.getElementById('createInterface').style.display = 'none';
+                document.getElementById('trackerInterface').style.display = 'block';
+                loadCampaign(campaignId);
+            } else {
+                document.getElementById('createInterface').style.display = 'block';
+                document.getElementById('trackerInterface').style.display = 'none';
+                loadCampaignList();
+                
+                // Attach create form listener
+                const createForm = document.getElementById('createForm');
+                if (createForm && !createForm.dataset.listenerAttached) {
+                    createForm.addEventListener('submit', handleCreateCampaign);
+                    createForm.dataset.listenerAttached = 'true';
+                }
+                
+                // Attach clear button listener
+                const clearBtn = document.getElementById('clearCampaignsBtn');
+                if (clearBtn && !clearBtn.dataset.listenerAttached) {
+                    clearBtn.addEventListener('click', clearAllCampaigns);
+                    clearBtn.dataset.listenerAttached = 'true';
+                }
+                
+                // Attach copy button listener
+                const copyBtn = document.getElementById('copyBtn');
+                if (copyBtn && !copyBtn.dataset.listenerAttached) {
+                    copyBtn.addEventListener('click', handleCopyLink);
+                    copyBtn.dataset.listenerAttached = 'true';
+                }
+            }
+        }
+        
+        // Handle campaign creation
+        function handleCreateCampaign(e) {
+            e.preventDefault();
+            
+            const campaignName = document.getElementById('campaignName').value;
+            const clientName = document.getElementById('clientName').value;
+            const launchDate = document.getElementById('launchDate').value;
+            
+            const campaignId = generateCampaignId();
+            
+            const campaignData = {
+                id: campaignId,
+                name: campaignName,
+                client: clientName,
+                launchDate: launchDate,
+                createdAt: new Date().toISOString(),
+                lastUpdated: new Date().toISOString(),
+                tasks: TASK_TEMPLATE.map(task => ({
+                    ...task,
+                    status: task.statusType === 'yesno' ? 'No' : 'Not Started',
+                    owner: task.defaultOwner,
+                    notes: ''
+                }))
+            };
+            
+            saveCampaign(campaignId, campaignData);
+            
+            // Redirect to campaign tracker
+            window.location.hash = campaignId;
+            initializeInterface();
+        }
+
+        // Generate unique campaign ID
+        function generateCampaignId() {
+            return 'camp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Storage operations using localStorage
+        function saveCampaign(id, data) {
+            try {
+                localStorage.setItem(id, JSON.stringify(data));
+                
+                // Also maintain campaign list
+                const listJson = localStorage.getItem('campaign_list');
+                const list = listJson ? JSON.parse(listJson) : [];
+                
+                if (!list.some(c => c.id === id)) {
+                    list.push({
+                        id: id,
+                        name: data.name,
+                        client: data.client,
+                        launchDate: data.launchDate
+                    });
+                    localStorage.setItem('campaign_list', JSON.stringify(list));
+                } else {
+                    // Update existing entry
+                    const index = list.findIndex(c => c.id === id);
+                    list[index] = {
+                        id: id,
+                        name: data.name,
+                        client: data.client,
+                        launchDate: data.launchDate
+                    };
+                    localStorage.setItem('campaign_list', JSON.stringify(list));
+                }
+                
+                showSaveIndicator();
+            } catch (error) {
+                console.error('Save failed:', error);
+                alert('Save failed. Please try again.');
+            }
+        }
+
+        function loadCampaign(id) {
+            try {
+                const dataJson = localStorage.getItem(id);
+                if (!dataJson) {
+                    alert('Campaign not found');
+                    window.location.hash = '';
+                    initializeInterface();
+                    return;
+                }
+                const data = JSON.parse(dataJson);
+                renderCampaign(data);
+            } catch (error) {
+                console.error('Load failed:', error);
+                alert('Campaign not found');
+                window.location.hash = '';
+                initializeInterface();
+            }
+        }
+
+        function loadCampaignList() {
+            try {
+                const listJson = localStorage.getItem('campaign_list');
+                const campaigns = listJson ? JSON.parse(listJson) : [];
+                
+                const container = document.getElementById('campaignListItems');
+                const clearBtn = document.getElementById('clearCampaignsBtn');
+                
+                if (campaigns.length === 0) {
+                    container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No campaigns yet. Create your first one above!</div>';
+                    if (clearBtn) clearBtn.style.display = 'none';
+                    return;
+                }
+                
+                if (clearBtn) clearBtn.style.display = 'block';
+                
+                container.innerHTML = campaigns.map(c => `
+                    <div class="campaign-item">
+                        <div class="campaign-item-info">
+                            <div class="campaign-item-name">${c.name}</div>
+                            <div class="campaign-item-client">${c.client}</div>
+                        </div>
+                        <a href="#${c.id}" class="campaign-item-link">Open Tracker</a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Load list failed:', error);
+            }
+        }
+        
+        // Clear all campaigns
+        function clearAllCampaigns() {
+            if (confirm('⚠️ Are you sure you want to delete ALL campaigns?\n\nThis will permanently delete all campaign data and cannot be undone.')) {
+                // Get campaign list
+                const listJson = localStorage.getItem('campaign_list');
+                const campaigns = listJson ? JSON.parse(listJson) : [];
+                
+                // Delete each campaign
+                campaigns.forEach(campaign => {
+                    localStorage.removeItem(campaign.id);
+                });
+                
+                // Clear the campaign list
+                localStorage.removeItem('campaign_list');
+                
+                // Reload the list
+                loadCampaignList();
+                
+                alert('✓ All campaigns cleared successfully!');
+            }
+        }
+
+        // Render campaign tracker
+        function renderCampaign(data) {
+            document.getElementById('campaignNameDisplay').textContent = data.name;
+            document.getElementById('clientNameDisplay').textContent = data.client;
+            document.getElementById('launchDateDisplay').textContent = new Date(data.launchDate).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            document.getElementById('lastUpdated').textContent = `Last updated: ${formatTimestamp(data.lastUpdated)}`;
+            
+            const url = window.location.href;
+            document.getElementById('campaignUrl').textContent = url;
+            
+            // Attach copy button listener
+            const copyBtn = document.getElementById('copyBtn');
+            if (copyBtn && !copyBtn.dataset.listenerAttached) {
+                copyBtn.addEventListener('click', handleCopyLink);
+                copyBtn.dataset.listenerAttached = 'true';
+            }
+            
+            updateProgress(data.tasks);
+            renderTasks(data.tasks, data.id);
+        }
+
+        // Render tasks
+        function renderTasks(tasks, campaignId) {
+            const container = document.getElementById('tasksList');
+            
+            // Check if gatekeeper (task 1) is unlocked
+            const gatekeeperTask = tasks.find(t => t.id === 1);
+            const isUnlocked = gatekeeperTask && gatekeeperTask.status === 'Yes';
+            
+            container.innerHTML = tasks.map((task, index) => {
+                const isLocked = task.id !== 1 && !isUnlocked;
+                const statusOptions = task.statusType === 'yesno' ? STATUS_OPTIONS_YESNO : STATUS_OPTIONS_STANDARD;
+                
+                return `
+                <div class="task-card ${isLocked ? 'locked' : ''}">
+                    <div class="task-header">
+                        <span class="task-number">${String(task.id).padStart(2, '0')}</span>
+                        <span class="task-title">${task.title}</span>
+                        <span class="status-badge status-${statusToClass(task.status)}">
+                            <span class="status-indicator indicator-${statusToClass(task.status)}"></span>
+                            ${task.status}
+                        </span>
+                    </div>
+                    
+                    <div class="task-controls">
+                        <div class="control-group">
+                            <label class="control-label">Status</label>
+                            <select data-task-id="${task.id}" data-field="status" ${isLocked ? 'disabled' : ''}>
+                                ${statusOptions.map(s => `<option value="${s}" ${s === task.status ? 'selected' : ''}>${s}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Owner</label>
+                            <select data-task-id="${task.id}" data-field="owner" disabled>
+                                ${OWNER_OPTIONS.map(o => `<option value="${o}" ${o === task.owner ? 'selected' : ''}>${o}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Notes</label>
+                        <textarea 
+                            data-task-id="${task.id}" 
+                            data-field="notes" 
+                            placeholder="Add status notes, blockers, or updates..."
+                            ${isLocked ? 'disabled' : ''}
+                        >${task.notes}</textarea>
+                    </div>
+                </div>
+            `}).join('');
+            
+            // Attach event listeners
+            container.querySelectorAll('select[data-field="status"]:not([disabled]), textarea:not([disabled])').forEach(element => {
+                element.addEventListener('change', handleTaskUpdate);
+                if (element.tagName === 'TEXTAREA') {
+                    element.addEventListener('input', debounce(handleTaskUpdate, 500));
+                }
+            });
+        }
+
+        // Handle task updates
+        function handleTaskUpdate(e) {
+            const taskId = parseInt(e.target.dataset.taskId);
+            const field = e.target.dataset.field;
+            const value = e.target.value;
+            
+            const campaignId = getCampaignId();
+            const dataJson = localStorage.getItem(campaignId);
+            const data = JSON.parse(dataJson);
+            
+            const taskIndex = data.tasks.findIndex(t => t.id === taskId);
+            const oldValue = data.tasks[taskIndex][field];
+            data.tasks[taskIndex][field] = value;
+            data.lastUpdated = new Date().toISOString();
+            
+            saveCampaign(campaignId, data);
+            
+            // Update UI
+            document.getElementById('lastUpdated').textContent = `Last updated: ${formatTimestamp(data.lastUpdated)}`;
+            updateProgress(data.tasks);
+            
+            // Update status badge if status changed
+            if (field === 'status') {
+                const card = e.target.closest('.task-card');
+                const badge = card.querySelector('.status-badge');
+                const indicator = card.querySelector('.status-indicator');
+                
+                badge.className = `status-badge status-${statusToClass(value)}`;
+                indicator.className = `status-indicator indicator-${statusToClass(value)}`;
+                badge.innerHTML = `
+                    <span class="status-indicator indicator-${statusToClass(value)}"></span>
+                    ${value}
+                `;
+                
+                // If task 1 changed, re-render to lock/unlock tasks
+                if (taskId === 1) {
+                    renderTasks(data.tasks, campaignId);
+                }
+                
+                // Check if campaign is fully launched (task 9 set to Yes)
+                if (taskId === 9 && value === 'Yes' && oldValue !== 'Yes') {
+                    checkForLaunch(data.tasks);
+                }
+            }
+        }
+        
+        // Check if campaign should trigger launch celebration
+        function checkForLaunch(tasks) {
+            const finalTask = tasks.find(t => t.id === 9);
+            if (finalTask && finalTask.status === 'Yes') {
+                triggerLaunchCelebration();
+            }
+        }
+        
+        // Trigger confetti and modal
+        function triggerLaunchCelebration() {
+            // Show modal
+            const modal = document.getElementById('launchModal');
+            const backdrop = document.getElementById('modalBackdrop');
+            
+            backdrop.classList.add('show');
+            modal.classList.add('show');
+            
+            // Trigger confetti
+            launchConfetti();
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                modal.classList.remove('show');
+                backdrop.classList.remove('show');
+            }, 4000);
+        }
+        
+        // Confetti animation
+        function launchConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const confettiPieces = [];
+            const colors = ['#0066ff', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#000000'];
+            
+            // Create confetti pieces
+            for (let i = 0; i < 150; i++) {
+                confettiPieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 10 - 5
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let stillFalling = false;
+                
+                confettiPieces.forEach(piece => {
+                    piece.y += piece.speedY;
+                    piece.x += piece.speedX;
+                    piece.rotation += piece.rotationSpeed;
+                    
+                    if (piece.y < canvas.height) {
+                        stillFalling = true;
+                    }
+                    
+                    ctx.save();
+                    ctx.translate(piece.x, piece.y);
+                    ctx.rotate((piece.rotation * Math.PI) / 180);
+                    ctx.fillStyle = piece.color;
+                    ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
+                    ctx.restore();
+                });
+                
+                if (stillFalling) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            animate();
+        }
+
+        // Update progress
+        function updateProgress(tasks) {
+            // Count tasks with status 'Complete' or 'Yes'
+            const completed = tasks.filter(t => t.status === 'Complete' || t.status === 'Yes').length;
+            const total = tasks.length;
+            const percentage = (completed / total) * 100;
+            
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${completed} of ${total} tasks complete`;
+        }
+
+        // Utility functions
+        function statusToClass(status) {
+            return status.toLowerCase().replace(/\s+/g, '-');
+        }
+
+        function formatTimestamp(iso) {
+            const date = new Date(iso);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+            
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => indicator.classList.remove('show'), 2000);
+        }
+
+        // Handle copy link
+        function handleCopyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.textContent = 'Copy Link';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('hashchange', initializeInterface);
+        window.addEventListener('load', initializeInterface);
+    </script>
+</body>
+</html>
