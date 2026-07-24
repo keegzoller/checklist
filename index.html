@@ -128,14 +128,13 @@ h2{font-size:38px;font-weight:700}
 .site-header.scrolled{background:var(--white);box-shadow:var(--shadow-header);padding-block:10px}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
 
-/* Serif wordmark logo (echoes the Vermac logo typography) */
-.brand{display:inline-flex;flex-direction:column;line-height:1;text-decoration:none}
-.brand .wm{font-family:var(--font-logo);font-weight:700;font-size:26px;letter-spacing:.5px;color:#fff;transition:color .3s ease}
-.brand .wm .mm{color:#fff;transition:color .3s ease}
-.brand .wm-sub{font-family:var(--font-body);font-size:10px;letter-spacing:.24em;font-weight:600;color:rgba(255,255,255,.72);margin-top:4px;transition:color .3s ease}
-.scrolled .brand .wm{color:var(--ink)}
-.scrolled .brand .wm .mm{color:var(--brand-maroon)}
-.scrolled .brand .wm-sub{color:var(--gray-400)}
+/* Official Vermac logo — white knockout over the hero, full-color on the white sticky header */
+.brand{display:inline-flex;align-items:center;line-height:0;text-decoration:none}
+.brand img{height:52px;width:auto;display:block;transition:height .3s ease}
+.scrolled .brand img{height:44px}
+.brand .logo-dark{display:none}
+.scrolled .brand .logo-dark{display:block}
+.scrolled .brand .logo-light{display:none}
 
 .nav{display:flex;align-items:center;gap:28px}
 .nav a.navlink{font-weight:500;font-size:16px;color:#fff;position:relative;padding:4px 0}
@@ -417,8 +416,8 @@ h2{font-size:38px;font-weight:700}
 <header class="site-header" id="siteHeader">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="Vermac Construction Inc — home">
-      <span class="wm">VER<span class="mm">M</span>AC</span>
-      <span class="wm-sub">CONSTRUCTION INC</span>
+      <img class="logo-light" src="images/vermac-logo-white.png" alt="Vermac Construction Inc" width="97" height="52">
+      <img class="logo-dark" src="images/vermac-logo.png" alt="Vermac Construction Inc" width="97" height="52">
     </a>
 
     <nav class="nav" aria-label="Primary">
@@ -451,7 +450,7 @@ h2{font-size:38px;font-weight:700}
 <!-- Mobile slide-in menu -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <div class="mobile-menu-top">
-    <span class="brand"><span class="wm" style="color:#fff">VER<span class="mm" style="color:#fff">M</span>AC</span><span class="wm-sub" style="color:rgba(255,255,255,.72)">CONSTRUCTION INC</span></span>
+    <img src="images/vermac-logo-white.png" alt="Vermac Construction Inc" height="46" style="height:46px;width:auto">
     <button class="icon-btn" id="menuClose" aria-label="Close menu" style="background:rgba(255,255,255,.16)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
@@ -876,7 +875,7 @@ h2{font-size:38px;font-weight:700}
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-col footer-brand">
-      <span class="wm">VER<span style="color:#e79aa0">M</span>AC<span class="wm-sub">CONSTRUCTION INC</span></span>
+      <img src="images/vermac-logo-white.png" alt="Vermac Construction Inc" style="height:58px;width:auto;margin-bottom:4px">
       <p>Family-owned siding &amp; construction serving Saratoga County, NY for over 20 years. Expert siding that protects your home for decades.</p>
       <!-- CONFIRM live social URLs (info.md §2) -->
       <div class="footer-social">
