@@ -303,6 +303,9 @@ h2{font-size:38px;font-weight:700}
 .town-pill.primary{background:var(--brand-maroon);color:#fff;border-color:var(--brand-maroon)}
 .map-card{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);aspect-ratio:4/3;background:var(--brand-maroon);position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
 .map-card svg{width:64px;height:64px;color:#e79aa0;margin-bottom:12px}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.team-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
+.team-cap{text-align:center;margin-top:16px;color:var(--gray-400);font-size:14px}
 
 /* ============================================================
    15. FAQ
@@ -577,13 +580,21 @@ h2{font-size:38px;font-weight:700}
          Add the town to each caption/alt for local SEO once confirmed with the client. -->
     <div class="gallery-grid reveal" id="galleryGrid">
       <figure tabindex="0"><img src="images/gallery/farmhouse-wraparound-porch.jpg" alt="White farmhouse with a wraparound covered porch and new siding" loading="lazy"><figcaption>Farmhouse with wraparound porch</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/red-colonial-siding.jpg" alt="Two-story home with new red and gray siding" loading="lazy"><figcaption>Siding replacement — finished home</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/white-farmhouse-porch.jpg" alt="Board-and-batten farmhouse with covered front porch" loading="lazy"><figcaption>Board-and-batten farmhouse</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/home-framing.jpg" alt="New home framing on a Vermac construction project" loading="lazy"><figcaption>New build — framing stage</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/blue-home-front-porch.jpg" alt="Home with blue siding and a covered front porch" loading="lazy"><figcaption>Blue siding &amp; front porch</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/gray-ranch-siding.jpg" alt="Ranch home with fresh gray siding and landscaped lawn" loading="lazy"><figcaption>Ranch siding replacement</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/white-home-covered-entry.jpg" alt="White-sided home with a covered entry and red door" loading="lazy"><figcaption>White siding &amp; covered entry</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/modern-curved-home.jpg" alt="Custom-built modern home exterior by Vermac" loading="lazy"><figcaption>Custom home exterior</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/covered-porch-entry.jpg" alt="Covered porch entry with red front door" loading="lazy"><figcaption>Covered porch &amp; entry</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/covered-porch-build.jpg" alt="Covered porch under construction" loading="lazy"><figcaption>Covered porch build</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/white-home-black-shutters.jpg" alt="White siding with black shutters on a two-story home" loading="lazy"><figcaption>White siding, black shutters</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/red-home-porch.jpg" alt="Home with red siding and a covered porch" loading="lazy"><figcaption>Siding &amp; porch project</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/shingle-siding-detail.jpg" alt="Cedar-look shingle siding detail" loading="lazy"><figcaption>Cedar-look shingle siding</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/construction-progress.jpg" alt="Vermac construction project in progress" loading="lazy"><figcaption>Project in progress</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/blue-gray-gable.jpg" alt="Blue-gray siding and gable detail" loading="lazy"><figcaption>Siding &amp; gable detail</figcaption></figure>
+      <figure tabindex="0"><img src="images/gallery/roof-work.jpg" alt="Roofing and exterior work on a residential build" loading="lazy"><figcaption>Roofing &amp; exterior</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/siding-trim-detail.jpg" alt="Siding and white trim detail on a custom home" loading="lazy"><figcaption>Siding &amp; trim detail</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/garage-carriage-door.jpg" alt="Garage with carriage-style door and coach lantern" loading="lazy"><figcaption>Garage &amp; carriage door</figcaption></figure>
       <figure tabindex="0"><img src="images/gallery/new-home-garage.jpg" alt="Newly built home with attached garage" loading="lazy"><figcaption>New home &amp; garage</figcaption></figure>
@@ -706,7 +717,7 @@ h2{font-size:38px;font-weight:700}
       <div class="reveal">
         <span class="eyebrow">Service Area</span>
         <h2>Proudly Serving All of Saratoga County, NY</h2>
-        <p class="lead" style="font-size:18px">Vermac Construction provides siding installation, replacement, remodels, and construction throughout Saratoga County — including Malta and Ballston Spa.</p>
+        <p class="lead" style="font-size:18px">Vermac Construction provides siding installation, replacement, remodels, and construction throughout Saratoga County — including Malta and Ballston Spa. It's all handled by a local crew that lives and works right here — neighbors serving neighbors.</p>
         <!-- CONFIRM exact town list with client (info.md §1) -->
         <div class="town-list">
           <span class="town-pill primary">Malta</span>
@@ -722,12 +733,14 @@ h2{font-size:38px;font-weight:700}
           <span class="town-pill">Milton</span>
         </div>
       </div>
-      <div class="map-card reveal">
-        <div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div style="font-family:var(--font-head);font-weight:600;font-size:20px">Saratoga County, NY</div>
-          <div style="color:#e6cccf;font-size:15px;margin-top:6px">Malta · Ballston Spa · &amp; surrounding towns</div>
+      <div class="reveal">
+        <div class="team-grid">
+          <img src="images/team/crew-1.jpg" alt="Vermac Construction crew member on a Saratoga County job site" loading="lazy">
+          <img src="images/team/crew-4.jpg" alt="Two Vermac Construction team members on a siding project" loading="lazy">
+          <img src="images/team/crew-3.jpg" alt="Vermac Construction team member on site" loading="lazy">
+          <img src="images/team/crew-2.jpg" alt="Vermac Construction crew member during a build" loading="lazy">
         </div>
+        <p class="team-cap">The local Vermac crew — your Saratoga County neighbors.</p>
       </div>
     </div>
   </div>
