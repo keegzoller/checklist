@@ -32,18 +32,31 @@ the repo root.
    the DNS at the current registrar to the values Netlify shows. Email on
    `vermacconstruction1@gmail.com` (Gmail) is unaffected — no MX changes needed.
 
-## The quote form (Netlify Forms)
+## Lead forms (GoHighLevel + Netlify backup)
 
-The contact form is wired for **Netlify Forms** (`data-netlify="true"`, a hidden
-`form-name`, and a honeypot). On deploy Netlify auto-detects it and captures
-submissions; successful submits redirect to `thank-you.html`.
+There are two intake forms — **Homeowner** (`homeowner-project`) and **Builder/GC**
+(`builder-project`) — toggled by a segmented control in the contact section.
 
-To get the submissions emailed to the client:
-**Netlify → Site settings → Forms → Form notifications → Add notification → Email**,
-sending to `vermacconstruction1@gmail.com`.
+On submit, JavaScript does two things, then redirects to `thank-you.html`:
 
-(Not hosting on Netlify? Swap the form for a Formspree endpoint or a serverless
-handler instead.)
+1. **GoHighLevel** — POSTs the lead as JSON to the LeadConnector inbound webhook
+   (`GHL_WEBHOOK` in `index.html`), which fires the client's **SMS + email** workflow.
+   Phone is normalized to E.164; builder-specific fields (company, scope, timeline,
+   location) are included and summarized into `message`.
+2. **Netlify Forms** — captures a backup copy (AJAX) so a lead survives even if the
+   GHL workflow is ever paused. Both forms have `data-netlify`, a hidden `form-name`,
+   and a honeypot (`bot-field`). If JS is disabled, the native submit still captures
+   to Netlify.
+
+**Client setup:**
+- **GoHighLevel:** the workflow (Inbound Webhook → Create/Update Contact → Send SMS →
+  Send Email) must be built + published in GHL, with a registered A2P/10DLC number for
+  SMS. See `integrations.md` for the field mapping and a `curl` test command.
+- **Netlify (backup emails, optional):** *Site configuration → Forms → notifications →
+  Email* for each form → `vermacconstruction1@gmail.com`.
+
+The webhook URL is a public ingestion endpoint (accepts data only), so it's safe in
+client-side code.
 
 ## Notes
 

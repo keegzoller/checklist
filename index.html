@@ -344,6 +344,8 @@ h2{font-size:38px;font-weight:700}
 .aud-toggle button[aria-selected="true"]{background:var(--brand-accent);color:#fff;box-shadow:0 4px 12px rgba(166,43,52,.28)}
 .aud-form{display:none}
 .aud-form.active{display:block}
+.form-status{font-size:14px;margin-top:14px;text-align:center;color:var(--gray-700);min-height:1px}
+.form-status a{font-weight:600}
 
 /* ============================================================
    17. FOOTER
@@ -833,9 +835,10 @@ h2{font-size:38px;font-weight:700}
       </div>
 
       <!-- Two intake forms (Homeowner + Builder/GC), toggled by the segmented control.
-           Both are wired for Netlify Forms — unique name, hidden form-name, honeypot.
-           To receive leads: Netlify → Site configuration → Forms → notifications → Email
-           → vermacconstruction1@gmail.com (add one for each form). -->
+           On submit, JS posts the lead to the GoHighLevel inbound webhook (fires the
+           client's SMS + email workflow) AND captures a backup copy in Netlify Forms,
+           then redirects to /thank-you.html. If JS is disabled, the native submit still
+           captures the lead in Netlify. Honeypot = bot-field. -->
       <div class="quote-form reveal">
         <div class="aud-toggle" role="tablist" aria-label="Who are you?">
           <button type="button" role="tab" id="tab-homeowner" aria-controls="form-homeowner" aria-selected="true">I'm a Homeowner</button>
@@ -1162,6 +1165,87 @@ h2{font-size:38px;font-weight:700}
       });
     });
   }
+
+  /* Lead forms → GoHighLevel webhook (fires SMS + email) + Netlify Forms backup */
+  var GHL_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Ysazlze58nVZM8Pk4GPw/webhook-trigger/e17cf22c-b9a7-4119-b719-095070068193";
+  function toE164(raw){
+    var d = (raw || "").replace(/\D/g, "");
+    if(d.length === 10) return "+1" + d;
+    if(d.length === 11 && d[0] === "1") return "+" + d;
+    return raw;
+  }
+  function wireLead(form, kind){
+    if(!form) return;
+    var status = form.querySelector(".form-status");
+    if(!status){
+      status = document.createElement("p");
+      status.className = "form-status";
+      status.setAttribute("role", "status");
+      status.setAttribute("aria-live", "polite");
+      form.appendChild(status);
+    }
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var hp = form.querySelector('[name="bot-field"]');
+      if(hp && hp.value){ window.location.href = "/thank-you.html"; return; }   // silent spam success
+      var btn = form.querySelector("button[type=submit]");
+      if(btn) btn.disabled = true;
+      status.textContent = "Sending…";
+
+      var get = function(n){ var el = form.querySelector('[name="' + n + '"]'); return el ? (el.value || "").trim() : ""; };
+      var fullName = get("name");
+      var parts = fullName.split(/\s+/).filter(Boolean);
+      var inquiry = get("inquiry-type") || (kind === "builder" ? "Builder / GC" : "Homeowner");
+      var svc = kind === "builder" ? ("Builder / GC — " + (get("scope") || "Siding")) : (get("service") || "Siding");
+      var lines = [];
+      if(get("message")) lines.push(get("message"));
+      if(kind === "builder"){
+        if(get("company")) lines.push("Company: " + get("company"));
+        if(get("scope")) lines.push("Scope: " + get("scope"));
+        if(get("timeline")) lines.push("Timeline: " + get("timeline"));
+        if(get("location")) lines.push("Location: " + get("location"));
+      } else {
+        if(get("service")) lines.push("Service: " + get("service"));
+        if(get("town")) lines.push("Town/Address: " + get("town"));
+      }
+      var payload = {
+        first_name: parts[0] || "",
+        last_name: parts.slice(1).join(" ") || "",
+        full_name: fullName,
+        email: get("email"),
+        phone: toE164(get("phone")),
+        address: get("town") || get("location"),
+        service: svc,
+        inquiry_type: inquiry,
+        company: get("company"),
+        scope: get("scope"),
+        timeline: get("timeline"),
+        message: lines.join("\n"),
+        source: "vermacconstruction.com — " + inquiry + " form",
+        page_url: window.location.href
+      };
+
+      var tasks = [];
+      // Netlify Forms backup capture (AJAX) — so a lead survives even if GHL is paused
+      try {
+        var enc = new URLSearchParams(new FormData(form)).toString();
+        tasks.push(fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: enc }));
+      } catch(_){}
+      // GoHighLevel inbound webhook — fires the SMS + email workflow
+      tasks.push(fetch(GHL_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }));
+
+      Promise.allSettled(tasks).then(function(results){
+        var ok = results.some(function(r){ return r.status === "fulfilled" && r.value && (r.value.ok || r.value.type === "opaque"); });
+        if(ok){ window.location.href = "/thank-you.html"; }
+        else {
+          status.innerHTML = 'Sorry — something went wrong sending your request. Please call <a href="tel:+15186368008">518-636-8008</a> and we’ll take care of you.';
+          if(btn) btn.disabled = false;
+        }
+      });
+    });
+  }
+  wireLead(document.getElementById("form-homeowner"), "homeowner");
+  wireLead(document.getElementById("form-builder"), "builder");
 
   /* Footer year */
   var y = document.getElementById("year");
