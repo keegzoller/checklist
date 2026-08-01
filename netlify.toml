@@ -4,6 +4,11 @@
 [build]
   publish = "."
 
+# Form submissions trigger netlify/functions/submission-created.mts, which emails
+# the lead to the sales inbox.
+[functions]
+  directory = "netlify/functions"
+
 # Long-cache the optimized images (they're content-hashed by filename in practice;
 # swap a filename to bust the cache).
 [[headers]]

@@ -768,8 +768,10 @@ h2{font-size:38px;font-weight:700}
       <!-- Two intake forms (Homeowner + Builder/GC), toggled by the segmented control.
            On submit, JS posts the lead to the GoHighLevel inbound webhook (fires the
            client's SMS + email workflow) AND captures a backup copy in Netlify Forms,
-           then redirects to /thank-you.html. If JS is disabled, the native submit still
-           captures the lead in Netlify. Honeypot = bot-field. -->
+           then redirects to /thank-you.html. Every Netlify capture also triggers
+           netlify/functions/submission-created.mts, which emails the lead to sales.
+           If JS is disabled, the native submit still captures the lead in Netlify.
+           Honeypot = bot-field. -->
       <div class="quote-form reveal" id="quote">
         <div class="aud-toggle" role="tablist" aria-label="Who are you?">
           <button type="button" role="tab" id="tab-homeowner" aria-controls="form-homeowner" aria-selected="true">I'm a Homeowner</button>
@@ -782,6 +784,7 @@ h2{font-size:38px;font-weight:700}
               role="tabpanel" aria-labelledby="tab-homeowner">
           <input type="hidden" name="form-name" value="homeowner-project">
           <input type="hidden" name="inquiry-type" value="Homeowner">
+          <input type="hidden" name="subject" value="New homeowner quote request from vermacconstruction.com">
           <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
           <div class="field"><label for="h-name">Name <span class="req">*</span></label><input type="text" id="h-name" name="name" autocomplete="name" required></div>
           <div class="field"><label for="h-phone">Phone <span class="req">*</span></label><input type="tel" id="h-phone" name="phone" autocomplete="tel" required></div>
@@ -806,6 +809,7 @@ h2{font-size:38px;font-weight:700}
               role="tabpanel" aria-labelledby="tab-builder" hidden>
           <input type="hidden" name="form-name" value="builder-project">
           <input type="hidden" name="inquiry-type" value="Builder / GC">
+          <input type="hidden" name="subject" value="New builder / GC inquiry from vermacconstruction.com">
           <p hidden><label>Leave this field empty: <input name="bot-field"></label></p>
           <div class="field"><label for="b-company">Company / Business name <span class="req">*</span></label><input type="text" id="b-company" name="company" autocomplete="organization" required></div>
           <div class="field"><label for="b-name">Contact name <span class="req">*</span></label><input type="text" id="b-name" name="name" autocomplete="name" required></div>
