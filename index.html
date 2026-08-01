@@ -768,8 +768,9 @@ h2{font-size:38px;font-weight:700}
       <!-- Two intake forms (Homeowner + Builder/GC), toggled by the segmented control.
            On submit, JS posts the lead to the GoHighLevel inbound webhook (fires the
            client's SMS + email workflow) AND captures a backup copy in Netlify Forms,
-           then redirects to /thank-you.html. Every Netlify capture also triggers
-           netlify/functions/submission-created.mts, which emails the lead to sales.
+           then redirects to /thank-you.html. The Netlify capture also sends the
+           built-in form notification email (configured in the Netlify dashboard under
+           Notifications); the hidden `subject` field below sets that email's subject.
            If JS is disabled, the native submit still captures the lead in Netlify.
            Honeypot = bot-field. -->
       <div class="quote-form reveal" id="quote">
