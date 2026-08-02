@@ -52,8 +52,35 @@ On submit, JavaScript does two things, then redirects to `thank-you.html`:
 - **GoHighLevel:** the workflow (Inbound Webhook → Create/Update Contact → Send SMS →
   Send Email) must be built + published in GHL, with a registered A2P/10DLC number for
   SMS. See `integrations.md` for the field mapping and a `curl` test command.
-- **Netlify (backup emails, optional):** *Site configuration → Forms → notifications →
-  Email* for each form → `vermacconstruction1@gmail.com`.
+- **Netlify submission alerts:** see below — a serverless function, not the built-in
+  email notification (that one needs a paid plan).
+
+## Submission alerts on the free plan
+
+Netlify's built-in form email notifications are a paid-plan feature. Instead,
+`netlify/functions/submission-created.mts` runs automatically on every **verified**
+(non-spam) submission — event-triggered functions are included on the free plan — and
+sends the lead wherever you point it. Netlify still stores every submission at
+*Project configuration → Forms*, regardless.
+
+Choose a channel by adding environment variables in the Netlify UI
+(*Project configuration → Environment variables*). Whatever is set gets sent; unset
+channels are skipped, and setting more than one is fine. No redeploy of the code is
+needed — just a redeploy to pick up new variables.
+
+| Channel | Variables | Notes |
+| --- | --- | --- |
+| **Phone push** *(easiest, no signup)* | `NTFY_TOPIC` | Install the free [ntfy](https://ntfy.sh) app, subscribe to the same topic name. Use something unguessable — anyone who knows the topic can read it. |
+| **Email** | `RESEND_API_KEY`, `NOTIFY_EMAIL_TO` | [Resend](https://resend.com) free tier is 3,000 emails/month. Optional `NOTIFY_EMAIL_FROM`; the default sender only delivers to the address that owns the Resend account until you verify a domain. |
+| **Text-style message** | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Create a bot via @BotFather. |
+| **Slack / Discord** | `SLACK_WEBHOOK_URL` / `DISCORD_WEBHOOK_URL` | Incoming-webhook URL from the app. |
+
+With nothing configured, submissions are still written to the function log
+(*Logs → Functions → submission-created*), so a lead is never lost.
+
+**Testing:** submit the real form on the live site with real-looking values — test
+strings like `asdf` or `test@test.com` get flagged as spam, and spam submissions never
+trigger the function.
 
 The webhook URL is a public ingestion endpoint (accepts data only), so it's safe in
 client-side code.
