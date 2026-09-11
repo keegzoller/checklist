@@ -1,6 +1,6 @@
 import React from 'react';
 import { Img, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
-import { V, FONT_BODY, FONT_HEAD } from './theme';
+import { BRAND_GRADIENT, V, FONT_BODY, FONT_HEAD } from './theme';
 import { BRAND_PATHS } from './brandPaths.generated';
 import { LOGO_FILES } from './logoAssets';
 import { usePunch, useEase } from './Kinetic';
@@ -48,16 +48,110 @@ export const VeroMark: React.FC<{ size?: number; tile?: boolean; radius?: number
   );
 };
 
+/**
+ * VC Solutions' own logo. Vero is VCS's product, so the close co-brands.
+ * The file is the real asset from vc-solutions.net -- a navy script wordmark
+ * with a blue swoosh and a map pin for the period. It is dark artwork, so it
+ * only works on a light surface.
+ */
+export const VcsLogo: React.FC<{ height?: number; style?: React.CSSProperties }> = ({
+  height = 54,
+  style,
+}) => (
+  <Img
+    src={staticFile('logos/vcs-logo.png')}
+    style={{ height, width: 'auto', objectFit: 'contain', display: 'block', ...style }}
+  />
+);
+
+/**
+ * The map pin from that logo, redrawn so it can animate. It is the whole VCS
+ * idea in one shape -- "every platform knows who people are, we know where
+ * they are" -- so it earns its own scene rather than being decoration.
+ */
+export const MapPin: React.FC<{
+  size?: number;
+  delay?: number;
+  label?: string;
+  ripple?: boolean;
+}> = ({ size = 64, delay = 0, label, ripple = true }) => {
+  const frame = useCurrentFrame();
+  const drop = usePunch(delay);
+  const id = React.useId();
+  // the ripple restarts every 2.4s so the pins feel like live pings
+  const t = ((frame - delay) % 72) / 72;
+  const showRipple = ripple && frame > delay + 6;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: size * 0.16,
+        opacity: Math.min(1, drop * 1.7),
+        // drops in from above and settles on its point
+        transform: `translateY(${(1 - drop) * -70}px) scale(${0.6 + drop * 0.4})`,
+        transformOrigin: 'bottom center',
+      }}
+    >
+      <div style={{ position: 'relative', width: size, height: size * 1.28 }}>
+        {showRipple && (
+          <span
+            style={{
+              position: 'absolute',
+              left: '50%',
+              bottom: -size * 0.1,
+              width: size * (0.5 + t * 1.9),
+              height: size * (0.5 + t * 1.9) * 0.42,
+              marginLeft: -(size * (0.5 + t * 1.9)) / 2,
+              borderRadius: '50%',
+              border: `2px solid ${V.sky}`,
+              opacity: (1 - t) * 0.75,
+            }}
+          />
+        )}
+        <svg width={size} height={size * 1.28} viewBox="0 0 40 51" style={{ position: 'relative' }}>
+          <defs>
+            <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor={BRAND_GRADIENT[1]} />
+              <stop offset="100%" stopColor={BRAND_GRADIENT[0]} />
+            </linearGradient>
+          </defs>
+          <path
+            d="M20 1.5C10.6 1.5 3 9.1 3 18.5c0 12 13.7 27.6 16.1 30.2.5.5 1.3.5 1.8 0C23.3 46.1 37 30.5 37 18.5 37 9.1 29.4 1.5 20 1.5z"
+            fill={`url(#${id})`}
+          />
+          <circle cx="20" cy="18.3" r="6.2" fill="#FFFFFF" />
+        </svg>
+      </div>
+      {label && (
+        <span
+          style={{
+            fontFamily: FONT_BODY,
+            fontSize: size * 0.27,
+            fontWeight: 600,
+            letterSpacing: 0.3,
+            color: 'rgba(255,255,255,0.92)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {label}
+        </span>
+      )}
+    </div>
+  );
+};
+
 /** Mark plus wordmark, as it appears in the product header. */
 export const VeroLockup: React.FC<{ size?: number; color?: string }> = ({ size = 96, color = V.ink }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: size * 0.10 }}>
     <VeroMark size={size} tile={false} />
     <span
       style={{
-        fontFamily: FONT_HEAD,
-        fontSize: size * 0.78,
-        fontWeight: 800,
-        letterSpacing: -size * 0.028,
+        fontFamily: FONT_BODY,
+        fontSize: size * 0.74,
+        fontWeight: 700,
+        letterSpacing: -size * 0.022,
         color,
       }}
     >
@@ -226,7 +320,7 @@ export const LogoPill: React.FC<{
         padding: `${13 * scale}px ${24 * scale}px`,
         borderRadius: 99,
         background: V.surface,
-        boxShadow: '0 16px 40px rgba(5,8,40,0.28), 0 1px 3px rgba(5,8,40,0.10)',
+        boxShadow: '0 16px 40px rgba(8,20,48,0.30), 0 1px 3px rgba(8,20,48,0.12)',
         opacity: Math.min(1, s * 1.6),
         transform: `translateY(${(1 - s) * 26 + bob}px) scale(${0.86 + s * 0.14})`,
         whiteSpace: 'nowrap',
@@ -235,10 +329,10 @@ export const LogoPill: React.FC<{
       <BrandGlyph brand={brand} size={32 * scale} />
       <span
         style={{
-          fontFamily: FONT_HEAD,
-          fontSize: 27 * scale,
-          fontWeight: 800,
-          letterSpacing: -0.4,
+          fontFamily: FONT_BODY,
+          fontSize: 25 * scale,
+          fontWeight: 700,
+          letterSpacing: -0.3,
           color: V.ink,
         }}
       >
@@ -258,7 +352,7 @@ export const LogoPill: React.FC<{
             alignItems: 'center',
             justifyContent: 'center',
             transform: `scale(${check})`,
-            boxShadow: '0 3px 10px rgba(18,201,126,0.5)',
+            boxShadow: '0 3px 10px rgba(52,211,153,0.5)',
           }}
         >
           <svg viewBox="0 0 24 24" width={13 * scale} height={13 * scale}>
@@ -382,7 +476,7 @@ export const Constellation: React.FC<{
           borderRadius: hubSize * 0.28,
           background: V.surface,
           overflow: 'hidden',
-          boxShadow: '0 22px 60px rgba(5,8,40,0.35)',
+          boxShadow: '0 22px 60px rgba(8,20,48,0.38)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

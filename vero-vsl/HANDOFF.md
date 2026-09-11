@@ -186,7 +186,7 @@ Blurred client workspace name; cropped the "1 of 5 sources authorized" line; rem
 
 ## 7. The fast cut (added 2026-09-11)
 
-A second composition, `VeroFast`, lives beside the original. 0:49, 1,470 frames, same
+A second composition, `VeroFast`, lives beside the original. 0:53, 1,590 frames, same
 1920x1080. It is the same product story told in the grammar of the reference VSL that
 prompted it: kinetic typography, hard colour cuts between white and Vero indigo, big
 counting numbers, floating cards, and two logo constellations.
@@ -198,10 +198,27 @@ considered one with real product footage; the fast cut is the one built to stop 
 
 - Product surfaces are still light. The stage flips colour, the cards never do.
 - Every invented number still wears a `sample view` tag (the spend beat and the payoff).
-- The palette is Vero's own. `V.blue` = `#0006C1` is the exact button fill sampled from
-  the Connections page. The full-bleed stage gradient is the same hue (238deg) with the
-  luminance lifted, because `#0006C1` across a whole 1080p frame eats white type alive.
-  **Keep the hue locked if you retune it** — that is what makes the flips read as one brand.
+
+**The palette is VCS's, not Vero's and not the reference video's.** This changed after the
+first pass: the video is for Vero, but Vero is VC Solutions' product, so the brand the
+video wears is the parent's. Every token in `src/fast/theme.ts` is a CSS custom property
+read off vc-solutions.net (`--vc-accent` `#2159B0`, `--vc-navy` `#0f172a`, `--vc-blue`
+`#007bff`, `--vc-text-dark`, `--text-slate`, `--bg-off-white`), plus `#38BDF8` from the
+site's signature `linear-gradient(135deg,#2159B0,#38BDF8)`. The heading face is **Anton**,
+the site's `--heading-font-font-family`. See README "Brand" for the full table.
+
+Two rules inside that which are easy to undo by accident:
+
+- **Anton is the video's voice, Inter is the product's.** Headlines, hero numbers and stat
+  values are Anton; anything imitating Vero's UI — the Vero wordmark, logo pills, the
+  connections list, the ranked table, the answer card — is Inter. A product card set in
+  Anton stops reading as software.
+- **Green means an outcome, sky means the brand.** `#34D399` only ever marks connected,
+  paid, positive, resolved. `#38BDF8` carries every other accent.
+
+The stage gradient's stops are pushed early (`navy 0%, brandDeep 34%, brand 74%`) because
+with navy sitting at the midpoint, the centre of a 1920x1080 frame lands in the dark half
+and the struck-through copy in `noMore` stops being readable.
 
 **What is new and worth knowing:**
 
@@ -223,6 +240,12 @@ considered one with real product footage; the fast cut is the one built to stop 
   array containing JSX. Anything it references (`Tick`, `VeroMark`) must be declared
   *above* it or the bundle throws "Cannot access 'X' before initialization" at runtime,
   not at compile time.
+
+**The pin motif.** The VCS logo sets a map pin as the period in "VCS." — that is their
+whole positioning, and it is Vero's differentiator too. `MapPin` redraws it so it can drop
+and ping, and scene 10 (`whereTheyAre`) is built on the VCS homepage's own line: "Every
+Platform Knows Who People Are. We Know Where They Are." The close co-brands with the real
+VCS logo.
 
 **Still open on the fast cut:** no audio (script in `SCRIPT-FAST.md`, nothing recorded),
 and no vertical cut — same reason as §6.3, the scenes are laid out on a wide grid.

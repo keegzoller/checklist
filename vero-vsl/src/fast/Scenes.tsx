@@ -5,7 +5,7 @@ import {
   Counter,
   DiagonalBand,
   FloatCard,
-  IndigoStage,
+  BrandStage,
   LightStage,
   Micro,
   RiseLine,
@@ -15,7 +15,7 @@ import {
   useEase,
   usePunch,
 } from './Kinetic';
-import { BrandGlyph, Constellation, VeroLockup, VeroMark } from './Logos';
+import { BrandGlyph, Constellation, MapPin, VcsLogo, VeroLockup, VeroMark } from './Logos';
 
 /* ------------------------------------------------------------------ *
  * shared bits
@@ -66,16 +66,16 @@ const SampleTag: React.FC<{ delay?: number; light?: boolean }> = ({ delay = 0, l
 export const SceneHook: React.FC = () => (
   <LightStage>
     <DiagonalBand delay={10} top="35%" height={215} />
-    <Stars count={16} color="rgba(74,68,240,0.30)" seed="hook" />
+    <Stars count={16} color="rgba(33,89,176,0.32)" seed="hook" />
     <Center gap={10}>
       <RiseLine
-        words={[{ t: "you're" }, { t: 'spending' }, { t: 'money.', color: V.blue }]}
+        words={[{ t: "you're" }, { t: 'spending' }, { t: 'money.', color: V.brand }]}
         size={152}
         delay={2}
         stagger={9}
       />
       <div style={{ marginTop: -6 }}>
-        <Squiggle delay={30} width={470} color={V.blue} />
+        <Squiggle delay={30} width={470} color={V.brand} />
       </div>
       <div style={{ marginTop: 18 }}>
         <Micro delay={40}>every location · every channel · every month</Micro>
@@ -89,16 +89,16 @@ export const SceneHook: React.FC = () => (
  * ================================================================== */
 
 export const SceneButWhere: React.FC = () => (
-  <IndigoStage>
+  <BrandStage>
     <Stars count={30} seed="bw" />
     <Center gap={8}>
       {/* the setup recedes, the payload is the bright one -- tint on indigo
           is not enough contrast to carry the line that matters */}
       <RiseLine words={[{ t: 'but' }, { t: 'you' }, { t: "can't" }, { t: 'tell' }]} size={112} color={V.tint} delay={0} stagger={3} />
-      <RiseLine words={[{ t: 'where' }, { t: 'it' }, { t: 'worked.' }]} size={158} color="#fff" delay={9} stagger={3} />
-      <Squiggle delay={26} width={600} color={V.tint} thickness={13} />
+      <RiseLine words={[{ t: 'where' }, { t: 'it' }, { t: 'worked.', color: V.sky }]} size={158} color="#fff" delay={9} stagger={3} />
+      <Squiggle delay={26} width={600} color={V.skySoft} thickness={13} />
     </Center>
-  </IndigoStage>
+  </BrandStage>
 );
 
 /* ================================================================== *
@@ -115,7 +115,7 @@ const SpendBeat: React.FC = () => (
         delay={2}
         duration={46}
         size={300}
-        color={V.blue}
+        color={V.brand}
         format={(n) => '$' + Math.round(n).toLocaleString('en-US')}
       />
       <div style={{ marginTop: 18 }}>
@@ -218,14 +218,14 @@ export const SceneSpendVsProof: React.FC = () => (
  * ================================================================== */
 
 export const SceneTheyBought: React.FC = () => (
-  <IndigoStage warm>
+  <BrandStage warm>
     <Stars count={24} seed="tb" />
     <Center gap={6}>
       <RiseLine words={[{ t: 'they' }, { t: 'walked' }, { t: 'in.' }]} size={112} color="#fff" delay={0} stagger={3} />
       <RiseLine words={[{ t: 'they' }, { t: 'bought.', color: V.green }]} size={150} color="#fff" delay={9} stagger={3} />
       <Squiggle delay={26} width={430} color={V.green} />
       <div style={{ marginTop: 20 }}>
-        <Micro delay={46} color="rgba(255,255,255,0.88)" size={25}>
+        <Micro delay={46} color="rgba(255,255,255,0.9)" size={25}>
           and not one platform saw the receipt
         </Micro>
       </div>
@@ -242,7 +242,7 @@ export const SceneTheyBought: React.FC = () => (
     <FloatCard delay={41} x="7%" y="68%" seed={9} rotate={5} width={250}>
       <Receipt store="Sarasota" amount="$203.40" time="7:03 PM" />
     </FloatCard>
-  </IndigoStage>
+  </BrandStage>
 );
 
 const Receipt: React.FC<{ store: string; amount: string; time: string }> = ({ store, amount, time }) => (
@@ -252,7 +252,7 @@ const Receipt: React.FC<{ store: string; amount: string; time: string }> = ({ st
       <span style={{ fontSize: 13, color: V.inkSoft, opacity: 0.7 }}>{time}</span>
     </div>
     <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 6 }}>
-      <span style={{ fontFamily: FONT_HEAD, fontSize: 30, fontWeight: 800, color: V.ink }}>{amount}</span>
+      <span style={{ fontFamily: FONT_BODY, fontSize: 29, fontWeight: 700, color: V.ink }}>{amount}</span>
       <span
         style={{
           fontSize: 12,
@@ -280,20 +280,20 @@ export const SceneConnect: React.FC = () => {
       {/* soft sky wash, the reference's palette-cleanser between indigo beats */}
       <AbsoluteFill
         style={{
-          background: `linear-gradient(168deg, #C3CCFF 0%, #E4E8FF 46%, ${V.page} 100%)`,
+          background: `linear-gradient(168deg, #BEDCF7 0%, #DFEDFB 46%, ${V.page} 100%)`,
         }}
       />
       <AbsoluteFill
         style={{
           background: `radial-gradient(900px 520px at ${30 + Math.sin(frame * 0.02) * 6}% 24%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 58%),
-                       radial-gradient(860px 500px at 78% 80%, rgba(154,166,255,0.60) 0%, rgba(154,166,255,0) 62%)`,
+                       radial-gradient(860px 500px at 78% 80%, rgba(56,189,248,0.42) 0%, rgba(56,189,248,0) 62%)`,
         }}
       />
-      <Stars count={14} color="rgba(74,68,240,0.28)" seed="cn" />
+      <Stars count={14} color="rgba(33,89,176,0.30)" seed="cn" />
       <Center gap={6}>
         <RiseLine words={[{ t: 'so' }, { t: 'connect' }, { t: 'the' }]} size={104} delay={0} stagger={3} />
-        <RiseLine words={[{ t: 'register.', color: V.blue }]} size={168} delay={9} />
-        <Squiggle delay={24} width={520} color={V.blue} />
+        <RiseLine words={[{ t: 'register.', color: V.brand }]} size={168} delay={9} />
+        <Squiggle delay={24} width={520} color={V.brand} />
       </Center>
       <FloatCard delay={16} x="5%" y="24%" seed={11} rotate={-4} width={280}>
         <StatCard label="Point of sale" value="Square" badge="CONNECTED" />
@@ -325,7 +325,7 @@ const NO_MORE = [
 export const SceneNoMore: React.FC = () => {
   const frame = useCurrentFrame();
   return (
-    <IndigoStage>
+    <BrandStage>
       <Stars count={26} seed="nm" />
       <Center gap={16}>
         {NO_MORE.map((line, i) => {
@@ -359,7 +359,7 @@ export const SceneNoMore: React.FC = () => {
           <RiseLine words={[{ t: 'it' }, { t: 'all' }, { t: 'ties' }, { t: 'to' }, { t: 'the' }, { t: 'register.', color: V.green }]} size={92} color="#fff" delay={88} stagger={3} />
         </div>
       </Center>
-    </IndigoStage>
+    </BrandStage>
   );
 };
 
@@ -454,7 +454,7 @@ const STEPS: Step[] = [
             >
               {t as string}
             </span>
-            {!dup && <span style={{ fontFamily: FONT_HEAD, fontWeight: 800, color: V.greenDeep, fontSize: 24 }}>1x</span>}
+            {!dup && <span style={{ fontFamily: FONT_BODY, fontWeight: 700, color: V.greenDeep, fontSize: 24 }}>1x</span>}
           </div>
         ))}
       </div>
@@ -485,7 +485,7 @@ const STEPS: Step[] = [
                 }}
               />
             </div>
-            <span style={{ fontFamily: FONT_HEAD, fontSize: 24, fontWeight: 800, color: col as string, width: 72, textAlign: 'right' }}>
+            <span style={{ fontFamily: FONT_BODY, fontSize: 23, fontWeight: 700, color: col as string, width: 72, textAlign: 'right' }}>
               {(pct as number) > 0 ? '+' : ''}
               {pct as number}%
             </span>
@@ -529,7 +529,7 @@ const StepBeat: React.FC<{ step: Step }> = ({ step }) => {
   const numberIn = useEase(0, 0.5);
   const body = (
     <>
-      <Stars count={step.dark ? 18 : 12} color={step.dark ? 'rgba(255,255,255,0.5)' : 'rgba(74,68,240,0.26)'} seed={step.n} />
+      <Stars count={step.dark ? 18 : 12} color={step.dark ? 'rgba(255,255,255,0.5)' : 'rgba(33,89,176,0.28)'} seed={step.n} />
       <AbsoluteFill style={{ padding: '0 128px', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 56 }}>
           <div style={{ flex: '0 0 auto' }}>
@@ -539,7 +539,7 @@ const StepBeat: React.FC<{ step: Step }> = ({ step }) => {
                 fontSize: 30,
                 fontWeight: 700,
                 letterSpacing: 7,
-                color: step.dark ? V.tint : V.blue,
+                color: step.dark ? V.tint : V.brand,
                 marginBottom: 6,
                 opacity: numberIn,
               }}
@@ -566,7 +566,7 @@ const StepBeat: React.FC<{ step: Step }> = ({ step }) => {
       </AbsoluteFill>
     </>
   );
-  return step.dark ? <IndigoStage>{body}</IndigoStage> : <LightStage>{body}</LightStage>;
+  return step.dark ? <BrandStage>{body}</BrandStage> : <LightStage>{body}</LightStage>;
 };
 
 const StepCard: React.FC<{ children: React.ReactNode; delay: number }> = ({ children, delay }) => {
@@ -612,18 +612,18 @@ const ConstellationScene: React.FC<{
   pillScale?: number;
   centerY?: number;
 }> = ({ words, nodes, pillScale = 1, centerY = 58 }) => (
-  <IndigoStage warm>
+  <BrandStage warm>
     <Stars count={20} seed="cs" opacity={0.7} />
     <div style={{ position: 'absolute', top: 92, left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
       <RiseLine words={words} size={86} color="#fff" delay={0} stagger={2} />
     </div>
     <Constellation nodes={nodes} delay={6} hubDelay={2} pillScale={pillScale} hubSize={212} centerY={centerY} />
-  </IndigoStage>
+  </BrandStage>
 );
 
 export const ScenePosLogos: React.FC = () => (
   <ConstellationScene
-    words={[{ t: 'it' }, { t: 'plugs' }, { t: 'into' }, { t: 'your' }, { t: 'register', color: V.green }]}
+    words={[{ t: 'it' }, { t: 'plugs' }, { t: 'into' }, { t: 'your' }, { t: 'register', color: V.sky }]}
     nodes={[
       { brand: 'toast', x: 19, y: 36 },
       { brand: 'square', x: 14, y: 59 },
@@ -637,7 +637,7 @@ export const ScenePosLogos: React.FC = () => (
 
 export const SceneChannelLogos: React.FC = () => (
   <ConstellationScene
-    words={[{ t: 'and' }, { t: 'every' }, { t: 'channel' }, { t: 'you' }, { t: 'buy', color: V.green }]}
+    words={[{ t: 'and' }, { t: 'every' }, { t: 'channel' }, { t: 'you' }, { t: 'buy', color: V.sky }]}
     pillScale={0.9}
     nodes={[
       { brand: 'meta', x: 17, y: 31 },
@@ -655,11 +655,56 @@ export const SceneChannelLogos: React.FC = () => (
 );
 
 /* ================================================================== *
- * 10. payoff
+ * 10. where they are -- VCS's own line, and the reason the pin is the
+ *     period in their logo
+ * ================================================================== */
+
+// kept clear of the centre band, which the headline owns
+const PIN_SITES: { x: number; y: number; label: string; delay: number }[] = [
+  { x: 12, y: 24, label: 'South Tampa', delay: 14 },
+  { x: 27, y: 84, label: 'Brandon', delay: 20 },
+  { x: 76, y: 21, label: 'West Palm Beach', delay: 26 },
+  { x: 90, y: 52, label: 'Sarasota', delay: 32 },
+  { x: 64, y: 86, label: 'Clearwater', delay: 38 },
+];
+
+export const SceneWhereTheyAre: React.FC = () => (
+  <BrandStage>
+    <Stars count={18} seed="wh" opacity={0.55} />
+    {PIN_SITES.map((p) => (
+      <div
+        key={p.label}
+        style={{ position: 'absolute', left: `${p.x}%`, top: `${p.y}%`, transform: 'translate(-50%,-100%)' }}
+      >
+        <MapPin size={78} delay={p.delay} label={p.label} />
+      </div>
+    ))}
+    <Center gap={4}>
+      <RiseLine
+        words={[{ t: 'every' }, { t: 'platform' }, { t: 'knows' }, { t: 'who', color: V.skySoft }, { t: 'they' }, { t: 'are.' }]}
+        size={74}
+        color="rgba(255,255,255,0.9)"
+        delay={0}
+        stagger={2}
+      />
+      <RiseLine
+        words={[{ t: 'Vero' }, { t: 'knows' }, { t: 'where.', color: V.sky }]}
+        size={124}
+        color="#fff"
+        delay={12}
+        stagger={3}
+      />
+      <Squiggle delay={30} width={520} color={V.sky} />
+    </Center>
+  </BrandStage>
+);
+
+/* ================================================================== *
+ * 11. payoff
  * ================================================================== */
 
 export const ScenePayoff: React.FC = () => (
-  <IndigoStage warm>
+  <BrandStage warm>
     <Stars count={28} seed="po" />
     <Center gap={6}>
       <RiseLine
@@ -703,11 +748,11 @@ export const ScenePayoff: React.FC = () => (
         badge="BLENDED"
       />
     </FloatCard>
-  </IndigoStage>
+  </BrandStage>
 );
 
 /* ================================================================== *
- * 11. close
+ * 12. close
  * ================================================================== */
 
 export const SceneCTA: React.FC = () => {
@@ -716,7 +761,7 @@ export const SceneCTA: React.FC = () => {
   const lock = usePunch(0);
   return (
     <LightStage>
-      <Stars count={18} color="rgba(74,68,240,0.28)" seed="cta" />
+      <Stars count={18} color="rgba(33,89,176,0.30)" seed="cta" />
       {/* dotted orbit behind the lockup, as the reference closes on its logo */}
       <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
         <div
@@ -724,7 +769,7 @@ export const SceneCTA: React.FC = () => {
             width: 860,
             height: 860,
             borderRadius: 999,
-            border: `2px dashed rgba(74,68,240,0.20)`,
+            border: `2px dashed rgba(33,89,176,0.22)`,
             transform: `rotate(${ring}deg) scale(${0.92 + lock * 0.08})`,
             marginTop: -40,
           }}
@@ -736,7 +781,7 @@ export const SceneCTA: React.FC = () => {
         </div>
         <div style={{ marginTop: 10 }}>
           <RiseLine
-            words={[{ t: 'see' }, { t: 'it' }, { t: 'on' }, { t: 'your' }, { t: 'own' }, { t: 'numbers.', color: V.blue }]}
+            words={[{ t: 'see' }, { t: 'it' }, { t: 'on' }, { t: 'your' }, { t: 'own' }, { t: 'numbers.', color: V.brand }]}
             size={100}
             delay={12}
             stagger={3}
@@ -744,6 +789,7 @@ export const SceneCTA: React.FC = () => {
         </div>
         <Micro delay={34} size={24}>15 minutes · your locations · not a slide deck</Micro>
         <ContactBlock delay={46} />
+        <ByVcs delay={60} />
       </Center>
     </LightStage>
   );
@@ -765,11 +811,56 @@ const ContactBlock: React.FC<{ delay: number }> = ({ delay }) => {
         color: V.ink,
       }}
     >
-      <span style={{ fontWeight: 700, color: V.blue }}>vc-solutions.net</span>
+      <span style={{ fontWeight: 700, color: V.brand }}>vc-solutions.net</span>
       <Dot />
       <span>Keegan Zoller, Founder</span>
       <Dot />
       <span>(813) 219-0955</span>
+    </div>
+  );
+};
+
+/** Vero is VCS's product. The close says so. */
+const ByVcs: React.FC<{ delay: number }> = ({ delay }) => {
+  const s = useEase(delay, 0.6);
+  return (
+    <div
+      style={{
+        opacity: s * 0.9,
+        transform: `translateY(${(1 - s) * 14}px)`,
+        marginTop: 34,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 20,
+      }}
+    >
+      <span style={{ width: 54, height: 1, background: V.border }} />
+      <span
+        style={{
+          fontFamily: FONT_BODY,
+          fontSize: 17,
+          fontWeight: 600,
+          letterSpacing: 3.4,
+          textTransform: 'uppercase',
+          color: V.inkMuted,
+        }}
+      >
+        a
+      </span>
+      <VcsLogo height={72} />
+      <span
+        style={{
+          fontFamily: FONT_BODY,
+          fontSize: 17,
+          fontWeight: 600,
+          letterSpacing: 3.4,
+          textTransform: 'uppercase',
+          color: V.inkMuted,
+        }}
+      >
+        product
+      </span>
+      <span style={{ width: 54, height: 1, background: V.border }} />
     </div>
   );
 };

@@ -4,8 +4,17 @@
  * A second composition alongside the original 1:20 `VeroVSL`. Same product,
  * different register: kinetic typography, hard cuts, full-bleed colour flips.
  *
- * The palette is Vero's own, sampled from the product UI (see HANDOFF.md §3),
- * not invented. `blue` is the exact button fill from the Connections page.
+ * PALETTE SOURCE: vc-solutions.net, not invented and not borrowed from the
+ * reference video. The named values below are the site's own CSS custom
+ * properties, read straight off the homepage:
+ *
+ *   --vc-accent: #2159B0   --vc-navy: #0f172a   --vc-blue: #007bff
+ *   --vc-text-dark: #1E212D   --text-slate: #475569   --bg-off-white: #f8fafc
+ *
+ * The site's signature gradient is `linear-gradient(135deg,#2159B0,#38BDF8)`,
+ * which is where `brand` and `sky` come from. Vero is VCS's product, so the
+ * video speaks in VCS's voice; the product's own light UI shows up inside
+ * cards and screenshots unchanged.
  */
 
 export const FPS = 30;
@@ -13,40 +22,67 @@ export const WIDTH = 1920;
 export const HEIGHT = 1080;
 
 export const V = {
-  /** Vero primary. Sampled from the "Manage connections" button fill. */
-  blue: '#0006C1',
-  blueDeep: '#00068E',
+  /** --vc-accent. The primary. Buttons, accent words on light, spoke pulses. */
+  brand: '#2159B0',
+  brandDeep: '#16418F',
+  /** --vc-blue. */
+  brandBright: '#007BFF',
+
+  /** The far end of the site's signature gradient. Accent word on dark. */
+  sky: '#38BDF8',
+  skySoft: '#8AC4FF',
+  tint: '#A8CDFF',
+
+  /** --vc-navy, and a deeper one for the top of the stage gradient. */
+  navy: '#0F172A',
+  navyDeep: '#080E1C',
+
+  /** --vc-text-dark and --text-slate. */
+  ink: '#1E212D',
+  inkSoft: '#475569',
+  inkMuted: '#6B7A99',
+
+  /** --bg-off-white. */
+  page: '#F8FAFC',
+  surface: '#FFFFFF',
+  border: '#E4E8F0',
 
   /**
-   * Full-bleed stage gradient. Same hue as `blue` (238deg) with the luminance
-   * lifted, because #0006C1 across 1920x1080 eats white type alive. Keep the
-   * hue locked if you retune these -- that is what makes the flips read as one
-   * brand rather than two.
+   * Green is not decoration here. It means "this went the right way":
+   * connected, paid, positive, resolved. Sky carries everything else.
    */
-  stageA: '#1A1FD6',
-  stageB: '#4A44F0',
-  stageC: '#6A5CFF',
-
-  /** Tint sampled from the product's soft-blue link text. */
-  tint: '#BDC4FF',
-  tintSoft: '#E2E5F6',
-
-  /** Near-black with a navy cast, for type on white. */
-  ink: '#0A0D2B',
-  inkSoft: '#5A5F8A',
-
-  page: '#FBFAFD',
-  surface: '#FFFFFF',
-  border: '#E5E8F0',
-
-  green: '#12C97E',
+  green: '#34D399',
   greenDeep: '#1F9D57',
+
   red: '#FF5A5F',
   redDeep: '#D93A3A',
   amber: '#FFB547',
 } as const;
 
-export const FONT_HEAD = 'Manrope Variable, Inter Variable, system-ui, sans-serif';
+/** The site's signature gradient, for squiggles and accent rules. */
+export const BRAND_GRADIENT = [V.brand, V.sky] as const;
+
+/**
+ * Dark stage: --vc-navy in the corner, falling into --vc-accent across the
+ * middle. The stops are pushed early on purpose -- with navy at 46% the centre
+ * of a 1920x1080 frame lands in the dark half and struck-through copy stops
+ * being readable. The centre of the frame wants to be brand blue.
+ */
+export const STAGE_DARK = `linear-gradient(152deg, ${V.navy} 0%, ${V.brandDeep} 34%, ${V.brand} 74%, #2B6FCB 100%)`;
+/** The brighter variant, for the constellations and the payoff. */
+export const STAGE_BRIGHT = `linear-gradient(135deg, #123B86 0%, ${V.brand} 50%, #2F8FD4 100%)`;
+
+/**
+ * Anton is vc-solutions.net's heading font (--heading-font-font-family), so
+ * it carries the video's voice. It is a single weight (400), condensed, and
+ * already tightly spaced -- do not pile negative letter-spacing on it the way
+ * you would with a grotesque.
+ *
+ * Inter is the body face on the site's custom blocks and reads as the product
+ * UI font inside cards, which is the distinction we want: VCS speaks, Vero
+ * shows itself.
+ */
+export const FONT_HEAD = 'Anton, Inter Variable, system-ui, sans-serif';
 export const FONT_BODY = 'Inter Variable, system-ui, sans-serif';
 
 /**
@@ -65,8 +101,9 @@ export const FAST = {
   steps: { from: 735, dur: 240 },
   posLogos: { from: 975, dur: 110 },
   channelLogos: { from: 1085, dur: 110 },
-  payoff: { from: 1195, dur: 125 },
-  cta: { from: 1320, dur: 150 },
+  whereTheyAre: { from: 1195, dur: 115 },
+  payoff: { from: 1310, dur: 125 },
+  cta: { from: 1435, dur: 155 },
 } as const;
 
-export const FAST_TOTAL = 1470; // 49s
+export const FAST_TOTAL = 1590; // 53s

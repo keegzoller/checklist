@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, interpolate, random, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { V, FONT_BODY, FONT_HEAD } from './theme';
+import { BRAND_GRADIENT, STAGE_BRIGHT, STAGE_DARK, V, FONT_BODY, FONT_HEAD } from './theme';
 
 /* ------------------------------------------------------------------ *
  * springs
@@ -76,22 +76,32 @@ export const Stars: React.FC<{ count?: number; color?: string; seed?: string; op
   );
 };
 
-/** Full-bleed Vero indigo. The `warm` variant pushes toward the violet end. */
-export const IndigoStage: React.FC<{ children?: React.ReactNode; warm?: boolean; dots?: boolean }> = ({
+/**
+ * Full-bleed VCS blue: navy falling into --vc-accent. The `warm` variant is
+ * the brighter one, pushed toward the sky end of the site's signature
+ * gradient. Named for what it does, not the old colour.
+ */
+export const BrandStage: React.FC<{ children?: React.ReactNode; warm?: boolean; dots?: boolean }> = ({
   children,
   warm = false,
   dots = true,
 }) => {
   const frame = useCurrentFrame();
-  const drift = Math.sin(frame * 0.01) * 6;
+  const drift = Math.sin(frame * 0.01) * 5;
   return (
     <AbsoluteFill
       style={{
         background: warm
-          ? `linear-gradient(${128 + drift}deg, ${V.stageA} 0%, ${V.stageB} 48%, ${V.stageC} 100%)`
-          : `linear-gradient(${142 + drift}deg, ${V.stageA} 0%, ${V.stageB} 62%, ${V.stageB} 100%)`,
+          ? STAGE_BRIGHT.replace('135deg', `${135 + drift}deg`)
+          : STAGE_DARK.replace('152deg', `${152 + drift}deg`),
       }}
     >
+      <AbsoluteFill
+        style={{
+          background:
+            'radial-gradient(1250px 760px at 50% 50%, rgba(96,165,250,0.20) 0%, rgba(96,165,250,0) 68%)',
+        }}
+      />
       {dots && (
         <AbsoluteFill
           style={{
@@ -113,7 +123,7 @@ export const LightStage: React.FC<{ children?: React.ReactNode }> = ({ children 
     <AbsoluteFill
       style={{
         background:
-          'radial-gradient(1500px 900px at 50% 120%, rgba(74,68,240,0.10) 0%, rgba(251,250,253,0) 65%)',
+          'radial-gradient(1500px 900px at 50% 120%, rgba(33,89,176,0.11) 0%, rgba(248,250,252,0) 65%)',
       }}
     />
     {children}
@@ -139,7 +149,7 @@ export const DiagonalBand: React.FC<{ delay?: number; height?: number; top?: str
         width: '124%',
         height,
         transform: `rotate(-7deg) translateX(${(1 - s) * -130}%)`,
-        background: `linear-gradient(90deg, rgba(189,196,255,0) 0%, ${V.tint} 22%, ${V.tintSoft} 78%, rgba(226,229,246,0) 100%)`,
+        background: `linear-gradient(90deg, rgba(168,205,255,0) 0%, ${V.tint} 22%, #DCEBFF 78%, rgba(220,235,255,0) 100%)`,
         opacity: 0.9,
       }}
     />
@@ -171,8 +181,8 @@ export const RiseLine: React.FC<{
   size = 118,
   color = V.ink,
   stagger = 3,
-  weight = 800,
-  gap = 0.28,
+  weight = 400,
+  gap = 0.26,
   justify = 'center',
 }) => (
   <div
@@ -185,8 +195,10 @@ export const RiseLine: React.FC<{
       fontFamily: FONT_HEAD,
       fontSize: size,
       fontWeight: weight,
-      letterSpacing: -size * 0.032,
-      lineHeight: 1.02,
+      // Anton ships one weight and is already condensed -- negative tracking
+      // welds the letters together. A hair of positive spacing opens it up.
+      letterSpacing: size * 0.004,
+      lineHeight: 1.04,
     }}
   >
     {words.map((w, i) => (
@@ -209,8 +221,8 @@ const MaskedWord: React.FC<{ word: Word; delay: number; color: string; size: num
       style={{
         display: 'inline-block',
         overflow: 'hidden',
-        padding: `${size * 0.16}px 0 ${size * 0.22}px`,
-        margin: `${-size * 0.16}px 0 ${-size * 0.22}px`,
+        padding: `${size * 0.12}px 0 ${size * 0.18}px`,
+        margin: `${-size * 0.12}px 0 ${-size * 0.18}px`,
       }}
     >
       <span
@@ -258,17 +270,25 @@ export const StrikeThrough: React.FC<{ delay?: number; color?: string; thickness
 export const Squiggle: React.FC<{
   delay?: number;
   width?: number;
+  /** A solid colour, or omit it to use the site's #2159B0 -> #38BDF8 gradient. */
   color?: string;
   thickness?: number;
-}> = ({ delay = 0, width = 520, color = V.blue, thickness = 11 }) => {
+}> = ({ delay = 0, width = 520, color, thickness = 11 }) => {
   const s = useEase(delay, 0.9);
   const LEN = 1080; // rough arclength of the path below
+  const id = React.useId();
   return (
     <svg width={width} height={width * 0.075} viewBox="0 0 1000 76" style={{ overflow: 'visible' }}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={BRAND_GRADIENT[0]} />
+          <stop offset="100%" stopColor={BRAND_GRADIENT[1]} />
+        </linearGradient>
+      </defs>
       <path
         d="M8 50 C 120 12, 200 12, 300 44 S 470 78, 570 44 S 760 8, 870 40 S 960 60, 992 50"
         fill="none"
-        stroke={color}
+        stroke={color ?? `url(#${id})`}
         strokeWidth={thickness}
         strokeLinecap="round"
         strokeDasharray={LEN}
@@ -319,7 +339,7 @@ export const Counter: React.FC<{
   format?: (n: number) => string;
   size?: number;
   color?: string;
-}> = ({ to, delay = 0, duration = 42, format = (n) => Math.round(n).toLocaleString('en-US'), size = 260, color = V.blue }) => {
+}> = ({ to, delay = 0, duration = 42, format = (n) => Math.round(n).toLocaleString('en-US'), size = 260, color = V.brand }) => {
   const frame = useCurrentFrame();
   const t = interpolate(frame - delay, [0, duration], [0, 1], {
     extrapolateLeft: 'clamp',
@@ -332,8 +352,8 @@ export const Counter: React.FC<{
       style={{
         fontFamily: FONT_HEAD,
         fontSize: size,
-        fontWeight: 800,
-        letterSpacing: -size * 0.04,
+        fontWeight: 400,
+        letterSpacing: size * 0.006,
         color,
         lineHeight: 1,
         transform: `scale(${0.82 + pop * 0.18})`,
@@ -381,8 +401,8 @@ export const FloatCard: React.FC<{
         background: dark ? 'rgba(10,13,43,0.92)' : V.surface,
         border: dark ? '1px solid rgba(255,255,255,0.10)' : `1px solid ${V.border}`,
         boxShadow: dark
-          ? '0 26px 60px rgba(0,0,0,0.40)'
-          : '0 26px 60px rgba(10,13,43,0.16), 0 2px 6px rgba(10,13,43,0.06)',
+          ? '0 26px 60px rgba(8,14,28,0.44)'
+          : '0 18px 44px rgba(15,23,41,0.14), 0 2px 6px rgba(33,89,176,0.10)',
         fontFamily: FONT_BODY,
         color: dark ? V.surface : V.ink,
         opacity: Math.min(1, s * 1.5),
@@ -405,7 +425,7 @@ export const StatCard: React.FC<{
   <>
     <div style={{ fontSize: 18, fontWeight: 600, color: V.inkSoft, letterSpacing: 0.3 }}>{label}</div>
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
-      <div style={{ fontFamily: FONT_HEAD, fontSize: 46, fontWeight: 800, color: V.ink, lineHeight: 1.1 }}>
+      <div style={{ fontFamily: FONT_HEAD, fontSize: 46, fontWeight: 400, color: V.ink, lineHeight: 1.15 }}>
         {value}
       </div>
       {badge && (

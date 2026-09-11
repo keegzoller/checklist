@@ -7,8 +7,9 @@ Two cuts, same project:
 
 - **`VeroVSL`** — 1:20, the considered version. Dark stage, real product screenshots,
   scene cross-fades. For a sales follow-up or an embed where someone is already leaning in.
-- **`VeroFast`** — 0:49, the feed version. Kinetic typography, hard colour cuts, the POS
-  and marketing-channel logo constellations. Built to stop a scroll.
+- **`VeroFast`** — 0:53, the feed version. Kinetic typography, hard colour cuts, the POS
+  and marketing-channel logo constellations. Built to stop a scroll, and themed to
+  vc-solutions.net rather than to Vero's product UI alone.
 
 ## Run it
 
@@ -35,7 +36,7 @@ binary". Also: `--concurrency` cannot exceed your core count.
 | id | size | length | use |
 | --- | --- | --- | --- |
 | `VeroVSL` | 1920x1080 | 1:20 | email embed, site, YouTube, sales follow-up |
-| `VeroFast` | 1920x1080 | 0:49 | paid social, LinkedIn feed, top of a cold email |
+| `VeroFast` | 1920x1080 | 0:53 | paid social, LinkedIn feed, top of a cold email |
 
 A square or vertical feed cut needs its own layouts rather than a resized frame (the scenes
 are built on a wide grid). That is a separate pass, not a flag on this one.
@@ -104,6 +105,36 @@ import { Audio, staticFile } from 'remotion';
 Music goes at the top level of `VeroVSL`, under everything else, with `volume={0.12}` so it
 sits behind the read.
 
+## Brand
+
+The fast cut is themed to **vc-solutions.net**, not to the reference video it borrows its
+motion from. Every value in `src/fast/theme.ts` is the site's own, read off the live CSS:
+
+| Token | Value | Source |
+| --- | --- | --- |
+| `V.brand` | `#2159B0` | `--vc-accent` |
+| `V.brandBright` | `#007BFF` | `--vc-blue` |
+| `V.sky` | `#38BDF8` | far end of `linear-gradient(135deg,#2159B0,#38BDF8)` |
+| `V.navy` | `#0F172A` | `--vc-navy` |
+| `V.ink` | `#1E212D` | `--vc-text-dark` |
+| `V.inkSoft` | `#475569` | `--text-slate` |
+| `V.page` | `#F8FAFC` | `--bg-off-white` |
+
+`BRAND_GRADIENT` is the site's signature gradient and is what every squiggle underline
+draws in. `STAGE_DARK` and `STAGE_BRIGHT` are the two full-bleed stages.
+
+**Two typefaces, two voices.** `FONT_HEAD` is **Anton** — the site's
+`--heading-font-font-family` — and carries the video's own voice: headlines, hero numbers,
+stat values. `FONT_BODY` is **Inter** and carries anything imitating Vero's product UI: the
+Vero wordmark, logo pills, the connections list, the ranked table, the answer card. Keep
+that split. A product card set in Anton reads as a poster, not as software.
+
+**Colour has meaning.** `V.green` (`#34D399`) is reserved for outcomes — connected, paid,
+positive, resolved. `V.sky` carries every other accent. Do not use green decoratively.
+
+Both fonts are self-hosted from npm (`@fontsource/anton`, `@fontsource-variable/inter`), so
+the render never reaches for Google Fonts.
+
 ## Logos
 
 The fast cut shows six point-of-sale brands and ten marketing channels. They are all drawn
@@ -122,6 +153,14 @@ transparency (512px+) or SVG.
 
 `npm run icons` regenerates `src/fast/brandPaths.generated.ts` after you change the brand
 list in `tools/gen-brand-paths.mjs`.
+
+### The VCS logo
+
+`public/logos/vcs-logo.png` is the real asset from vc-solutions.net — a navy script
+wordmark with a blue swoosh and a **map pin for the period**. That pin is the whole VCS
+idea ("every platform knows who people are, we know where they are"), so it is redrawn as
+an animated component (`MapPin` in `src/fast/Logos.tsx`) and gets its own scene rather than
+being decoration. The logo is dark artwork and only works on a light surface.
 
 ### The Vero mark
 

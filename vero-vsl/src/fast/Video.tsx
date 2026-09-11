@@ -1,7 +1,9 @@
 import React from 'react';
 import { AbsoluteFill, Sequence } from 'remotion';
 import '@fontsource-variable/inter';
-import '@fontsource-variable/manrope';
+// Anton is vc-solutions.net's heading font, self-hosted from npm so the render
+// never reaches for Google Fonts.
+import '@fontsource/anton';
 import { FAST, FAST_TOTAL, V } from './theme';
 import {
   SceneHook,
@@ -13,6 +15,7 @@ import {
   SceneSteps,
   ScenePosLogos,
   SceneChannelLogos,
+  SceneWhereTheyAre,
   ScenePayoff,
   SceneCTA,
 } from './Scenes';
@@ -33,6 +36,7 @@ const ORDER = [
   [FAST.steps, SceneSteps],
   [FAST.posLogos, ScenePosLogos],
   [FAST.channelLogos, SceneChannelLogos],
+  [FAST.whereTheyAre, SceneWhereTheyAre],
   [FAST.payoff, ScenePayoff],
   [FAST.cta, SceneCTA],
 ] as const;
