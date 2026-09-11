@@ -7,7 +7,8 @@
     "render": "remotion render VeroVSL out/vero-vsl.mp4",
     "still": "remotion still VeroVSL out/frame.png",
     "render:fast": "remotion render VeroFast out/vero-fast.mp4",
-    "icons": "node tools/gen-brand-paths.mjs"
+    "icons": "node tools/gen-brand-paths.mjs",
+    "render:film": "remotion render VeroFilm out/vero-film.mp4"
   },
   "dependencies": {
     "@fontsource-variable/epilogue": "^5.3.0",

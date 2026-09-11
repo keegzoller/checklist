@@ -252,11 +252,59 @@ and no vertical cut — same reason as §6.3, the scenes are laid out on a wide 
 
 ---
 
-## 8. Suggested first prompt in Claude Code
+## 8. The product film (added 2026-09-11, and the one to show people)
 
-> This is a Remotion project that renders two product videos for Vero: `VeroVSL` (1:20,
-> dark stage, real screenshots) and `VeroFast` (0:49, kinetic typography, logo
-> constellations). Read HANDOFF.md, then SCRIPT.md or SCRIPT-FAST.md depending on which cut
-> I mean. I want to [X]. Keep product surfaces light against a contrasting stage, keep every
-> illustrative number tagged "sample view," and do not add cross-fades to the fast cut --
-> the hard cuts are the style.
+A third composition, `VeroFilm`. 0:44, 1,330 frames, 1920x1080. It replaces neither of the
+others in the repo, but it is the one that should go on the site.
+
+**Why it exists.** The first two cuts sold an attribution product — connect your data, see
+what worked. Reading *Vero: what it is and why it exists* makes clear that is the category
+Vero is deliberately **not** in, and it is why those cuts felt generic. Every tool in the
+market makes that promise.
+
+The film makes the real argument instead: every party in marketing is paid to say it
+worked, the owner is the only one with money at risk and the only one who cannot check,
+and Vero is built to say when it didn't — and when nobody can tell yet. The payoff shot is
+a lift table where **+8.4% is withheld and +8.2% is reported**, because significance
+depends on how noisy a location is rather than how big the number looks. No competitor
+will show a number they refuse to claim; that is the demonstration.
+
+Two beats near the end are spent on what Vero *cannot* do. That is not a hedge — per the
+source document, leading with the limit is what makes the rest credible. Do not cut them.
+
+**Craft.** Built in the grammar of a modern SaaS launch film, not kinetic typography:
+near-white stage, blur-and-lift reveals on a single ease-out curve (no springs — the wobble
+is what made the earlier cuts read as a template), grey and black words in the same
+sentence so only the part being said is dark, and product panels 1,500-1,800px wide that
+bleed off the frame edge.
+
+Two rules that are easy to undo:
+
+- **A statement is at most five words a line and never below ~100px.** The first pass of
+  this cut was seven-word lines at 86px, which reads as a paragraph, not a title.
+- **Never centre a product panel.** It bleeds off the edge, or it is not doing its job.
+
+**Typography differs from the poster cut on purpose.** The film sets headlines in Manrope
+rather than VCS's Anton. A condensed display face shouting next to real product UI is what
+makes a film look like a template, and Vero's own interface is already a grotesque. The
+brand stays VCS's through colour, the logo and the language. It is one constant in
+`src/film/theme.ts` if you disagree.
+
+**What is designed rather than real:** the report cards, the double-counted order, the
+method panel and the lift table. Two real screenshots carry the product (Connections and
+the workspace home). Capturing a rendered answer and a real lift table would replace the
+last two designed panels — that is still the single highest-value capture, as it was in §6.
+
+**Still open:** no audio (VO script in `SCRIPT-FILM.md`), and no vertical cut.
+
+---
+
+## 9. Suggested first prompt in Claude Code
+
+> This is a Remotion project that renders three videos for Vero. `VeroFilm` (0:44) is the
+> current one -- a product film built on the argument in "Vero: what it is and why it
+> exists". `VeroFast` (0:53) and `VeroVSL` (1:20) are earlier cuts. Read HANDOFF.md, then
+> SCRIPT-FILM.md. I want to [X]. On the film: no springs, statements are at most five words
+> a line and never below 100px, product panels always bleed off the frame edge, and do not
+> cut the two beats about what Vero cannot do -- leading with the limit is what makes the
+> rest credible.

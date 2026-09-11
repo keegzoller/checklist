@@ -3,13 +3,17 @@
 Product videos for Vero, built in Remotion so every word, number and screen can be changed
 and re-rendered without touching a video editor.
 
-Two cuts, same project:
+Three cuts, same project:
 
 - **`VeroVSL`** — 1:20, the considered version. Dark stage, real product screenshots,
   scene cross-fades. For a sales follow-up or an embed where someone is already leaning in.
 - **`VeroFast`** — 0:53, the feed version. Kinetic typography, hard colour cuts, the POS
   and marketing-channel logo constellations. Built to stop a scroll, and themed to
   vc-solutions.net rather than to Vero's product UI alone.
+- **`VeroFilm`** — 0:44, **the current one**. A product film rather than a poster: near-white
+  stage, blur reveals, real product UI at size, and Vero's actual argument from *what it is
+  and why it exists* — every party is paid to say it worked, you're the only one who can't
+  check, and this is the tool built to say when it can't tell. Start here.
 
 ## Run it
 
@@ -17,7 +21,8 @@ Two cuts, same project:
 npm install
 npm run studio       # live editor at localhost:3000, scrub and edit with hot reload
 npm run render       # the 1:20 cut  -> out/vero-vsl.mp4
-npm run render:fast  # the 0:49 cut  -> out/vero-fast.mp4
+npm run render:fast  # the 0:53 poster cut -> out/vero-fast.mp4
+npm run render:film  # the 0:44 product film -> out/vero-film.mp4
 ```
 
 Node 18+ required. If Remotion cannot download a browser on your machine, point it at one
@@ -37,6 +42,7 @@ binary". Also: `--concurrency` cannot exceed your core count.
 | --- | --- | --- | --- |
 | `VeroVSL` | 1920x1080 | 1:20 | email embed, site, YouTube, sales follow-up |
 | `VeroFast` | 1920x1080 | 0:53 | paid social, LinkedIn feed, top of a cold email |
+| `VeroFilm` | 1920x1080 | 0:44 | the site, a sales follow-up, anywhere the viewer will give you forty seconds |
 
 A square or vertical feed cut needs its own layouts rather than a resized frame (the scenes
 are built on a wide grid). That is a separate pass, not a flag on this one.
@@ -75,7 +81,7 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/components/Base.tsx` | background, type styles, motion helpers |
 | `src/screens.ts` | screenshot slots |
 
-### The 0:49 cut
+### The 0:53 poster cut
 
 | File | What lives there |
 | --- | --- |
@@ -86,9 +92,19 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/fast/Logos.tsx` | the Vero mark, brand glyphs, logo pills, the constellation |
 | `src/fast/logoAssets.ts` | drop-in slots for official logo files |
 
+### The 0:44 product film
+
+| File | What lives there |
+| --- | --- |
+| `SCRIPT-FILM.md` | the argument, the beat table, the VO, and what is real |
+| `src/film/theme.ts` | the `F` palette and the `FILM` beat map |
+| `src/film/Motion.tsx` | the whole motion vocabulary: blur reveal, stage, chips, panels |
+| `src/film/Scenes.tsx` | all fourteen beats and every line of copy |
+| `src/film/Panels.tsx` | the designed Vero surfaces the recording never captured |
+
 Timing is frame-based at 30fps, so 30 frames is one second. To give a scene more room,
-change its `dur` (in `src/theme.ts` for the long cut, `src/fast/theme.ts` for the fast one)
-and push every later scene's `from` by the same amount. The `TOTAL` / `FAST_TOTAL` constant
+change its `dur` (`src/theme.ts`, `src/fast/theme.ts` or `src/film/theme.ts`) and push every
+later scene's `from` by the same amount. The `TOTAL` / `FAST_TOTAL` / `FILM_TOTAL` constant
 at the bottom of each file is the sum.
 
 ## Adding voiceover
@@ -123,11 +139,15 @@ motion from. Every value in `src/fast/theme.ts` is the site's own, read off the 
 `BRAND_GRADIENT` is the site's signature gradient and is what every squiggle underline
 draws in. `STAGE_DARK` and `STAGE_BRIGHT` are the two full-bleed stages.
 
-**Two typefaces, two voices.** `FONT_HEAD` is **Anton** — the site's
-`--heading-font-font-family` — and carries the video's own voice: headlines, hero numbers,
-stat values. `FONT_BODY` is **Inter** and carries anything imitating Vero's product UI: the
-Vero wordmark, logo pills, the connections list, the ranked table, the answer card. Keep
-that split. A product card set in Anton reads as a poster, not as software.
+**Typography differs by cut, on purpose.** The poster cut sets headlines in **Anton**, the
+site's `--heading-font-font-family`, which suits a poster. The product film sets them in
+**Manrope** instead: a condensed display face shouting next to real product UI is exactly
+what makes a film read as a template, and Vero's own interface is already set in a
+grotesque. The brand stays VCS's through colour, the logo and the language. Flipping the
+film back to Anton is one constant in `src/film/theme.ts`.
+
+In both cuts, anything imitating Vero's product UI — the Vero wordmark, logo pills, tables,
+answer cards — is set in **Inter**, the product's own face.
 
 **Colour has meaning.** `V.green` (`#34D399`) is reserved for outcomes — connected, paid,
 positive, resolved. `V.sky` carries every other accent. Do not use green decoratively.
