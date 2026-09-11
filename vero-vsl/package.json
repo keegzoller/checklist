@@ -1,0 +1,26 @@
+{
+  "name": "vero-vsl",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render VeroVSL out/vero-vsl.mp4",
+    "still": "remotion still VeroVSL out/frame.png",
+    "render:fast": "remotion render VeroFast out/vero-fast.mp4",
+    "icons": "node tools/gen-brand-paths.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@remotion/cli": "4.0.401",
+    "@remotion/google-fonts": "4.0.401",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.401",
+    "simple-icons": "^16.30.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.6.3"
+  }
+}
