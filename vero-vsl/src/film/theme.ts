@@ -69,27 +69,55 @@ export const FONT_UI = 'Inter Variable, system-ui, sans-serif';
 
 /**
  * Beats, in frames @30fps. Hard cuts, no overlap -- each scene paints its own
- * background from frame 0. Most beats carry two or three sub-reveals inside
- * them, which is where the density comes from; stretching a beat to give a
- * line more room is almost always the wrong fix.
+ * background from frame 0.
+ *
+ * THE ARC, in five acts. The earlier version of this cut explained the method
+ * beautifully and never told an owner what they would actually receive, which
+ * is the difference between "clever" and "worth buying":
+ *
+ *   1. the feeling      -- you're spending it either way, and you still guess
+ *   2. why nobody knows -- everyone reporting to you is graded by themselves,
+ *                          and marketing is the last big expense nobody checks
+ *   3. what Vero does   -- reads the register, compares against your own quiet
+ *                          locations
+ *   4. WHAT YOU GET     -- four concrete things, each with the money attached
+ *   5. the close        -- what it won't do, and the line
+ *
+ * Text-heavy beats hold roughly a second past the last word landing. That is
+ * deliberate: a line you cannot finish reading may as well not be there.
  *
  * `FILM_TOTAL` must equal the sum.
  */
 export const FILM = {
-  open: { from: 0, dur: 50 },
-  onlyOne: { from: 50, dur: 100 },
-  theRoom: { from: 150, dur: 110 },
-  sameSale: { from: 260, dur: 80 },
-  intro: { from: 340, dur: 65 },
-  register: { from: 405, dur: 95 },
-  twoQuestions: { from: 500, dur: 105 },
-  method: { from: 605, dur: 120 },
-  refuse: { from: 725, dur: 125 },
-  proof: { from: 850, dur: 95 },
-  partner: { from: 945, dur: 105 },
-  limit: { from: 1050, dur: 85 },
-  measure: { from: 1135, dur: 80 },
-  cta: { from: 1215, dur: 115 },
+  open: { from: 0, dur: 55 },
+
+  // act 1 -- the feeling
+  eitherWay: { from: 55, dur: 115 },
+  everyMonth: { from: 170, dur: 120 },
+  gut: { from: 290, dur: 125 },
+
+  // act 2 -- why nobody can tell you
+  graded: { from: 415, dur: 135 },
+  sameSale: { from: 550, dur: 100 },
+  lastExpense: { from: 650, dur: 130 },
+
+  // act 3 -- what Vero does
+  register: { from: 780, dur: 120 },
+  quietOnes: { from: 900, dur: 140 },
+
+  // act 4 -- what you actually get
+  whatYouGet: { from: 1040, dur: 55 },
+  getLocations: { from: 1095, dur: 110 },
+  getNextDollar: { from: 1205, dur: 110 },
+  getLeak: { from: 1315, dur: 110 },
+  getAsk: { from: 1425, dur: 115 },
+  sounds: { from: 1540, dur: 175 },
+  tellYouNo: { from: 1715, dur: 130 },
+
+  // act 5 -- the close
+  limit: { from: 1845, dur: 95 },
+  measure: { from: 1940, dur: 95 },
+  cta: { from: 2035, dur: 130 },
 } as const;
 
-export const FILM_TOTAL = 1330; // 44.3s
+export const FILM_TOTAL = 2165; // 72.2s

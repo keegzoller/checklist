@@ -10,10 +10,10 @@ Three cuts, same project:
 - **`VeroFast`** — 0:53, the feed version. Kinetic typography, hard colour cuts, the POS
   and marketing-channel logo constellations. Built to stop a scroll, and themed to
   vc-solutions.net rather than to Vero's product UI alone.
-- **`VeroFilm`** — 0:44, **the current one**. A product film rather than a poster: near-white
-  stage, blur reveals, real product UI at size, and Vero's actual argument from *what it is
-  and why it exists* — every party is paid to say it worked, you're the only one who can't
-  check, and this is the tool built to say when it can't tell. Start here.
+- **`VeroFilm`** — 1:12, **the current one**. A product film rather than a poster: near-white
+  stage, blur reveals, all three real product screens at size, and a five-act argument built
+  on *Vero — positioning and narrative*. It answers three questions in order: why should I
+  care, why can nobody already tell me, and what do I actually get. Start here.
 
 ## Run it
 
@@ -42,7 +42,7 @@ binary". Also: `--concurrency` cannot exceed your core count.
 | --- | --- | --- | --- |
 | `VeroVSL` | 1920x1080 | 1:20 | email embed, site, YouTube, sales follow-up |
 | `VeroFast` | 1920x1080 | 0:53 | paid social, LinkedIn feed, top of a cold email |
-| `VeroFilm` | 1920x1080 | 0:44 | the site, a sales follow-up, anywhere the viewer will give you forty seconds |
+| `VeroFilm` | 1920x1080 | 1:12 | the site, a sales follow-up, anywhere the viewer will give you a minute |
 
 A square or vertical feed cut needs its own layouts rather than a resized frame (the scenes
 are built on a wide grid). That is a separate pass, not a flag on this one.
@@ -92,7 +92,7 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/fast/Logos.tsx` | the Vero mark, brand glyphs, logo pills, the constellation |
 | `src/fast/logoAssets.ts` | drop-in slots for official logo files |
 
-### The 0:44 product film
+### The 1:12 product film
 
 | File | What lives there |
 | --- | --- |
@@ -101,6 +101,12 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/film/Motion.tsx` | the whole motion vocabulary: blur reveal, stage, chips, panels |
 | `src/film/Scenes.tsx` | all fourteen beats and every line of copy |
 | `src/film/Panels.tsx` | the designed Vero surfaces the recording never captured |
+
+Three rules the film depends on, all easy to undo: a statement is at most five words a line
+and never below ~100px; a product panel always bleeds off the frame edge; and each scene's
+`exit` holds far enough past the last reveal that the line can be read twice. See
+`SCRIPT-FILM.md` for the full reasoning, and for the list of dashboard captures that would
+replace the designed panels.
 
 Timing is frame-based at 30fps, so 30 frames is one second. To give a scene more room,
 change its `dur` (`src/theme.ts`, `src/fast/theme.ts` or `src/film/theme.ts`) and push every
