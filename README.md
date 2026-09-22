@@ -34,3 +34,9 @@ If a Google tag is installed separately, generate_lead is emitted after successf
 `npm test` runs form delivery tests; `python3 scripts/check-site.py` checks local page structure, links, schema and sitemap.
 Preview locally: `python3 -m http.server 8765` (Netlify Forms POSTs require a Netlify deploy).
 Production verification must include both mobile/desktop display, a labeled test request, saved submission and email receipt.
+
+## Inline homeowner quote flow
+
+Homepage quote links progressively open an inline panel below the hero. The wizard clones the existing detected homeowner form, preserving its Netlify name and fields. Project choices advance immediately; text answers use Continue or Enter. Details are optional. Review includes direct edit actions; closing retains in-page progress. The original bottom forms remain available, including when JavaScript is unavailable. Email notification configuration is still managed in Netlify, not in the wizard.
+
+Browser verified: required town validation, all questions, optional details, review editing, close/reopen persistence, capture failure/retry, successful isolated local capture and thank-you redirect, and mobile layout. The isolated success test blocked external CRM requests and verified the encoded payload locally.
