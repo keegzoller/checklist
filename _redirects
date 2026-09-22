@@ -1,0 +1,8 @@
+# Preserve useful destinations from the former Wix website.
+/the-players /#about 301
+/about /#about 301
+/book-online /#quote 301
+/highlights /#gallery 301
+/single-project /#gallery 301
+/social-media /#contact 301
+/siding /siding-installation/ 301
