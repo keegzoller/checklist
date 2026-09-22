@@ -18,3 +18,14 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Keep internal and confirmation pages out of search results.
+[[headers]]
+  for = "/checklist*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/thank-you*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
