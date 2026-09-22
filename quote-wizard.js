@@ -1,16 +1,23 @@
 // Progressive enhancement: the original contact forms remain usable without JS.
 export function initQuoteWizard() {
   const original = document.getElementById('form-homeowner');
-  const hero = document.querySelector('.hero');
-  if (!original || !hero) return;
+  const container = original?.closest('.quote-form');
+  if (!original || !container) return;
   const panel = document.createElement('section');
-  panel.id = 'inline-quote'; panel.className = 'inline-quote'; panel.hidden = true;
+  panel.id = 'guided-quote'; panel.className = 'guided-quote';
   panel.setAttribute('aria-label', 'Request a free estimate');
   panel.innerHTML = `<div class="wizard-shell"><div class="wizard-top"><span class="eyebrow">YOUR HOME. YOUR NEXT PROJECT.</span><button type="button" class="wizard-close" aria-label="Close quote form">Close ×</button></div><div class="wizard-progress"><span class="wizard-count"></span><span>No obligation</span></div><progress max="7" value="1" aria-label="Quote form progress"></progress><div class="wizard-heading"><h2 tabindex="-1"></h2><p></p></div></div>`;
-  hero.after(panel);
+  const placeholder = document.createElement('div');
+  placeholder.id = container.id || 'quote-card';
+  container.replaceWith(placeholder);
+  placeholder.appendChild(panel);
+  const dialog = document.createElement('dialog');
+  dialog.id='quote-popup'; dialog.className='quote-dialog';
+  dialog.setAttribute('aria-label','Request a free estimate');
+  document.body.appendChild(dialog);
   const shell = panel.querySelector('.wizard-shell');
   const form = original.cloneNode(true);
-  form.id = 'inline-homeowner'; form.className = 'wizard-form';
+  form.id = 'guided-homeowner'; form.className = 'wizard-form';
   form.removeAttribute('role'); form.removeAttribute('aria-labelledby'); form.setAttribute('aria-label','Your project details');
   form.noValidate = true;
   form.querySelectorAll('[id]').forEach(el => { el.id = 'inline-' + el.id; });
@@ -79,7 +86,7 @@ export function initQuoteWizard() {
         row.append(text,edit); review.appendChild(row);
       });
     }
-    if(focus) panel.querySelector('h2').focus({preventScroll:true});
+    if(focus) { panel.querySelector('h2').focus({preventScroll:true}); if(dialog.open)dialog.scrollTop=0; }
   }
   function advance(){
     if(current>=steps.length)return;
@@ -104,16 +111,28 @@ export function initQuoteWizard() {
     panel.querySelectorAll('button').forEach(button=>{button.disabled=busy;});
   }).observe(form,{attributes:true,attributeFilter:['aria-busy']});
   const links=[...document.querySelectorAll('a[href="#quote"]')];
+  const closeButton=panel.querySelector('.wizard-close');
+  closeButton.hidden=true;
+  let previousOverflow='';
   links.forEach(link=>{
-    link.setAttribute('aria-controls',panel.id);link.setAttribute('aria-expanded','false');
+    link.setAttribute('aria-controls',dialog.id);link.setAttribute('aria-haspopup','dialog');
     link.addEventListener('click',e=>{
-      e.preventDefault();opener=link;panel.hidden=false;links.forEach(a=>a.setAttribute('aria-expanded','true'));
-      panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
-      show(current);
-    });
+      e.preventDefault();e.stopImmediatePropagation();opener=link;
+      const menu=document.getElementById('mobileMenu');
+      if(menu?.classList.contains('open')) document.getElementById('menuClose')?.click();
+      previousOverflow=document.body.style.overflow;
+      document.body.style.overflow='hidden';
+      dialog.appendChild(panel);closeButton.hidden=false;dialog.showModal();show(current);
+    },true);
   });
-  function close(){if(form.getAttribute('aria-busy')==='true')return;panel.hidden=true;links.forEach(a=>a.setAttribute('aria-expanded','false'));opener?.focus();}
-  panel.querySelector('.wizard-close').addEventListener('click',close);
-  panel.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  function close(){if(form.getAttribute('aria-busy')==='true')return;dialog.close();}
+  closeButton.addEventListener('click',close);
+  dialog.addEventListener('cancel',e=>{if(form.getAttribute('aria-busy')==='true')e.preventDefault();});
+  dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close();}});
+  dialog.addEventListener('close',()=>{
+    placeholder.appendChild(panel);closeButton.hidden=true;
+    document.body.style.overflow=previousOverflow;opener?.focus({preventScroll:true});
+  });
   show(0,false);
+  if(location.hash==='#quote') requestAnimationFrame(()=>document.getElementById('quote')?.scrollIntoView({block:'start'}));
 }
