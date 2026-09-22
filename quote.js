@@ -62,7 +62,7 @@ if (typeof document !== 'undefined') {
       event.preventDefault();
       if (submitting || !form.reportValidity()) return;
       const fields = new FormData(form);
-      if (fields.get('bot-field')) { location.assign('/thank-you/'); return; }
+      if (fields.get('bot-field')) { location.assign('/thank-you'); return; }
       submitting = true;
       const button = form.querySelector('button[type="submit"]');
       button.disabled = true; form.setAttribute('aria-busy', 'true'); status.textContent = 'Sending your request…';
@@ -76,7 +76,7 @@ if (typeof document !== 'undefined') {
       // Optional analytics integration: no personal contact data is sent to analytics.
       try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.name }); } catch {}
       await forwardQuote(fields);
-      location.assign('/thank-you/');
+      location.assign('/thank-you');
     });
   });
 }
