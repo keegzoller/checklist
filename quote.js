@@ -1,3 +1,4 @@
+import { initQuoteWizard } from './quote-wizard.js';
 // Netlify Forms is the durable source of truth. GHL remains a secondary integration.
 const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/Ysazlze58nVZM8Pk4GPw/webhook-trigger/e17cf22c-b9a7-4119-b719-095070068193';
 
@@ -40,6 +41,7 @@ export async function forwardQuote(fields, fetcher = fetch) {
 }
 
 if (typeof document !== 'undefined') {
+  initQuoteWizard();
   const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
   let attribution = { 'landing-page': location.pathname };
   try {
