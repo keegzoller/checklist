@@ -1,13 +1,13 @@
-.inline-quote{background:#f8f4f3;padding:56px 24px;scroll-margin-top:84px;border-bottom:1px solid #e5dadb}
-.inline-quote[hidden],.wizard-form [hidden]{display:none!important}
-.wizard-shell{max-width:720px;margin:auto;background:#fff;padding:36px;border:1px solid #e9dfe0;border-radius:18px;box-shadow:0 14px 45px #58272f0d}
+.guided-quote{width:100%;min-width:0}.quote-dialog{border:0;padding:0;border-radius:18px;width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 40px);margin:auto;overflow:auto;background:#fff;color:#322326;box-shadow:0 24px 90px #0005;overscroll-behavior:contain}.quote-dialog::backdrop{background:rgba(25,15,18,.65);backdrop-filter:blur(4px)}.quote-dialog .wizard-shell{border:0;box-shadow:none}
+.wizard-shell [hidden],.wizard-form [hidden]{display:none!important}
+.wizard-shell{max-width:560px;margin:auto;background:#fff;padding:28px;border:1px solid #e9dfe0;border-radius:18px;box-shadow:0 14px 45px #58272f0d}
 .wizard-top,.wizard-progress,.wizard-actions{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .wizard-top .eyebrow{margin:0;font-size:11px;letter-spacing:.12em}
 .wizard-close,.wizard-back,.wizard-review button{background:none;border:0;color:#58272f;font:inherit;cursor:pointer;min-height:44px;padding:8px}
 .wizard-progress{font-size:13px;color:#716467;margin-top:22px}
 .wizard-shell progress{display:block;width:100%;height:5px;border:0;border-radius:8px;overflow:hidden;margin:12px 0 28px;accent-color:#a62b34;background:#f0e8e9}
 .wizard-shell progress::-webkit-progress-bar{background:#f0e8e9}.wizard-shell progress::-webkit-progress-value{background:#a62b34}
-.wizard-heading h2{font-size:clamp(25px,4vw,34px);line-height:1.2;margin:0 0 12px;outline:none}
+.wizard-heading h2{font-size:clamp(23px,3vw,29px);line-height:1.2;margin:0 0 12px;outline:none}
 .wizard-heading p{color:#716467;line-height:1.6;margin:0 0 26px}
 .wizard-step input,.wizard-step textarea{width:100%;padding:16px;border:1px solid #c9bbbd;border-radius:9px;font:inherit;font-size:18px;background:#fff;color:#322326;box-sizing:border-box}
 .wizard-step textarea{min-height:132px;resize:vertical}.wizard-step input:focus,.wizard-step textarea:focus{outline:3px solid #a62b342e;border-color:#a62b34}
@@ -18,4 +18,8 @@
 .wizard-review-row{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #eee5e6;padding:12px 0}.wizard-review-row strong{display:block;font-size:12px;color:#716467}.wizard-review-row span{display:block;overflow-wrap:anywhere;white-space:pre-wrap}.wizard-review-row>div{min-width:0}.wizard-review button{text-decoration:underline}
 .wizard-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .wizard-form .form-status{margin-top:16px;color:#58272f}.wizard-form .form-status a{text-decoration:underline}.wizard-shell button:focus-visible{outline:3px solid #a62b34;outline-offset:3px}.wizard-shell button:disabled{opacity:.55;cursor:wait}
-@media(max-width:600px){.inline-quote{padding:24px 16px;scroll-margin-top:76px}.wizard-shell{padding:24px 20px}.wizard-options{grid-template-columns:1fr}.wizard-option{min-height:62px;padding:16px}.wizard-top .eyebrow{font-size:9px}.wizard-actions .btn{padding:13px 17px;font-size:14px}}
+@media(max-width:600px){.quote-dialog{max-height:calc(100dvh - 24px);width:calc(100vw - 24px)}.wizard-shell{padding:24px 20px}.wizard-options{grid-template-columns:1fr}.wizard-option{min-height:62px;padding:16px}.wizard-top .eyebrow{font-size:9px}.wizard-actions .btn{padding:13px 17px;font-size:14px}}
+
+.guided-quote .wizard-actions .btn{width:auto}.guided-quote .wizard-shell{margin:0 auto}.guided-quote .wizard-form{margin:0}.guided-quote .wizard-review-row{padding:8px 0}
+/* Override the site's full-width section spacing for this compact card. */
+section.guided-quote{padding:0;margin:0}

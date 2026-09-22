@@ -40,3 +40,7 @@ Production verification must include both mobile/desktop display, a labeled test
 Homepage quote links progressively open an inline panel below the hero. The wizard clones the existing detected homeowner form, preserving its Netlify name and fields. Project choices advance immediately; text answers use Continue or Enter. Details are optional. Review includes direct edit actions; closing retains in-page progress. The original bottom forms remain available, including when JavaScript is unavailable. Email notification configuration is still managed in Netlify, not in the wizard.
 
 Browser verified: required town validation, all questions, optional details, review editing, close/reopen persistence, capture failure/retry, successful isolated local capture and thank-you redirect, and mobile layout. The isolated success test blocked external CRM requests and verified the encoded payload locally.
+
+### Popup correction
+
+Quote buttons open a native modal dialog over the current page, matching the Chores No More entry behavior. The same guided card replaces the long bottom form and service-page forms when JavaScript is available. Moving the single card between its bottom mount and dialog preserves answers. Native dialog provides focus containment, Escape dismissal, and inert background; body scroll is locked while open. Closing restores the original trigger focus. Static forms remain solely as progressive/no-JavaScript fallback and for Netlify build-time form detection.
