@@ -1,4 +1,5 @@
 import { initQuoteWizard } from './quote-wizard.js';
+import { initInquiryWizards } from './inquiry-wizard.js';
 // Netlify Forms is the durable source of truth. GHL remains a secondary integration.
 const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/Ysazlze58nVZM8Pk4GPw/webhook-trigger/e17cf22c-b9a7-4119-b719-095070068193';
 
@@ -23,7 +24,7 @@ export function ghlPayload(fields) {
     email: get('email'), phone, address: get('town') || get('location'),
     service: get('service') || get('scope'), inquiry_type: get('inquiry-type'), company: get('company'),
     scope: get('scope'), timeline: get('timeline'),
-    message: ['message', 'company', 'scope', 'timeline', 'town', 'location'].map(key => get(key) ? `${key}: ${get(key)}` : '').filter(Boolean).join('\n'),
+    message: ['message', 'company', 'scope', 'timeline', 'town', 'location', 'role', 'school'].map(key => get(key) ? `${key}: ${get(key)}` : '').filter(Boolean).join('\n'),
     source: 'vermacconstruction.com ' + get('inquiry-type') + ' form', page_url: get('page-url'),
     utm_source: get('utm_source'), utm_medium: get('utm_medium'), utm_campaign: get('utm_campaign'),
   };
@@ -42,6 +43,7 @@ export async function forwardQuote(fields, fetcher = fetch) {
 
 if (typeof document !== 'undefined') {
   initQuoteWizard();
+  initInquiryWizards();
   const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
   let attribution = { 'landing-page': location.pathname };
   try {
@@ -51,7 +53,7 @@ if (typeof document !== 'undefined') {
     sessionStorage.setItem('vermac-attribution', JSON.stringify(attribution));
   } catch { /* Requests still work when browser storage is disabled. */ }
 
-  document.querySelectorAll('form[data-netlify], form[name="homeowner-project"], form[name="builder-project"]').forEach(form => {
+  document.querySelectorAll('form[data-netlify], form[name="homeowner-project"], form[name="builder-project"], form[name="student-program"]').forEach(form => {
     Object.entries({ ...attribution, 'page-url': location.origin + location.pathname }).forEach(([key, value]) => {
       const field = form.elements.namedItem(key);
       if (field) field.value = value;
@@ -76,7 +78,7 @@ if (typeof document !== 'undefined') {
         button.disabled = false; form.removeAttribute('aria-busy'); submitting = false; return;
       }
       // Optional analytics integration: no personal contact data is sent to analytics.
-      try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.name }); } catch {}
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.getAttribute('name') }); } catch {}
       await forwardQuote(fields);
       location.assign('/thank-you');
     });
