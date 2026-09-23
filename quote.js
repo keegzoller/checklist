@@ -78,7 +78,7 @@ if (typeof document !== 'undefined') {
         button.disabled = false; form.removeAttribute('aria-busy'); submitting = false; return;
       }
       // Optional analytics integration: no personal contact data is sent to analytics.
-      try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.name }); } catch {}
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.getAttribute('name') }); } catch {}
       await forwardQuote(fields);
       location.assign('/thank-you');
     });
