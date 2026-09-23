@@ -265,7 +265,7 @@ h2{font-size:38px;font-weight:700}
 .map-card{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);aspect-ratio:4/3;background:var(--brand-maroon);position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
 .map-card svg{width:64px;height:64px;color:#e79aa0;margin-bottom:12px}
 .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.team-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
+.team-grid img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--shadow-card)}
 .team-cap{text-align:center;margin-top:16px;color:var(--gray-400);font-size:14px}
 
 /* ============================================================
