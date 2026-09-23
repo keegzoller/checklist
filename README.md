@@ -44,3 +44,13 @@ Browser verified: required town validation, all questions, optional details, rev
 ### Popup correction
 
 Quote buttons open a native modal dialog over the current page, matching the Chores No More entry behavior. The same guided card replaces the long bottom form and service-page forms when JavaScript is available. Moving the single card between its bottom mount and dialog preserves answers. Native dialog provides focus containment, Escape dismissal, and inert background; body scroll is locked while open. Closing restores the original trigger focus. Static forms remain solely as progressive/no-JavaScript fallback and for Netlify build-time form detection.
+
+## September 2026 site refinements
+
+- `/builders/` restores a dedicated builder/GC intake, linked in primary navigation and on the homepage.
+- `/future-builders/` introduces Vermac Future Builders, with a separate student/parent/educator inquiry and homepage announcement strip. College assistance is described only as assistance after two years working at Vermac; amounts and detailed participation terms remain to be established by the business.
+- `/service-area/` links to 11 individual town pages. Each includes a distinct planning topic, related services, neighboring towns, a quote wizard, canonical metadata, and Service/WebPage schema. No town-specific offices, reviews, or project locations are invented.
+- `refinements.css` is shared by the homepage and interior pages. `showcase.js` adds a horizontal project gallery with touch scrolling, mouse dragging, arrow navigation, optional autoplay, and reduced-motion handling. Photo enlargement uses a native modal dialog.
+- `inquiry-wizard.js` progressively enhances builder and student forms. Static form markup remains available for Netlify detection and non-JavaScript submission. `quote.js` saves all three inquiry types in Netlify before optional CRM forwarding.
+
+Validation: `npm test`, `python3 scripts/check-site.py`, desktop/mobile browser checks, and isolated local builder/student submissions with external CRM blocked. Local form tests verify capture payloads, required input, invalid email, and edit/review behavior without generating customer-facing test messages.
