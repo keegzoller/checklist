@@ -53,7 +53,7 @@ if (typeof document !== 'undefined') {
     sessionStorage.setItem('vermac-attribution', JSON.stringify(attribution));
   } catch { /* Requests still work when browser storage is disabled. */ }
 
-  document.querySelectorAll('form[data-netlify], form[name="homeowner-project"], form[name="builder-project"]').forEach(form => {
+  document.querySelectorAll('form[data-netlify], form[name="homeowner-project"], form[name="builder-project"], form[name="student-program"]').forEach(form => {
     Object.entries({ ...attribution, 'page-url': location.origin + location.pathname }).forEach(([key, value]) => {
       const field = form.elements.namedItem(key);
       if (field) field.value = value;
