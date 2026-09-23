@@ -128,7 +128,7 @@ h2{font-size:38px;font-weight:700}
 /* ============================================================
    6. HERO
    ============================================================ */
-.hero{position:relative;color:#fff;overflow:hidden;padding-top:170px;padding-bottom:110px;background:#3a171c url('images/hero-siding-home-saratoga-county.jpg') center 30%/cover no-repeat}
+.hero{position:relative;color:#fff;overflow:hidden;padding-top:170px;padding-bottom:110px;background:#3a171c url('images/hero-siding-home-saratoga-county.webp') center 30%/cover no-repeat}
 /* Real Vermac project photo behind a maroon gradient overlay for legibility
    (design.md §6.2, §7). Swap for an even higher-res hero or muted video later. */
 .hero::before{content:'';position:absolute;inset:0;background:

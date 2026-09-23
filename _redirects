@@ -6,3 +6,23 @@
 /single-project /#gallery 301
 /social-media /#contact 301
 /siding /siding-installation/ 301
+
+# Consolidate explicit HTML aliases onto the public canonical URLs.
+/index.html / 301!
+/builders/index.html /builders/ 301!
+/future-builders/index.html /future-builders/ 301!
+/privacy/index.html /privacy/ 301!
+/service-area/index.html /service-area/ 301!
+/siding-ballston-lake-ny/index.html /siding-ballston-lake-ny/ 301!
+/siding-ballston-spa-ny/index.html /siding-ballston-spa-ny/ 301!
+/siding-clifton-park-ny/index.html /siding-clifton-park-ny/ 301!
+/siding-halfmoon-ny/index.html /siding-halfmoon-ny/ 301!
+/siding-installation/index.html /siding-installation/ 301!
+/siding-malta-ny/index.html /siding-malta-ny/ 301!
+/siding-mechanicville-ny/index.html /siding-mechanicville-ny/ 301!
+/siding-milton-ny/index.html /siding-milton-ny/ 301!
+/siding-replacement/index.html /siding-replacement/ 301!
+/siding-round-lake-ny/index.html /siding-round-lake-ny/ 301!
+/siding-saratoga-springs-ny/index.html /siding-saratoga-springs-ny/ 301!
+/siding-stillwater-ny/index.html /siding-stillwater-ny/ 301!
+/siding-wilton-ny/index.html /siding-wilton-ny/ 301!
