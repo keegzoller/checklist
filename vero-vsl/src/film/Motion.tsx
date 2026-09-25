@@ -203,7 +203,10 @@ export const Sub: React.FC<{
   size?: number;
   color?: string;
   width?: number;
-}> = ({ children, delay = 0, exit, size = 31, color = F.muted, width = 1050 }) => {
+  /** Centred body copy under a centred headline. Left-aligned by default,
+   *  which is right beside a panel and wrong underneath one. */
+  center?: boolean;
+}> = ({ children, delay = 0, exit, size = 31, color = F.muted, width = 1050, center = false }) => {
   const st = useReveal(delay, exit);
   return (
     <div
@@ -215,6 +218,7 @@ export const Sub: React.FC<{
         lineHeight: 1.5,
         color,
         maxWidth: width,
+        textAlign: center ? 'center' : 'left',
       }}
     >
       {children}

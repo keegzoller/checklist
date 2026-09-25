@@ -71,53 +71,60 @@ export const FONT_UI = 'Inter Variable, system-ui, sans-serif';
  * Beats, in frames @30fps. Hard cuts, no overlap -- each scene paints its own
  * background from frame 0.
  *
- * THE ARC, in five acts. The earlier version of this cut explained the method
- * beautifully and never told an owner what they would actually receive, which
- * is the difference between "clever" and "worth buying":
+ * THE SPINE, as the founder tells it. Everything else is texture hung on this:
  *
- *   1. the feeling      -- you're spending it either way, and you still guess
- *   2. why nobody knows -- everyone reporting to you is graded by themselves,
- *                          and marketing is the last big expense nobody checks
- *   3. what Vero does   -- reads the register, compares against your own quiet
- *                          locations
- *   4. WHAT YOU GET     -- four concrete things, each with the money attached
- *   5. the close        -- what it won't do, and the line
+ *   I don't know if my marketing is working, which channels to spend on, or
+ *   how much.  ->  Introducing Vero.  ->  It connects to your point of sale.
+ *   ->  Then to every marketing channel.  ->  It attributes where customers
+ *   came from and what they came for.  ->  This is NOT an AI that reads your
+ *   data.  ->  It reasons deterministically, it builds the floor of what
+ *   happens without marketing, and it forecasts what a change will do.  ->
+ *   Outcomes: clearer decisions, better allocation, more customers in the door.
  *
- * Text-heavy beats hold roughly a second past the last word landing. That is
- * deliberate: a line you cannot finish reading may as well not be there.
+ * Seven acts. Act 4 ("what we are not") is load-bearing -- without it every
+ * claim in act 5 sounds like the same AI-summarizes-your-dashboard pitch the
+ * buyer has already been sold twice.
+ *
+ * Text-heavy beats hold roughly a second past the last word landing. A line
+ * you cannot finish reading may as well not be there.
  *
  * `FILM_TOTAL` must equal the sum.
  */
 export const FILM = {
-  open: { from: 0, dur: 55 },
+  open: { from: 0, dur: 50 },
 
-  // act 1 -- the feeling
-  eitherWay: { from: 55, dur: 115 },
-  everyMonth: { from: 170, dur: 120 },
-  gut: { from: 290, dur: 125 },
+  // act 1 -- the three things you don't know
+  eitherWay: { from: 50, dur: 110 },
+  threeUnknowns: { from: 160, dur: 175 },
+  gut: { from: 335, dur: 115 },
 
   // act 2 -- why nobody can tell you
-  graded: { from: 415, dur: 135 },
-  sameSale: { from: 550, dur: 100 },
-  lastExpense: { from: 650, dur: 130 },
+  graded: { from: 450, dur: 125 },
+  lastExpense: { from: 575, dur: 125 },
 
-  // act 3 -- what Vero does
-  register: { from: 780, dur: 120 },
-  quietOnes: { from: 900, dur: 140 },
+  // act 3 -- introducing Vero, and what it connects to
+  intro: { from: 700, dur: 70 },
+  connectPos: { from: 770, dur: 170 },
+  connectChannels: { from: 940, dur: 165 },
+  attribute: { from: 1105, dur: 185 },
 
-  // act 4 -- what you actually get
-  whatYouGet: { from: 1040, dur: 55 },
-  getLocations: { from: 1095, dur: 110 },
-  getNextDollar: { from: 1205, dur: 110 },
-  getLeak: { from: 1315, dur: 110 },
-  getAsk: { from: 1425, dur: 115 },
-  sounds: { from: 1540, dur: 175 },
-  tellYouNo: { from: 1715, dur: 130 },
+  // act 4 -- what we are not
+  notAnAI: { from: 1290, dur: 165 },
 
-  // act 5 -- the close
-  limit: { from: 1845, dur: 95 },
-  measure: { from: 1940, dur: 95 },
-  cta: { from: 2035, dur: 130 },
+  // act 5 -- how it actually works
+  deterministic: { from: 1455, dur: 200 },
+  baseline: { from: 1655, dur: 200 },
+  forecast: { from: 1855, dur: 200 },
+
+  // act 6 -- what it sounds like
+  sounds: { from: 2055, dur: 165 },
+  tellYouNo: { from: 2220, dur: 135 },
+
+  // act 7 -- outcomes and close
+  outcomes: { from: 2355, dur: 210 },
+  limit: { from: 2565, dur: 85 },
+  measure: { from: 2650, dur: 90 },
+  cta: { from: 2740, dur: 130 },
 } as const;
 
-export const FILM_TOTAL = 2165; // 72.2s
+export const FILM_TOTAL = 2870; // 95.7s
