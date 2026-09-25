@@ -24,10 +24,10 @@ export const ramp = (frame: number, delay: number, dur = 14) =>
  * The signature reveal: blur and lift in, hold, then blur and lift back out.
  * `exit` is the frame the element starts leaving; omit it and it stays.
  */
-export const useReveal = (delay: number, exit?: number, dur = 13) => {
+export const useReveal = (delay: number, exit?: number, dur = 11) => {
   const frame = useCurrentFrame();
   const enter = ramp(frame, delay, dur);
-  const leave = exit === undefined ? 0 : ramp(frame, exit, 10);
+  const leave = exit === undefined ? 0 : ramp(frame, exit, 7);
   const t = enter - leave;
   return {
     opacity: t,
@@ -121,7 +121,7 @@ export const Line: React.FC<{
   delay = 0,
   exit,
   size = 92,
-  stagger = 2.5,
+  stagger = 2.2,
   weight = 800,
   color = F.ink,
   justify = 'center',
@@ -339,10 +339,10 @@ export const Panel: React.FC<{
   /** slow push-in across the beat, in scale units */
   zoom?: number;
   dur?: number;
-}> = ({ children, delay = 0, exit, x = 620, y = 110, width = 1460, zoom = 0.03, dur = 20 }) => {
+}> = ({ children, delay = 0, exit, x = 620, y = 110, width = 1460, zoom = 0.03, dur = 16 }) => {
   const frame = useCurrentFrame();
   const enter = ramp(frame, delay, dur);
-  const leave = exit === undefined ? 0 : ramp(frame, exit, 12);
+  const leave = exit === undefined ? 0 : ramp(frame, exit, 8);
   const drift = interpolate(frame - delay, [0, 150], [0, zoom], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, Img, staticFile } from 'remotion';
+import { AbsoluteFill } from 'remotion';
 import { F, FONT, FONT_UI } from './theme';
 import {
   Center,
@@ -19,10 +19,11 @@ import {
   BaselinePanel,
   DeterministicPanel,
   ForecastPanel,
+  LocationAnswer,
   NotThisCard,
   OutcomeCard,
 } from './Mechanism';
-import { VcsLogo, VeroMark } from '../fast/Logos';
+import { VeroMark } from '../fast/Logos';
 
 /**
  * Five acts. Source: "Vero -- positioning and narrative".
@@ -48,10 +49,6 @@ import { VcsLogo, VeroMark } from '../fast/Logos';
  * for that -- shortening one without pulling its `exit` back will cut a line
  * off mid-sentence.
  */
-
-const REAL = (file: string) => (
-  <Img src={staticFile(`screens/${file}`)} style={{ width: '100%', display: 'block' }} />
-);
 
 /* ================================================================== *
  * 1. open
@@ -89,18 +86,23 @@ export const SceneOpen: React.FC = () => {
  * ACT 1 -- THE FEELING
  * ================================================================== */
 
-/** 2. the hook, straight off the front of the doc */
-export const SceneEitherWay: React.FC = () => (
+/** 2. the hook -- names the decision, then names the problem with it */
+export const SceneHook: React.FC = () => (
   <Stage>
     <Center gap={4}>
-      <Line words={[{ t: "You're" }, { t: 'spending' }, { t: 'the' }, { t: 'money' }]} size={112} delay={0} exit={100} />
-      <Line words={[{ t: 'either' }, { t: 'way.' }]} size={112} delay={10} exit={100} />
-      <div style={{ marginTop: 42 }}>
+      <Line
+        words={[{ t: 'Every' }, { t: 'month,' }, { t: 'you' }, { t: 'approve' }]}
+        size={104}
+        delay={0}
+        exit={90}
+      />
+      <Line words={[{ t: 'the' }, { t: 'marketing' }, { t: 'budget.' }]} size={104} delay={8} exit={90} />
+      <div style={{ marginTop: 44 }}>
         <Line
-          words={[{ t: 'You' }, { t: 'should' }, { t: 'get' }, { t: 'to' }, { t: 'know.', color: F.brand }]}
-          size={94}
-          delay={40}
-          exit={100}
+          words={[{ t: 'And' }, { t: 'every' }, { t: 'month,' }, { t: 'you' }, { t: 'approve' }, { t: 'it' }, { t: 'blind.', color: F.brand }]}
+          size={78}
+          delay={34}
+          exit={90}
         />
       </div>
     </Center>
@@ -108,30 +110,29 @@ export const SceneEitherWay: React.FC = () => (
 );
 
 
-/** 4. so you go with your gut -- the emotional centre */
-export const SceneGut: React.FC = () => (
+/**
+ * 4. the real problem is not that you guess -- it is that you never find out,
+ *    so the guess never improves. "Going with your gut" undersold that.
+ */
+export const SceneInstinct: React.FC = () => (
   <Stage>
-    <Center gap={6}>
-      <Line words={[{ t: 'So' }, { t: 'you' }, { t: 'go' }, { t: 'with' }, { t: 'your' }, { t: 'gut.' }]} size={104} delay={0} exit={110} />
-      <div style={{ marginTop: 2 }}>
-        <Line words={[{ t: 'Again.' }]} size={104} delay={14} exit={110} color={F.brand} />
+    <Center gap={4}>
+      <Line
+        words={[{ t: 'So' }, { t: 'the' }, { t: 'decision' }, { t: 'gets' }, { t: 'made' }]}
+        size={92}
+        delay={0}
+        exit={95}
+      />
+      <Line words={[{ t: 'on' }, { t: 'instinct.' }]} size={92} delay={8} exit={95} />
+      <div style={{ marginTop: 46 }}>
+        <Sub delay={32} exit={95} size={34} width={1220} center color={F.muted}>
+          Same as last month. Same as next month.
+        </Sub>
       </div>
-      <div style={{ marginTop: 52 }}>
-        <Line
-          words={[{ t: "You've" }, { t: 'been' }, { t: 'doing' }, { t: 'that' }, { t: 'for' }, { t: 'years.' }]}
-          size={50}
-          delay={44}
-          exit={110}
-          color={F.ghost}
-        />
-        <div style={{ marginTop: 8 }}>
-          <Line
-            words={[{ t: 'And' }, { t: 'it' }, { t: 'still' }, { t: 'bothers' }, { t: 'you' }, { t: 'every' }, { t: 'single' }, { t: 'month.' }]}
-            size={50}
-            delay={64}
-            exit={110}
-          />
-        </div>
+      <div style={{ marginTop: 14 }}>
+        <Sub delay={54} exit={95} size={34} width={1220} center color={F.ink}>
+          <b>You never find out whether you were right — so it never gets better.</b>
+        </Sub>
       </div>
     </Center>
   </Stage>
@@ -152,7 +153,7 @@ export const SceneGraded: React.FC = () => (
           claim="+34%"
           detail="how Facebook says Facebook did"
           delay={0}
-          exit={120}
+          exit={108}
           rotate={-1.3}
         />
         <ReportCard
@@ -161,7 +162,7 @@ export const SceneGraded: React.FC = () => (
           claim="+41%"
           detail="how Google says Google did"
           delay={7}
-          exit={120}
+          exit={108}
           rotate={0.7}
         />
         <ReportCard
@@ -169,24 +170,30 @@ export const SceneGraded: React.FC = () => (
           claim="Great month."
           detail="written by the people being graded"
           delay={14}
-          exit={120}
+          exit={108}
           rotate={-0.5}
         />
       </div>
       <div style={{ textAlign: 'center' }}>
         <Line
-          words={[{ t: 'None' }, { t: 'of' }, { t: 'them' }, { t: 'are' }, { t: 'lying.' }]}
-          size={78}
-          delay={34}
-          exit={120}
+          words={[{ t: 'None' }, { t: 'of' }, { t: 'your' }, { t: 'channels' }, { t: 'are' }, { t: 'lying.' }]}
+          size={74}
+          delay={30}
+          exit={108}
           color={F.ghost}
         />
         <div style={{ marginTop: 10 }}>
           <Line
-            words={[{ t: 'They' }, { t: 'just' }, { t: "can't" }, { t: 'afford' }, { t: 'to' }, { t: 'tell' }, { t: 'you' }, { t: 'it' }, { t: "didn't." }]}
-            size={62}
+            words={[{ t: 'They' }, { t: 'just' }, { t: "can't" }, { t: 'afford' }, { t: 'to' }, { t: 'tell' }, { t: 'you' }]}
+            size={58}
+            delay={46}
+            exit={108}
+          />
+          <Line
+            words={[{ t: 'when' }, { t: "it isn't" }, { t: 'working.', color: F.brand }]}
+            size={58}
             delay={54}
-            exit={120}
+            exit={108}
           />
         </div>
       </div>
@@ -203,9 +210,9 @@ export const SceneLastExpense: React.FC = () => (
         words={[{ t: 'Every' }, { t: 'other' }, { t: 'line' }, { t: 'on' }, { t: 'your' }, { t: 'P&L,' }, { t: 'you' }, { t: 'can' }, { t: 'check.' }]}
         size={62}
         delay={0}
-        exit={116}
+        exit={106}
       />
-      <ExpenseCheck delay={12} exit={116} />
+      <ExpenseCheck delay={12} exit={106} />
     </AbsoluteFill>
   </Stage>
 );
@@ -225,14 +232,14 @@ export const SceneThreeUnknowns: React.FC = () => (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 34 }}>
       {UNKNOWNS.map((q, i) => (
-        <UnknownRow key={q} q={q} delay={i * 30} exit={158} />
+        <UnknownRow key={q} q={q} delay={i * 26} exit={144} />
       ))}
       <div style={{ marginTop: 26 }}>
         <Line
           words={[{ t: 'Three' }, { t: 'questions.' }, { t: 'No' }, { t: 'answers.', color: F.brand }]}
           size={62}
-          delay={116}
-          exit={158}
+          delay={104}
+          exit={144}
         />
       </div>
     </AbsoluteFill>
@@ -294,15 +301,15 @@ export const SceneIntro: React.FC = () => {
         </Eyebrow>
         <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
           <div style={mark}>
-            <VeroMark size={104} tile={false} />
+            <VeroMark size={140} tile={false} />
           </div>
           <div
             style={{
               ...word,
               fontFamily: FONT,
-              fontSize: 104,
+              fontSize: 142,
               fontWeight: 700,
-              letterSpacing: -3.6,
+              letterSpacing: -5,
               color: F.ink,
             }}
           >
@@ -374,26 +381,26 @@ export const SceneAttribute: React.FC = () => (
  * ACT 4 -- what we are not
  * ================================================================== */
 
-export const SceneNotAnAI: React.FC = () => (
+export const SceneNotChatbot: React.FC = () => (
   <Stage flip>
-    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 40 }}>
+    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 38 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line
-          words={[{ t: 'This' }, { t: 'is' }, { t: 'not' }, { t: 'an' }, { t: 'AI' }]}
-          size={82}
-          delay={0}
-          exit={151}
-        />
-        <Line
-          words={[{ t: 'that' }, { t: 'reads' }, { t: 'your' }, { t: 'dashboards.' }]}
-          size={82}
-          delay={6}
-          exit={151}
-        />
+        <Line words={[{ t: 'Vero' }, { t: 'is' }, { t: 'not' }, { t: 'a' }, { t: 'chatbot.' }]} size={88} delay={0} exit={146} />
+        <div style={{ marginTop: 8 }}>
+          <Line
+            words={[{ t: 'Not' }, { t: 'a' }, { t: 'widget.' }, { t: 'Not' }, { t: 'another' }, { t: 'dashboard.' }]}
+            size={62}
+            delay={10}
+            exit={146}
+            color={F.ghost}
+          />
+        </div>
       </div>
-      <NotThisCard delay={26} exit={151} />
-      <Sub delay={76} exit={151} size={29} width={1100} color={F.ink} center>
-        Restating numbers you already couldn’t trust, with more confidence, is not an answer.
+      <NotThisCard delay={28} exit={146} />
+      <Sub delay={74} exit={146} size={29} width={1160} color={F.ink} center>
+        Those read the same numbers you already couldn’t trust and say them back with more
+        confidence. <b>Vero is a measurement system.</b> It starts at your revenue and works
+        backwards.
       </Sub>
     </AbsoluteFill>
   </Stage>
@@ -431,18 +438,19 @@ export const SceneDeterministic: React.FC = () => (
   <Stage>
     <Mech
       n="01"
-      top="It reasons"
-      bottom="deterministically."
-      exit={186}
-      subDelay={92}
+      top="Ask it the same question twice."
+      bottom="You get the same answer."
+      exit={181}
+      subDelay={88}
       sub={
         <>
-          Same question, same data, <b style={{ color: F.ink }}>same answer</b> — every time. Not a
-          model guessing differently on a Tuesday.
+          That is what <b style={{ color: F.ink }}>deterministic</b> means: the number comes from
+          counting your register rows, not from a model generating something that sounds right.
+          And you can open the rows it counted.
         </>
       }
     >
-      <DeterministicPanel delay={14} exit={186} />
+      <DeterministicPanel delay={14} exit={181} />
     </Mech>
   </Stage>
 );
@@ -453,8 +461,8 @@ export const SceneBaseline: React.FC = () => (
       n="02"
       top="It builds the floor —"
       bottom="what happens without you."
-      exit={186}
-      subDelay={96}
+      exit={181}
+      subDelay={92}
       sub={
         <>
           Your own unmarketed locations show what demand did on its own.{' '}
@@ -462,7 +470,7 @@ export const SceneBaseline: React.FC = () => (
         </>
       }
     >
-      <BaselinePanel delay={14} exit={186} />
+      <BaselinePanel delay={14} exit={181} />
     </Mech>
   </Stage>
 );
@@ -473,8 +481,8 @@ export const SceneForecast: React.FC = () => (
       n="03"
       top="And it forecasts"
       bottom="the change before you make it."
-      exit={186}
-      subDelay={98}
+      exit={181}
+      subDelay={94}
       sub={
         <>
           Move the money on screen and see what it’s expected to do at the register —{' '}
@@ -482,7 +490,7 @@ export const SceneForecast: React.FC = () => (
         </>
       }
     >
-      <ForecastPanel delay={14} exit={186} />
+      <ForecastPanel delay={14} exit={181} />
     </Mech>
   </Stage>
 );
@@ -498,7 +506,7 @@ export const SceneOutcomes: React.FC = () => (
         words={[{ t: 'What' }, { t: 'changes' }, { t: 'for' }, { t: 'you.' }]}
         size={78}
         delay={0}
-        exit={196}
+        exit={191}
         justify="flex-start"
       />
       <div style={{ display: 'flex', gap: 30, alignItems: 'stretch' }}>
@@ -507,21 +515,21 @@ export const SceneOutcomes: React.FC = () => (
           title="Clarity in the decision"
           body="You walk into the meeting already knowing which locations are working and which aren’t."
           delay={14}
-          exit={196}
+          exit={191}
         />
         <OutcomeCard
           n="02"
           title="Better allocation of every dollar"
           body="The next dollar goes where the last one actually produced — not where the report looked best."
           delay={26}
-          exit={196}
+          exit={191}
         />
         <OutcomeCard
           n="03"
           title="More customers through the door"
           body="Waste gets found in week one instead of next quarter, and that budget goes back to work."
           delay={38}
-          exit={196}
+          exit={191}
         />
       </div>
     </AbsoluteFill>
@@ -567,83 +575,47 @@ const NumRule: React.FC<{ n: string; exit: number }> = ({ n, exit }) => {
 
 
 
-/** 15. what it sounds like -- REAL investigating strip, then two real answers */
-export const SceneSounds: React.FC = () => (
+/**
+ * 15. what an answer actually looks like. The screenshot montage that used to
+ *     sit here showed Vero starting to work and never finishing, because the
+ *     recording stops before it renders one -- so it sold the waiting, not the
+ *     answer. This shows the answer, with the location's own trend under it.
+ */
+export const SceneAnswerTrend: React.FC = () => (
   <Stage flip>
-    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 26 }}>
-      <RealStrip delay={0} exit={162} />
-      <Exchange
-        delay={26}
-        exit={162}
-        width={1100}
-        q="“Is the marketing working?”"
-        a={
-          <>
-            At <b>four of your twelve locations</b>, yes — worth about <b style={{ color: F.green }}>$7,500 a week</b>{' '}
-            between them. One is genuinely down. The rest I can’t call yet, and I’ll tell you
-            what would settle it.
-          </>
-        }
+    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 34 }}>
+      <Line
+        words={[{ t: 'So' }, { t: 'you' }, { t: 'ask.' }, { t: 'And' }, { t: 'it' }, { t: 'answers.', color: F.brand }]}
+        size={62}
+        delay={0}
+        exit={161}
       />
-      <Exchange
-        delay={78}
-        exit={162}
-        width={1100}
-        q="“Meta is crushing it, right? I want to put more there.”"
-        a={
-          <>
-            Not quite. Meta is working — about <b>$2.90</b> back per dollar. Geofencing is doing{' '}
-            <b style={{ color: F.green }}>$6.85</b> on a third of the budget. If you’re moving
-            money, move it the other way.
-          </>
-        }
-      />
+      <LocationAnswer delay={10} exit={161} />
     </AbsoluteFill>
   </Stage>
 );
 
-/** The investigating state, cut from the recording. Wide and short, so it sits
- *  as a banner above the answers rather than as a hero panel. */
-const RealStrip: React.FC<{ delay: number; exit?: number }> = ({ delay, exit }) => {
-  const st = useReveal(delay, exit);
-  return (
-    <div
-      style={{
-        ...st,
-        width: 1100,
-        borderRadius: 16,
-        overflow: 'hidden',
-        border: `1px solid ${F.line}`,
-        boxShadow: '0 30px 68px rgba(15,23,41,0.11)',
-      }}
-    >
-      {REAL('screen-investigating.png')}
-    </div>
-  );
-};
 
-/** 16. the first thing that will tell you no */
-export const SceneTellYouNo: React.FC = () => (
+
+/**
+ * 16. the refusal. "The first thing in your marketing that will tell you no"
+ *     was too clever to parse in three seconds -- it now says the thing
+ *     plainly and the sub explains why the smaller number is the real one.
+ */
+export const SceneWhenItCant: React.FC = () => (
   <Stage>
-    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 38 }}>
+    <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 36 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line
-          words={[{ t: "It's" }, { t: 'the' }, { t: 'first' }, { t: 'thing' }, { t: 'in' }, { t: 'your' }, { t: 'marketing' }]}
-          size={62}
-          delay={0}
-          exit={116}
-        />
-        <Line
-          words={[{ t: 'that' }, { t: 'will' }, { t: 'tell' }, { t: 'you' }, { t: 'no.', color: F.brand }]}
-          size={62}
-          delay={7}
-          exit={116}
-        />
+        <Line words={[{ t: 'And' }, { t: 'when' }, { t: "it can't" }, { t: 'tell' }, { t: 'yet,' }]} size={70} delay={0} exit={136} />
+        <div style={{ marginTop: 6 }}>
+          <Line words={[{ t: 'it' }, { t: 'says' }, { t: 'so.', color: F.brand }]} size={70} delay={8} exit={136} />
+        </div>
       </div>
-      <RefusePanel delay={18} exit={116} />
-      <Sub delay={72} exit={116} size={27} width={1180} center>
-        <b style={{ color: F.ink }}>+8.4% is withheld. +8.2% is reported.</b> Below a location’s own
-        noise, Vero says so instead of making something up.
+      <RefusePanel delay={20} exit={136} />
+      <Sub delay={80} exit={136} size={27} width={1240} center>
+        Destin is up 8.4% and Vero will not report it. Schenectady is up 8.2% and it will.{' '}
+        <b style={{ color: F.ink }}>The difference isn’t the size of the number</b> — it’s whether
+        that location is steady enough for the number to mean anything.
       </Sub>
     </AbsoluteFill>
   </Stage>
@@ -653,121 +625,56 @@ export const SceneTellYouNo: React.FC = () => (
  * ACT 5 -- THE CLOSE
  * ================================================================== */
 
-/** 17. what it does not do */
-export const SceneLimit: React.FC = () => (
-  <Stage flip>
-    <Center gap={10}>
-      <div style={{ marginBottom: 22 }}>
-        <Eyebrow delay={0} exit={82} color={F.faint}>
-          what Vero does not do
-        </Eyebrow>
-      </div>
-      <Line
-        words={[{ t: 'It' }, { t: "won't" }, { t: 'tell' }, { t: 'you' }, { t: 'which' }, { t: 'image' }, { t: 'won.' }]}
-        size={70}
-        delay={6}
-        exit={82}
-        color={F.ghost}
-      />
-      <Line
-        words={[{ t: 'Or' }, { t: 'what' }, { t: 'happened' }, { t: 'yesterday.' }]}
-        size={70}
-        delay={16}
-        exit={82}
-        color={F.ghost}
-      />
-      <div style={{ marginTop: 34, display: 'flex', gap: 16, alignItems: 'center' }}>
-        <Chip delay={30} exit={82} size={36}>
-          it needs a few weeks
-        </Chip>
-        <Chip delay={36} exit={82} size={36}>
-          and more than one location
-        </Chip>
-      </div>
-    </Center>
-  </Stage>
-);
 
-/** 18. the line */
-export const SceneMeasure: React.FC = () => (
+/** 18. the tagline. One line, held. */
+export const SceneTagline: React.FC = () => (
   <Stage>
-    <Center gap={14}>
-      <Line
-        words={[{ t: 'They' }, { t: 'measure' }, { t: 'the' }, { t: 'campaign.' }]}
-        size={84}
-        delay={0}
-        exit={82}
-        color={F.ghost}
-      />
-      <Line
-        words={[{ t: 'Vero' }, { t: 'measures' }, { t: 'the' }, { t: 'money.', color: F.brand }]}
-        size={122}
-        delay={16}
-        exit={82}
-      />
+    <Center gap={0}>
+      <Line words={[{ t: 'Decisions' }, { t: 'made' }, { t: 'simple.' }]} size={124} delay={0} exit={72} />
     </Center>
   </Stage>
 );
 
-/** 19. close */
+/** 19. close: the mark, the name, and where to reach us. Nothing else. */
 export const SceneCTA: React.FC = () => {
   const mark = useReveal(0);
-  const word = useReveal(3);
-  const contact = useReveal(34);
-  const vcs = useReveal(44);
+  const word = useReveal(4);
+  const contact = useReveal(26);
   return (
     <Stage>
-      <Center gap={26}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+      <Center gap={0}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
           <div style={mark}>
-            <VeroMark size={96} tile={false} />
+            <VeroMark size={150} tile={false} />
           </div>
           <div
             style={{
               ...word,
               fontFamily: FONT,
-              fontSize: 94,
+              fontSize: 152,
               fontWeight: 700,
-              letterSpacing: -3.2,
+              letterSpacing: -5.4,
               color: F.ink,
             }}
           >
             Vero
           </div>
         </div>
-        <Line words={[{ t: 'Bring' }, { t: 'us' }, { t: 'a' }, { t: 'month' }]} size={72} delay={10} />
-        <div style={{ marginTop: -12 }}>
-          <Line words={[{ t: 'you' }, { t: 'already' }, { t: 'argued' }, { t: 'about.' }]} size={72} delay={16} />
-        </div>
-        <div style={{ marginTop: 12 }}>
-          <Sub delay={26} size={29} width={980}>
-            Fifteen minutes, on your own locations — including the parts we can’t read yet.
-          </Sub>
-        </div>
         <div
           style={{
             ...contact,
-            marginTop: 30,
+            marginTop: 54,
             display: 'flex',
             alignItems: 'center',
-            gap: 26,
+            gap: 28,
             fontFamily: FONT_UI,
-            fontSize: 28,
+            fontSize: 32,
             color: F.ink,
           }}
         >
           <span style={{ fontWeight: 700, color: F.brand }}>vc-solutions.net</span>
           <Sep />
-          <span>Keegan Zoller, Founder</span>
-          <Sep />
-          <span>(813) 219-0955</span>
-        </div>
-        <div style={{ ...vcs, marginTop: 36, display: 'flex', alignItems: 'center', gap: 20 }}>
-          <span style={{ width: 52, height: 1, background: F.line }} />
-          <Tiny>a</Tiny>
-          <VcsLogo height={68} />
-          <Tiny>product</Tiny>
-          <span style={{ width: 52, height: 1, background: F.line }} />
+          <span>info@vc-solutions.net</span>
         </div>
       </Center>
     </Stage>
@@ -776,19 +683,4 @@ export const SceneCTA: React.FC = () => {
 
 const Sep: React.FC = () => (
   <span style={{ width: 5, height: 5, borderRadius: 99, background: F.faint, display: 'block' }} />
-);
-
-const Tiny: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span
-    style={{
-      fontFamily: FONT_UI,
-      fontSize: 16,
-      fontWeight: 600,
-      letterSpacing: 3.2,
-      textTransform: 'uppercase',
-      color: F.faint,
-    }}
-  >
-    {children}
-  </span>
 );

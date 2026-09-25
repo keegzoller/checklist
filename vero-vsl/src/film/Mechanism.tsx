@@ -608,3 +608,143 @@ export const OutcomeCard: React.FC<{
     </div>
   );
 };
+
+/* ================================================================== *
+ * what an answer actually looks like
+ * ================================================================== *
+ *
+ * Replaces the screenshot montage. The recording only ever captured Vero
+ * *starting* to work, never finishing, so a real answer never appeared on
+ * screen -- which made that beat the weakest in the film. This is the answer
+ * as the product would render it: a sentence, then the location's own trend
+ * against its floor, then the two numbers that make the sentence checkable.
+ */
+export const LocationAnswer: React.FC<{ delay: number; exit?: number }> = ({ delay, exit }) => {
+  const frame = useCurrentFrame();
+  const ask = useReveal(delay + 2, exit);
+  const reply = useReveal(delay + 12, exit);
+  const chartIn = useReveal(delay + 26, exit);
+  const drawBase = ramp(frame, delay + 32, 22);
+  const drawReal = ramp(frame, delay + 44, 26);
+  const fill = ramp(frame, delay + 62, 18);
+  const stats = useReveal(delay + 70, exit);
+
+  const W = 1080;
+  const H = 190;
+  const base = [41, 40, 42, 41, 43, 42, 43, 41, 43, 42, 44, 43];
+  const real = [42, 41, 44, 45, 47, 48, 50, 49, 52, 53, 55, 56];
+  const LO = 36;
+  const HI = 60;
+  const step = W / (base.length - 1);
+  const yOf = (v: number) => H - ((v - LO) / (HI - LO)) * H;
+  const line = (arr: number[]) =>
+    arr.map((v, i) => `${i === 0 ? 'M' : 'L'} ${i * step} ${yOf(v)}`).join(' ');
+  const area = `${line(real)} ${base
+    .slice()
+    .reverse()
+    .map((v, i) => `L ${W - i * step} ${yOf(v)}`)
+    .join(' ')} Z`;
+  const LEN = 1500;
+
+  return (
+    <Card delay={delay} exit={exit} width={1260} pad="36px 44px 32px">
+      <div style={ask}>
+        <Eyebrow>you asked</Eyebrow>
+        <div style={{ fontFamily: FONT_UI, fontSize: 27, fontWeight: 600, color: F.ink, marginTop: 10 }}>
+          “How is Destin actually doing?”
+        </div>
+      </div>
+
+      <div
+        style={{
+          ...reply,
+          marginTop: 22,
+          paddingTop: 22,
+          borderTop: `1px solid ${F.lineSoft}`,
+          display: 'flex',
+          gap: 18,
+        }}
+      >
+        <VeroMark size={38} tile={false} />
+        <div style={{ fontFamily: FONT_UI, fontSize: 25, color: F.ink, lineHeight: 1.5, flex: 1 }}>
+          Destin is your <b>strongest location</b>. Marketing is adding about{' '}
+          <b style={{ color: F.green }}>$2,100 a week</b> there — here it is against what your
+          unmarketed locations did over the same twelve weeks.
+        </div>
+      </div>
+
+      <div style={{ ...chartIn, marginTop: 26 }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+          <Eyebrow>destin · weekly revenue</Eyebrow>
+          <span style={{ marginLeft: 'auto', display: 'flex', gap: 22 }}>
+            <Legend color={F.ink} label="Destin" />
+            <Legend color={F.faint} label="The floor" dashed />
+          </span>
+        </div>
+        <svg width={W} height={H} style={{ display: 'block', overflow: 'visible' }}>
+          <path d={area} fill={F.green} opacity={0.11 * fill} />
+          <path
+            d={line(base)}
+            fill="none"
+            stroke={F.faint}
+            strokeWidth="2.4"
+            strokeDasharray="8 7"
+            strokeLinecap="round"
+            opacity={drawBase}
+          />
+          <path
+            d={line(real)}
+            fill="none"
+            stroke={F.ink}
+            strokeWidth="3.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray={LEN}
+            strokeDashoffset={LEN * (1 - drawReal)}
+          />
+        </svg>
+      </div>
+
+      <div
+        style={{
+          ...stats,
+          marginTop: 24,
+          paddingTop: 20,
+          borderTop: `1px solid ${F.lineSoft}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 46,
+        }}
+      >
+        <Stat label="measured lift" value="+9.1%" tone="green" />
+        <Stat label="confidence" value="96%" />
+        <Stat label="weeks of data" value="12" />
+        <span style={{ marginLeft: 'auto' }}>
+          <Chip tone="brand">show the rows behind this</Chip>
+        </span>
+      </div>
+    </Card>
+  );
+};
+
+const Stat: React.FC<{ label: string; value: string; tone?: 'green' }> = ({
+  label,
+  value,
+  tone,
+}) => (
+  <div>
+    <div
+      style={{
+        fontFamily: FONT,
+        fontSize: 38,
+        fontWeight: 800,
+        letterSpacing: -1.2,
+        color: tone === 'green' ? F.green : F.ink,
+        lineHeight: 1.1,
+      }}
+    >
+      {value}
+    </div>
+    <div style={{ fontFamily: FONT_UI, fontSize: 18, color: F.muted, marginTop: 3 }}>{label}</div>
+  </div>
+);

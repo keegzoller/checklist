@@ -91,40 +91,39 @@ export const FONT_UI = 'Inter Variable, system-ui, sans-serif';
  * `FILM_TOTAL` must equal the sum.
  */
 export const FILM = {
-  open: { from: 0, dur: 50 },
+  open: { from: 0, dur: 44 },
 
-  // act 1 -- the three things you don't know
-  eitherWay: { from: 50, dur: 110 },
-  threeUnknowns: { from: 160, dur: 175 },
-  gut: { from: 335, dur: 115 },
+  // act 1 -- what you don't know. Tight: this is setup, not the pitch.
+  hook: { from: 44, dur: 100 },
+  threeUnknowns: { from: 144, dur: 160 },
+  instinct: { from: 304, dur: 105 },
 
   // act 2 -- why nobody can tell you
-  graded: { from: 450, dur: 125 },
-  lastExpense: { from: 575, dur: 125 },
+  graded: { from: 409, dur: 122 },
+  lastExpense: { from: 531, dur: 120 },
 
   // act 3 -- introducing Vero, and what it connects to
-  intro: { from: 700, dur: 70 },
-  connectPos: { from: 770, dur: 170 },
-  connectChannels: { from: 940, dur: 165 },
-  attribute: { from: 1105, dur: 185 },
+  intro: { from: 651, dur: 70 },
+  connectPos: { from: 721, dur: 170 },
+  connectChannels: { from: 891, dur: 165 },
+  attribute: { from: 1056, dur: 185 },
 
   // act 4 -- what we are not
-  notAnAI: { from: 1290, dur: 165 },
+  notChatbot: { from: 1241, dur: 160 },
 
   // act 5 -- how it actually works
-  deterministic: { from: 1455, dur: 200 },
-  baseline: { from: 1655, dur: 200 },
-  forecast: { from: 1855, dur: 200 },
+  deterministic: { from: 1401, dur: 195 },
+  baseline: { from: 1596, dur: 195 },
+  forecast: { from: 1791, dur: 195 },
 
-  // act 6 -- what it sounds like
-  sounds: { from: 2055, dur: 165 },
-  tellYouNo: { from: 2220, dur: 135 },
+  // act 6 -- what an answer looks like, and what it refuses to answer
+  answerTrend: { from: 1986, dur: 175 },
+  whenItCant: { from: 2161, dur: 150 },
 
   // act 7 -- outcomes and close
-  outcomes: { from: 2355, dur: 210 },
-  limit: { from: 2565, dur: 85 },
-  measure: { from: 2650, dur: 90 },
-  cta: { from: 2740, dur: 130 },
+  outcomes: { from: 2311, dur: 205 },
+  tagline: { from: 2516, dur: 85 },
+  cta: { from: 2601, dur: 130 },
 } as const;
 
-export const FILM_TOTAL = 2870; // 95.7s
+export const FILM_TOTAL = 2731; // 91.0s

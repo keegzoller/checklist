@@ -10,7 +10,7 @@ Three cuts, same project:
 - **`VeroFast`** — 0:53, the feed version. Kinetic typography, hard colour cuts, the POS
   and marketing-channel logo constellations. Built to stop a scroll, and themed to
   vc-solutions.net rather than to Vero's product UI alone.
-- **`VeroFilm`** — 1:36, **the current one**. A product film rather than a poster: near-white
+- **`VeroFilm`** — 1:31, **the current one**. A product film rather than a poster: near-white
   stage, blur reveals, all three real product screens at size, and a five-act argument built
   on *Vero — positioning and narrative*. It answers three questions in order: why should I
   care, why can nobody already tell me, and what do I actually get. Start here.
@@ -42,7 +42,7 @@ binary". Also: `--concurrency` cannot exceed your core count.
 | --- | --- | --- | --- |
 | `VeroVSL` | 1920x1080 | 1:20 | email embed, site, YouTube, sales follow-up |
 | `VeroFast` | 1920x1080 | 0:53 | paid social, LinkedIn feed, top of a cold email |
-| `VeroFilm` | 1920x1080 | 1:36 | the site, a sales follow-up, anywhere the viewer will give you a minute |
+| `VeroFilm` | 1920x1080 | 1:31 | the site, a sales follow-up, anywhere the viewer will give you a minute |
 
 A square or vertical feed cut needs its own layouts rather than a resized frame (the scenes
 are built on a wide grid). That is a separate pass, not a flag on this one.
@@ -92,7 +92,7 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/fast/Logos.tsx` | the Vero mark, brand glyphs, logo pills, the constellation |
 | `src/fast/logoAssets.ts` | drop-in slots for official logo files |
 
-### The 1:36 product film
+### The 1:31 product film
 
 | File | What lives there |
 | --- | --- |

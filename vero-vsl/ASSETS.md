@@ -21,11 +21,25 @@ the connection hub and the close can all use it large.
 
 ---
 
-## 2. Dashboard captures
+## 2. Dashboard captures — now the biggest gap
 
-Three real screens are in the film today: the Connections page, the workspace home, and the
-investigating state. Everything else that looks like Vero is a designed panel matching the
-product's light palette.
+**The film currently contains no real product screenshots at all.** That is worth saying
+plainly. Each of the three beats that used one has been replaced over the last two passes:
+the Connections page gave way to the POS/channel tile grids, the workspace home beat was
+cut, and the investigating screen was replaced by the designed answer card with the
+location trend.
+
+Every one of those replacements is better than what it replaced. But the net effect is that
+a prospect watching this never sees the actual product — only faithful reconstructions of
+it. For a tool whose entire pitch is "you can check this", that is the wrong thing to be
+short of.
+
+Two ways to fix it, and they are not exclusive:
+
+- **Quickest:** put the real Connections screen back somewhere in act 3. It is a good
+  screenshot and it fits "it starts at your point of sale".
+- **Best:** send the captures below. Each replaces a designed panel outright, and the
+  layouts already accommodate a panel of that size.
 
 Each capture below replaces one designed panel outright. **App window only, 2400px wide or
 more, at a normal zoom level.** A real workspace with a blurred client name is fine — we

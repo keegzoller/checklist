@@ -5,24 +5,23 @@ import '@fontsource-variable/manrope';
 import { F, FILM, FILM_TOTAL } from './theme';
 import {
   SceneOpen,
-  SceneEitherWay,
+  SceneHook,
   SceneThreeUnknowns,
-  SceneGut,
+  SceneInstinct,
   SceneGraded,
   SceneLastExpense,
   SceneIntro,
   SceneConnectPos,
   SceneConnectChannels,
   SceneAttribute,
-  SceneNotAnAI,
+  SceneNotChatbot,
   SceneDeterministic,
   SceneBaseline,
   SceneForecast,
-  SceneSounds,
-  SceneTellYouNo,
+  SceneAnswerTrend,
+  SceneWhenItCant,
   SceneOutcomes,
-  SceneLimit,
-  SceneMeasure,
+  SceneTagline,
   SceneCTA,
 } from './Scenes';
 
@@ -34,10 +33,10 @@ import {
 const ORDER = [
   [FILM.open, SceneOpen],
 
-  // act 1 -- the three things you don't know
-  [FILM.eitherWay, SceneEitherWay],
+  // act 1 -- what you don't know
+  [FILM.hook, SceneHook],
   [FILM.threeUnknowns, SceneThreeUnknowns],
-  [FILM.gut, SceneGut],
+  [FILM.instinct, SceneInstinct],
 
   // act 2 -- why nobody can tell you
   [FILM.graded, SceneGraded],
@@ -50,21 +49,20 @@ const ORDER = [
   [FILM.attribute, SceneAttribute],
 
   // act 4 -- what we are not
-  [FILM.notAnAI, SceneNotAnAI],
+  [FILM.notChatbot, SceneNotChatbot],
 
   // act 5 -- how it actually works
   [FILM.deterministic, SceneDeterministic],
   [FILM.baseline, SceneBaseline],
   [FILM.forecast, SceneForecast],
 
-  // act 6 -- what it sounds like
-  [FILM.sounds, SceneSounds],
-  [FILM.tellYouNo, SceneTellYouNo],
+  // act 6 -- an answer, and a refusal
+  [FILM.answerTrend, SceneAnswerTrend],
+  [FILM.whenItCant, SceneWhenItCant],
 
   // act 7 -- outcomes and close
   [FILM.outcomes, SceneOutcomes],
-  [FILM.limit, SceneLimit],
-  [FILM.measure, SceneMeasure],
+  [FILM.tagline, SceneTagline],
   [FILM.cta, SceneCTA],
 ] as const;
 
