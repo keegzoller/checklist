@@ -85,45 +85,48 @@ export const FONT_UI = 'Inter Variable, system-ui, sans-serif';
  * claim in act 5 sounds like the same AI-summarizes-your-dashboard pitch the
  * buyer has already been sold twice.
  *
- * Text-heavy beats hold roughly a second past the last word landing. A line
- * you cannot finish reading may as well not be there.
+ * PACING RULE: a beat's length follows how much there is to read, not a house
+ * average. A panel of numbers holds past the last reveal so it can be read
+ * twice; a logo, a tagline or a two-word line gets out of the way. Trimming
+ * the light beats is where the runtime comes from -- trimming the dense ones
+ * just makes them illegible.
  *
  * `FILM_TOTAL` must equal the sum.
  */
 export const FILM = {
-  open: { from: 0, dur: 44 },
+  open: { from: 0, dur: 32 },
 
-  // act 1 -- what you don't know. Tight: this is setup, not the pitch.
-  hook: { from: 44, dur: 100 },
-  threeUnknowns: { from: 144, dur: 160 },
-  instinct: { from: 304, dur: 105 },
+  // act 1 -- what you don't know
+  hook: { from: 32, dur: 96 },
+  threeUnknowns: { from: 128, dur: 150 },
+  instinct: { from: 278, dur: 92 },
 
   // act 2 -- why nobody can tell you
-  graded: { from: 409, dur: 122 },
-  lastExpense: { from: 531, dur: 120 },
+  graded: { from: 370, dur: 118 },
+  lastExpense: { from: 488, dur: 116 },
 
   // act 3 -- introducing Vero, and what it connects to
-  intro: { from: 651, dur: 70 },
-  connectPos: { from: 721, dur: 170 },
-  connectChannels: { from: 891, dur: 165 },
-  attribute: { from: 1056, dur: 185 },
+  intro: { from: 604, dur: 44 },
+  connectPos: { from: 648, dur: 122 },
+  connectChannels: { from: 770, dur: 118 },
+  attribute: { from: 888, dur: 160 },
 
   // act 4 -- what we are not
-  notChatbot: { from: 1241, dur: 160 },
+  notChatbot: { from: 1048, dur: 150 },
 
   // act 5 -- how it actually works
-  deterministic: { from: 1401, dur: 195 },
-  baseline: { from: 1596, dur: 195 },
-  forecast: { from: 1791, dur: 195 },
+  deterministic: { from: 1198, dur: 172 },
+  baseline: { from: 1370, dur: 168 },
+  forecast: { from: 1538, dur: 168 },
 
-  // act 6 -- what an answer looks like, and what it refuses to answer
-  answerTrend: { from: 1986, dur: 175 },
-  whenItCant: { from: 2161, dur: 150 },
+  // act 6 -- an answer, and a refusal
+  answerTrend: { from: 1706, dur: 165 },
+  whenItCant: { from: 1871, dur: 145 },
 
   // act 7 -- outcomes and close
-  outcomes: { from: 2311, dur: 205 },
-  tagline: { from: 2516, dur: 85 },
-  cta: { from: 2601, dur: 130 },
+  outcomes: { from: 2016, dur: 178 },
+  tagline: { from: 2194, dur: 58 },
+  cta: { from: 2252, dur: 100 },
 } as const;
 
-export const FILM_TOTAL = 2731; // 91.0s
+export const FILM_TOTAL = 2352; // 78.4s

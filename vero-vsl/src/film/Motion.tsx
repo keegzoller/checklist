@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import { F, FONT, FONT_UI } from './theme';
 
 /* ------------------------------------------------------------------ *
@@ -19,6 +19,18 @@ export const ramp = (frame: number, delay: number, dur = 14) =>
     extrapolateRight: 'clamp',
     easing: OUT,
   });
+
+/**
+ * When a beat should start clearing itself.
+ *
+ * Inside a `<Sequence>`, `useVideoConfig().durationInFrames` is that sequence's
+ * length, so a scene can derive its own exit instead of carrying a hand-tuned
+ * number that silently drifts every time a duration changes. Nine frames out,
+ * with a seven-frame blur, leaves two blank frames at the cut -- enough to read
+ * as a beat, not enough to read as dead air. Across nineteen cuts that
+ * difference alone was worth about three seconds of runtime.
+ */
+export const useSceneExit = (lead = 9) => useVideoConfig().durationInFrames - lead;
 
 /**
  * The signature reveal: blur and lift in, hold, then blur and lift back out.

@@ -254,7 +254,7 @@ and no vertical cut — same reason as §6.3, the scenes are laid out on a wide 
 
 ## 8. The product film (added 2026-09-11, and the one to show people)
 
-A third composition, `VeroFilm`. 1:31, 2,731 frames, 1920x1080. It replaces neither of the
+A third composition, `VeroFilm`. 1:18, 2,352 frames, 1920x1080. It replaces neither of the
 others in the repo, but it is the one that should go on the site.
 
 **Why it exists.** The first two cuts sold an attribution product — connect your data, see

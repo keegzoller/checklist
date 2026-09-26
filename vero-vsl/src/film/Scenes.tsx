@@ -11,6 +11,7 @@ import {
   Stage,
   Sub,
   useReveal,
+  useSceneExit,
 } from './Motion';
 import { Exchange, ExpenseCheck, RefusePanel, ReportCard } from './Panels';
 import { CHANNEL_TILES, ConnectGrid, POS_TILES } from './Connect';
@@ -55,8 +56,9 @@ import { VeroMark } from '../fast/Logos';
  * ================================================================== */
 
 export const SceneOpen: React.FC = () => {
-  const mark = useReveal(0, 40);
-  const word = useReveal(4, 40);
+  const exit = useSceneExit();
+  const mark = useReveal(0, exit);
+  const word = useReveal(4, exit);
   return (
     <Stage>
       <Center gap={0}>
@@ -86,64 +88,76 @@ export const SceneOpen: React.FC = () => {
  * ACT 1 -- THE FEELING
  * ================================================================== */
 
-/** 2. the hook -- names the decision, then names the problem with it */
-export const SceneHook: React.FC = () => (
-  <Stage>
-    <Center gap={4}>
-      <Line
-        words={[{ t: 'Every' }, { t: 'month,' }, { t: 'you' }, { t: 'approve' }]}
-        size={104}
-        delay={0}
-        exit={90}
-      />
-      <Line words={[{ t: 'the' }, { t: 'marketing' }, { t: 'budget.' }]} size={104} delay={8} exit={90} />
-      <div style={{ marginTop: 44 }}>
-        <Line
-          words={[{ t: 'And' }, { t: 'every' }, { t: 'month,' }, { t: 'you' }, { t: 'approve' }, { t: 'it' }, { t: 'blind.', color: F.brand }]}
-          size={78}
-          delay={34}
-          exit={90}
-        />
-      </div>
-    </Center>
-  </Stage>
-);
+/**
+ * 2. the hook. Two earlier versions were rejected for shrugging rather than
+ *    stating. This one opens on the number so the viewer recognises their own
+ *    spend, then names the thing that is actually wrong with it.
+ */
+export const SceneHook: React.FC = () => {
+  const exit = useSceneExit();
+  return (
+    <Stage>
+      <Center gap={0}>
+        <Line words={[{ t: '$40,000' }, { t: 'a' }, { t: 'month.' }]} size={136} delay={0} exit={exit} />
+        <div style={{ marginTop: 46 }}>
+          <Line
+            words={[{ t: 'The' }, { t: 'only' }, { t: 'money' }, { t: 'you' }, { t: 'spend' }]}
+            size={66}
+            delay={26}
+            exit={exit}
+            color={F.ghost}
+          />
+          <div style={{ marginTop: 6 }}>
+            <Line
+              words={[{ t: 'that' }, { t: 'nobody' }, { t: 'can' }, { t: 'account' }, { t: 'for.', color: F.brand }]}
+              size={66}
+              delay={33}
+              exit={exit}
+            />
+          </div>
+        </div>
+      </Center>
+    </Stage>
+  );
+};
 
 
 /**
- * 4. the real problem is not that you guess -- it is that you never find out,
- *    so the guess never improves. "Going with your gut" undersold that.
+ * 4. the pause between the two lines is the beat. "And hope" only lands if the
+ *    first line has already settled, hence the gap in the delays.
  */
-export const SceneInstinct: React.FC = () => (
-  <Stage>
-    <Center gap={4}>
-      <Line
-        words={[{ t: 'So' }, { t: 'the' }, { t: 'decision' }, { t: 'gets' }, { t: 'made' }]}
-        size={92}
-        delay={0}
-        exit={95}
-      />
-      <Line words={[{ t: 'on' }, { t: 'instinct.' }]} size={92} delay={8} exit={95} />
-      <div style={{ marginTop: 46 }}>
-        <Sub delay={32} exit={95} size={34} width={1220} center color={F.muted}>
-          Same as last month. Same as next month.
-        </Sub>
-      </div>
-      <div style={{ marginTop: 14 }}>
-        <Sub delay={54} exit={95} size={34} width={1220} center color={F.ink}>
-          <b>You never find out whether you were right — so it never gets better.</b>
-        </Sub>
-      </div>
-    </Center>
-  </Stage>
-);
+export const SceneInstinct: React.FC = () => {
+  const exit = useSceneExit();
+  return (
+    <Stage>
+      <Center gap={0}>
+        <Line words={[{ t: 'So' }, { t: 'you' }, { t: 'approve' }, { t: 'it.' }]} size={104} delay={0} exit={exit} />
+        <div style={{ marginTop: 18 }}>
+          <Line words={[{ t: 'And' }, { t: 'hope.', color: F.brand }]} size={104} delay={20} exit={exit} />
+        </div>
+        <div style={{ marginTop: 48 }}>
+          <Sub delay={40} exit={exit} size={32} width={1220} center color={F.muted}>
+            Same as last month. Same as next month.
+          </Sub>
+        </div>
+        <div style={{ marginTop: 12 }}>
+          <Sub delay={56} exit={exit} size={32} width={1220} center color={F.ink}>
+            <b>You never find out whether you were right — so it never gets better.</b>
+          </Sub>
+        </div>
+      </Center>
+    </Stage>
+  );
+};
 
 /* ================================================================== *
  * ACT 2 -- WHY NOBODY CAN TELL YOU
  * ================================================================== */
 
 /** 5. everyone reporting to you is being graded by themselves */
-export const SceneGraded: React.FC = () => (
+export const SceneGraded: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 60 }}>
       <div style={{ display: 'flex', gap: 34, height: 250 }}>
@@ -153,7 +167,7 @@ export const SceneGraded: React.FC = () => (
           claim="+34%"
           detail="how Facebook says Facebook did"
           delay={0}
-          exit={108}
+          exit={exit}
           rotate={-1.3}
         />
         <ReportCard
@@ -162,7 +176,7 @@ export const SceneGraded: React.FC = () => (
           claim="+41%"
           detail="how Google says Google did"
           delay={7}
-          exit={108}
+          exit={exit}
           rotate={0.7}
         />
         <ReportCard
@@ -170,7 +184,7 @@ export const SceneGraded: React.FC = () => (
           claim="Great month."
           detail="written by the people being graded"
           delay={14}
-          exit={108}
+          exit={exit}
           rotate={-0.5}
         />
       </div>
@@ -179,7 +193,7 @@ export const SceneGraded: React.FC = () => (
           words={[{ t: 'None' }, { t: 'of' }, { t: 'your' }, { t: 'channels' }, { t: 'are' }, { t: 'lying.' }]}
           size={74}
           delay={30}
-          exit={108}
+          exit={exit}
           color={F.ghost}
         />
         <div style={{ marginTop: 10 }}>
@@ -187,35 +201,39 @@ export const SceneGraded: React.FC = () => (
             words={[{ t: 'They' }, { t: 'just' }, { t: "can't" }, { t: 'afford' }, { t: 'to' }, { t: 'tell' }, { t: 'you' }]}
             size={58}
             delay={46}
-            exit={108}
+            exit={exit}
           />
           <Line
             words={[{ t: 'when' }, { t: "it isn't" }, { t: 'working.', color: F.brand }]}
             size={58}
             delay={54}
-            exit={108}
+            exit={exit}
           />
         </div>
       </div>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 
 /** 7. marketing is the last big expense nobody can check */
-export const SceneLastExpense: React.FC = () => (
+export const SceneLastExpense: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 52 }}>
       <Line
         words={[{ t: 'Every' }, { t: 'other' }, { t: 'line' }, { t: 'on' }, { t: 'your' }, { t: 'P&L,' }, { t: 'you' }, { t: 'can' }, { t: 'check.' }]}
         size={62}
         delay={0}
-        exit={106}
+        exit={exit}
       />
-      <ExpenseCheck delay={12} exit={106} />
+      <ExpenseCheck delay={12} exit={exit} />
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 1 (cont.) -- the three things you don't know
@@ -228,23 +246,26 @@ const UNKNOWNS = [
 ];
 
 /** Three questions, each landing with nothing in the answer slot. */
-export const SceneThreeUnknowns: React.FC = () => (
+export const SceneThreeUnknowns: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 34 }}>
       {UNKNOWNS.map((q, i) => (
-        <UnknownRow key={q} q={q} delay={i * 26} exit={144} />
+        <UnknownRow key={q} q={q} delay={i * 26} exit={exit} />
       ))}
       <div style={{ marginTop: 26 }}>
         <Line
           words={[{ t: 'Three' }, { t: 'questions.' }, { t: 'No' }, { t: 'answers.', color: F.brand }]}
           size={62}
           delay={104}
-          exit={144}
+          exit={exit}
         />
       </div>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 const UnknownRow: React.FC<{ q: string; delay: number; exit: number }> = ({ q, delay, exit }) => {
   const st = useReveal(delay, exit);
@@ -291,12 +312,13 @@ const UnknownRow: React.FC<{ q: string; delay: number; exit: number }> = ({ q, d
  * ================================================================== */
 
 export const SceneIntro: React.FC = () => {
-  const mark = useReveal(0, 56);
-  const word = useReveal(3, 56);
+  const exit = useSceneExit();
+  const mark = useReveal(0, exit);
+  const word = useReveal(3, exit);
   return (
     <Stage>
       <Center gap={30}>
-        <Eyebrow delay={0} exit={56} color={F.faint}>
+        <Eyebrow delay={0} exit={exit} color={F.faint}>
           introducing
         </Eyebrow>
         <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
@@ -322,36 +344,44 @@ export const SceneIntro: React.FC = () => {
 };
 
 /** It starts at the register. */
-export const SceneConnectPos: React.FC = () => (
+export const SceneConnectPos: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 42 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line words={[{ t: 'It' }, { t: 'starts' }, { t: 'at' }, { t: 'your' }]} size={66} delay={0} exit={156} />
-        <Line words={[{ t: 'point' }, { t: 'of' }, { t: 'sale.', color: F.brand }]} size={66} delay={5} exit={156} />
+        <Line words={[{ t: 'It' }, { t: 'starts' }, { t: 'at' }, { t: 'your' }]} size={66} delay={0} exit={exit} />
+        <Line words={[{ t: 'point' }, { t: 'of' }, { t: 'sale.', color: F.brand }]} size={66} delay={5} exit={exit} />
       </div>
-      <ConnectGrid tiles={POS_TILES} delay={14} exit={156} cols={6} tileW={182} />
-      <Sub delay={78} exit={156} size={27} width={1100} center>
+      <ConnectGrid tiles={POS_TILES} delay={14} exit={exit} cols={6} tileW={182} />
+      <Sub delay={78} exit={exit} size={27} width={1100} center>
         Not clicks. Not impressions. The actual money that came through your tills.
       </Sub>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /** Then every channel you buy. */
-export const SceneConnectChannels: React.FC = () => (
+export const SceneConnectChannels: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 42 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line words={[{ t: 'Then' }, { t: 'every' }, { t: 'channel' }]} size={66} delay={0} exit={151} />
-        <Line words={[{ t: 'you' }, { t: 'buy.', color: F.brand }]} size={66} delay={5} exit={151} />
+        <Line words={[{ t: 'Then' }, { t: 'every' }, { t: 'channel' }]} size={66} delay={0} exit={exit} />
+        <Line words={[{ t: 'you' }, { t: 'buy.', color: F.brand }]} size={66} delay={5} exit={exit} />
       </div>
-      <ConnectGrid tiles={CHANNEL_TILES} delay={12} exit={151} cols={5} tileW={186} />
+      <ConnectGrid tiles={CHANNEL_TILES} delay={12} exit={exit} cols={5} tileW={186} />
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /** Where they came from, and what they came for. */
-export const SceneAttribute: React.FC = () => (
+export const SceneAttribute: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 44 }}>
       <div style={{ textAlign: 'center' }}>
@@ -359,52 +389,56 @@ export const SceneAttribute: React.FC = () => (
           words={[{ t: 'So' }, { t: 'you' }, { t: 'can' }, { t: 'see' }, { t: 'where' }, { t: 'they' }, { t: 'came' }, { t: 'from' }]}
           size={58}
           delay={0}
-          exit={171}
+          exit={exit}
         />
         <Line
           words={[{ t: 'and' }, { t: 'what' }, { t: 'they' }, { t: 'came' }, { t: 'for.', color: F.brand }]}
           size={58}
           delay={7}
-          exit={171}
+          exit={exit}
         />
       </div>
-      <AttributionPanel delay={16} exit={171} />
-      <Sub delay={86} exit={171} size={27} width={1240} center>
+      <AttributionPanel delay={16} exit={exit} />
+      <Sub delay={86} exit={exit} size={27} width={1240} center>
         Not just which ad they clicked — which locations, which channels, and which items
         actually rang up.
       </Sub>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 4 -- what we are not
  * ================================================================== */
 
-export const SceneNotChatbot: React.FC = () => (
+export const SceneNotChatbot: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 38 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line words={[{ t: 'Vero' }, { t: 'is' }, { t: 'not' }, { t: 'a' }, { t: 'chatbot.' }]} size={88} delay={0} exit={146} />
+        <Line words={[{ t: 'Vero' }, { t: 'is' }, { t: 'not' }, { t: 'a' }, { t: 'chatbot.' }]} size={88} delay={0} exit={exit} />
         <div style={{ marginTop: 8 }}>
           <Line
             words={[{ t: 'Not' }, { t: 'a' }, { t: 'widget.' }, { t: 'Not' }, { t: 'another' }, { t: 'dashboard.' }]}
             size={62}
             delay={10}
-            exit={146}
+            exit={exit}
             color={F.ghost}
           />
         </div>
       </div>
-      <NotThisCard delay={28} exit={146} />
-      <Sub delay={74} exit={146} size={29} width={1160} color={F.ink} center>
+      <NotThisCard delay={28} exit={exit} />
+      <Sub delay={74} exit={exit} size={29} width={1160} color={F.ink} center>
         Those read the same numbers you already couldn’t trust and say them back with more
         confidence. <b>Vero is a measurement system.</b> It starts at your revenue and works
         backwards.
       </Sub>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 5 -- how it actually works
@@ -434,13 +468,15 @@ const Mech: React.FC<{
   </AbsoluteFill>
 );
 
-export const SceneDeterministic: React.FC = () => (
+export const SceneDeterministic: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <Mech
       n="01"
       top="Ask it the same question twice."
       bottom="You get the same answer."
-      exit={181}
+      exit={exit}
       subDelay={88}
       sub={
         <>
@@ -450,18 +486,21 @@ export const SceneDeterministic: React.FC = () => (
         </>
       }
     >
-      <DeterministicPanel delay={14} exit={181} />
+      <DeterministicPanel delay={14} exit={exit} />
     </Mech>
   </Stage>
-);
+  );
+};
 
-export const SceneBaseline: React.FC = () => (
+export const SceneBaseline: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <Mech
       n="02"
       top="It builds the floor —"
       bottom="what happens without you."
-      exit={181}
+      exit={exit}
       subDelay={92}
       sub={
         <>
@@ -470,18 +509,21 @@ export const SceneBaseline: React.FC = () => (
         </>
       }
     >
-      <BaselinePanel delay={14} exit={181} />
+      <BaselinePanel delay={14} exit={exit} />
     </Mech>
   </Stage>
-);
+  );
+};
 
-export const SceneForecast: React.FC = () => (
+export const SceneForecast: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <Mech
       n="03"
       top="And it forecasts"
       bottom="the change before you make it."
-      exit={181}
+      exit={exit}
       subDelay={94}
       sub={
         <>
@@ -490,23 +532,26 @@ export const SceneForecast: React.FC = () => (
         </>
       }
     >
-      <ForecastPanel delay={14} exit={181} />
+      <ForecastPanel delay={14} exit={exit} />
     </Mech>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 7 -- outcomes
  * ================================================================== */
 
-export const SceneOutcomes: React.FC = () => (
+export const SceneOutcomes: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <AbsoluteFill style={{ justifyContent: 'center', padding: '0 110px', gap: 52 }}>
       <Line
         words={[{ t: 'What' }, { t: 'changes' }, { t: 'for' }, { t: 'you.' }]}
         size={78}
         delay={0}
-        exit={191}
+        exit={exit}
         justify="flex-start"
       />
       <div style={{ display: 'flex', gap: 30, alignItems: 'stretch' }}>
@@ -515,26 +560,27 @@ export const SceneOutcomes: React.FC = () => (
           title="Clarity in the decision"
           body="You walk into the meeting already knowing which locations are working and which aren’t."
           delay={14}
-          exit={191}
+          exit={exit}
         />
         <OutcomeCard
           n="02"
           title="Better allocation of every dollar"
           body="The next dollar goes where the last one actually produced — not where the report looked best."
           delay={26}
-          exit={191}
+          exit={exit}
         />
         <OutcomeCard
           n="03"
           title="More customers through the door"
           body="Waste gets found in week one instead of next quarter, and that budget goes back to work."
           delay={38}
-          exit={191}
+          exit={exit}
         />
       </div>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 3 -- WHAT VERO DOES
@@ -581,19 +627,22 @@ const NumRule: React.FC<{ n: string; exit: number }> = ({ n, exit }) => {
  *     recording stops before it renders one -- so it sold the waiting, not the
  *     answer. This shows the answer, with the location's own trend under it.
  */
-export const SceneAnswerTrend: React.FC = () => (
+export const SceneAnswerTrend: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage flip>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 34 }}>
       <Line
         words={[{ t: 'So' }, { t: 'you' }, { t: 'ask.' }, { t: 'And' }, { t: 'it' }, { t: 'answers.', color: F.brand }]}
         size={62}
         delay={0}
-        exit={161}
+        exit={exit}
       />
-      <LocationAnswer delay={10} exit={161} />
+      <LocationAnswer delay={10} exit={exit} />
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 
 
@@ -602,24 +651,27 @@ export const SceneAnswerTrend: React.FC = () => (
  *     was too clever to parse in three seconds -- it now says the thing
  *     plainly and the sub explains why the smaller number is the real one.
  */
-export const SceneWhenItCant: React.FC = () => (
+export const SceneWhenItCant: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', gap: 36 }}>
       <div style={{ textAlign: 'center' }}>
-        <Line words={[{ t: 'And' }, { t: 'when' }, { t: "it can't" }, { t: 'tell' }, { t: 'yet,' }]} size={70} delay={0} exit={136} />
+        <Line words={[{ t: 'And' }, { t: 'when' }, { t: "it can't" }, { t: 'tell' }, { t: 'yet,' }]} size={70} delay={0} exit={exit} />
         <div style={{ marginTop: 6 }}>
-          <Line words={[{ t: 'it' }, { t: 'says' }, { t: 'so.', color: F.brand }]} size={70} delay={8} exit={136} />
+          <Line words={[{ t: 'it' }, { t: 'says' }, { t: 'so.', color: F.brand }]} size={70} delay={8} exit={exit} />
         </div>
       </div>
-      <RefusePanel delay={20} exit={136} />
-      <Sub delay={80} exit={136} size={27} width={1240} center>
+      <RefusePanel delay={20} exit={exit} />
+      <Sub delay={80} exit={exit} size={27} width={1240} center>
         Destin is up 8.4% and Vero will not report it. Schenectady is up 8.2% and it will.{' '}
         <b style={{ color: F.ink }}>The difference isn’t the size of the number</b> — it’s whether
         that location is steady enough for the number to mean anything.
       </Sub>
     </AbsoluteFill>
   </Stage>
-);
+  );
+};
 
 /* ================================================================== *
  * ACT 5 -- THE CLOSE
@@ -627,13 +679,16 @@ export const SceneWhenItCant: React.FC = () => (
 
 
 /** 18. the tagline. One line, held. */
-export const SceneTagline: React.FC = () => (
+export const SceneTagline: React.FC = () => {
+  const exit = useSceneExit();
+  return (
   <Stage>
     <Center gap={0}>
-      <Line words={[{ t: 'Decisions' }, { t: 'made' }, { t: 'simple.' }]} size={124} delay={0} exit={72} />
+      <Line words={[{ t: 'Decisions' }, { t: 'made' }, { t: 'simple.' }]} size={124} delay={0} exit={exit} />
     </Center>
   </Stage>
-);
+  );
+};
 
 /** 19. close: the mark, the name, and where to reach us. Nothing else. */
 export const SceneCTA: React.FC = () => {

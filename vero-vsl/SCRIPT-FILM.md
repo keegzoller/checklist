@@ -1,6 +1,6 @@
 # Vero: the product film
 
-**Composition:** `VeroFilm` · 1920x1080 · 30fps · 2,731 frames (1:31)
+**Composition:** `VeroFilm` · 1920x1080 · 30fps · 2,352 frames (1:18)
 **Audience:** multi-location and franchise owners who sign off on the marketing spend
 **Ask:** fifteen minutes on a month they have already argued about
 **Source:** the founder's spine, plus *Vero — positioning and narrative* for the language.
@@ -43,32 +43,48 @@ bullet points.
 
 | # | key | in | dur | on screen |
 | --- | --- | --- | --- | --- |
-| 1 | `open` | 0:00 | 1.5s | Vero mark and wordmark |
+| 1 | `open` | 0:00 | 1.1s | Vero mark and wordmark |
 | | | | | **ACT 1 — what you don't know** |
-| 2 | `hook` | 0:01.5 | 3.3s | "Every month, you approve the marketing budget." → "And every month, you approve it **blind.**" |
-| 3 | `threeUnknowns` | 0:04.8 | 5.3s | the three questions, each with an empty answer slot → "Three questions. **No answers.**" |
-| 4 | `instinct` | 0:10.1 | 3.5s | "So the decision gets made on instinct." → "You never find out whether you were right — so it never gets better." |
+| 2 | `hook` | 0:01.1 | 3.2s | "**$40,000 a month.**" → "The only money you spend that nobody can account **for.**" |
+| 3 | `threeUnknowns` | 0:04.3 | 5.0s | the three questions, each with an empty answer slot → "Three questions. **No answers.**" |
+| 4 | `instinct` | 0:09.3 | 3.1s | "So you approve it. **And hope.**" → "You never find out whether you were right — so it never gets better." |
 | | | | | **ACT 2 — why nobody can tell you** |
-| 5 | `graded` | 0:13.6 | 4.1s | Meta, Google, the agency — "**None of your channels are lying.** They just can't afford to tell you when it isn't working." |
-| 6 | `lastExpense` | 0:17.7 | 4.0s | rent ✓ food cost ✓ a bad hire ✓ **marketing ?** |
+| 5 | `graded` | 0:12.3 | 3.9s | Meta, Google, the agency — "None of your channels are lying. They just can't afford to tell you when it isn't working." |
+| 6 | `lastExpense` | 0:16.3 | 3.9s | rent ✓ food cost ✓ a bad hire ✓ **marketing ?** |
 | | | | | **ACT 3 — introducing Vero** |
-| 7 | `intro` | 0:21.7 | 2.3s | "Introducing **Vero**" — full size |
-| 8 | `connectPos` | 0:24 | 5.7s | "It starts at your point of sale." — six POS logos checking in |
-| 9 | `connectChannels` | 0:29.7 | 5.5s | "Then every channel you buy." — ten marketing channels |
-| 10 | `attribute` | 0:35.2 | 6.2s | where they came from (channel split) and what they came for (item mix) |
+| 7 | `intro` | 0:20.1 | 1.5s | "Introducing **Vero**" |
+| 8 | `connectPos` | 0:21.6 | 4.1s | "It starts at your point of sale." — six POS logos checking in |
+| 9 | `connectChannels` | 0:25.7 | 3.9s | "Then every channel you buy." — ten marketing channels |
+| 10 | `attribute` | 0:29.6 | 5.3s | where they came from (channel split) and what they came for (item mix) |
 | | | | | **ACT 4 — what we are not** |
-| 11 | `notChatbot` | 0:41.4 | 5.3s | "Vero is not a chatbot. Not a widget. Not another dashboard." — generic summary struck out — "Vero is a measurement system." |
+| 11 | `notChatbot` | 0:34.9 | 5.0s | "Vero is not a chatbot. Not a widget. Not another dashboard." |
 | | | | | **ACT 5 — how it actually works** |
-| 12 | `deterministic` | 0:46.7 | 6.5s | **01** "Ask it the same question twice. You get the same answer." — three identical runs, and what *deterministic* means |
-| 13 | `baseline` | 0:53.2 | 6.5s | **02** the floor — unmarketed vs marketed, the gap shaded |
-| 14 | `forecast` | 0:59.7 | 6.5s | **03** move $18K on screen, projection with its range |
+| 12 | `deterministic` | 0:39.9 | 5.7s | **01** "Ask it the same question twice. You get the same answer." |
+| 13 | `baseline` | 0:45.6 | 5.6s | **02** the floor — unmarketed vs marketed, the gap shaded |
+| 14 | `forecast` | 0:51.2 | 5.6s | **03** move $18K on screen, projection with its range |
 | | | | | **ACT 6 — an answer, and a refusal** |
-| 15 | `answerTrend` | 1:06.2 | 5.8s | "So you ask. And it **answers.**" — a real-shaped reply with Destin's own trend against its floor |
-| 16 | `whenItCant` | 1:12 | 5.0s | "And when it can't tell yet, **it says so.**" — +8.4% withheld, +8.2% reported, explained |
+| 15 | `answerTrend` | 0:56.8 | 5.5s | "So you ask. And it **answers.**" — Destin's trend against its floor |
+| 16 | `whenItCant` | 1:02.3 | 4.8s | "And when it can't tell yet, **it says so.**" |
 | | | | | **ACT 7 — outcomes and close** |
-| 17 | `outcomes` | 1:17 | 6.8s | clarity in the decision · better allocation of every dollar · more customers through the door |
-| 18 | `tagline` | 1:23.9 | 2.8s | **"Decisions made simple."** |
-| 19 | `cta` | 1:26.7 | 4.3s | Vero mark + wordmark · vc-solutions.net · info@vc-solutions.net |
+| 17 | `outcomes` | 1:07.2 | 5.9s | clarity · better allocation · more customers through the door |
+| 18 | `tagline` | 1:13.1 | 1.9s | **"Decisions made simple."** |
+| 19 | `cta` | 1:15.0 | 3.3s | Vero mark + wordmark · vc-solutions.net · info@vc-solutions.net |
+
+### Pacing
+
+Beat length follows reading load, not a house average. A panel of numbers holds past its
+last reveal so it can be read twice; a logo, a tagline or a two-word line gets out of the
+way. **Trimming the light beats is where runtime comes from — trimming the dense ones just
+makes them illegible.**
+
+Scenes no longer carry hand-tuned exit frames. `useSceneExit()` reads the sequence's own
+duration (`useVideoConfig().durationInFrames` is the *sequence* length inside a `Sequence`)
+and clears nine frames before the end, which with a seven-frame blur leaves two blank frames
+at the cut. That is a beat, not dead air — the previous hand-set exits were leaving seven,
+which across nineteen cuts was about three seconds of white.
+
+**Getting below ~1:16 means removing beats, not shortening them.** The dense panels are
+already at the floor of what can be read.
 
 Timings live in `FILM` in `src/film/theme.ts`. Change a `dur` and push every later `from`
 by the same amount; `FILM_TOTAL` must equal the sum.
@@ -95,11 +111,11 @@ earlier poster cuts read as a template.
 
 Written to the existing timing — no frames move. Read it flat.
 
-1. "Every month, you approve the marketing budget. And every month, you approve it blind."
+1. "Forty thousand a month. The only money you spend that nobody can account for."
 2. "Is my marketing working? Which channels should I spend on? How much should I spend?
    Three questions, and nobody can answer any of them."
-3. "So the decision gets made on instinct. Same as last month, same as next month — and you
-   never find out whether you were right, so it never gets better."
+3. "So you approve it. And hope. Same as last month, same as next month — and you never find
+   out whether you were right, so it never gets better."
 4. "None of your channels are lying. They just can't afford to tell you when it isn't
    working."
 5. "You know what your rent buys. You know your food cost to the point. Marketing is the one
