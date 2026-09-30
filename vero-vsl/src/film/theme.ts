@@ -94,39 +94,41 @@ export const FONT_UI = 'Inter Variable, system-ui, sans-serif';
  * `FILM_TOTAL` must equal the sum.
  */
 export const FILM = {
-  open: { from: 0, dur: 32 },
+  open: { from: 0, dur: 26 },
 
-  // act 1 -- what you don't know
-  hook: { from: 32, dur: 96 },
-  threeUnknowns: { from: 128, dur: 150 },
-  instinct: { from: 278, dur: 92 },
+  // act 1 -- what you don't know. Setup, so it moves.
+  hook: { from: 26, dur: 88 },
+  threeUnknowns: { from: 114, dur: 140 },
+  instinct: { from: 254, dur: 75 },
 
-  // act 2 -- why nobody can tell you
-  graded: { from: 370, dur: 118 },
-  lastExpense: { from: 488, dur: 116 },
+  // act 2 -- why nobody can tell you.
+  // `graded` carries three cards and a three-line payoff; it earns the extra
+  // second the others give back.
+  graded: { from: 329, dur: 150 },
+  lastExpense: { from: 479, dur: 110 },
 
   // act 3 -- introducing Vero, and what it connects to
-  intro: { from: 604, dur: 44 },
-  connectPos: { from: 648, dur: 122 },
-  connectChannels: { from: 770, dur: 118 },
-  attribute: { from: 888, dur: 160 },
+  intro: { from: 589, dur: 70 },
+  connectPos: { from: 659, dur: 114 },
+  connectChannels: { from: 773, dur: 110 },
+  attribute: { from: 883, dur: 152 },
 
   // act 4 -- what we are not
-  notChatbot: { from: 1048, dur: 150 },
+  notChatbot: { from: 1035, dur: 140 },
 
   // act 5 -- how it actually works
-  deterministic: { from: 1198, dur: 172 },
-  baseline: { from: 1370, dur: 168 },
-  forecast: { from: 1538, dur: 168 },
+  deterministic: { from: 1175, dur: 172 },
+  baseline: { from: 1347, dur: 168 },
+  forecast: { from: 1515, dur: 168 },
 
   // act 6 -- an answer, and a refusal
-  answerTrend: { from: 1706, dur: 165 },
-  whenItCant: { from: 1871, dur: 145 },
+  answerTrend: { from: 1683, dur: 165 },
+  whenItCant: { from: 1848, dur: 145 },
 
   // act 7 -- outcomes and close
-  outcomes: { from: 2016, dur: 178 },
-  tagline: { from: 2194, dur: 58 },
-  cta: { from: 2252, dur: 100 },
+  outcomes: { from: 1993, dur: 190 },
+  tagline: { from: 2183, dur: 58 },
+  cta: { from: 2241, dur: 120 },
 } as const;
 
-export const FILM_TOTAL = 2352; // 78.4s
+export const FILM_TOTAL = 2361; // 78.7s

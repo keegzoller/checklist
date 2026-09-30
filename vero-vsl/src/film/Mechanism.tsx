@@ -56,49 +56,57 @@ const Eyebrow: React.FC<{ children: React.ReactNode; color?: string }> = ({
 );
 
 /* ================================================================== *
- * what we are NOT -- the generic AI summary, struck out
- * ================================================================== */
+ * what we are NOT
+ * ================================================================== *
+ *
+ * An earlier version quoted an invented chatbot summary and struck it out.
+ * It read as strange -- inventing copy purely to discredit it. Naming the
+ * three categories and crossing each one off is faster to read and sits in the
+ * same rhythm as the P&L beat.
+ */
 
-export const NotThisCard: React.FC<{ delay: number; exit?: number }> = ({ delay, exit }) => {
+const NOT_THESE = ['A chatbot.', 'A widget.', 'Another dashboard.'];
+
+export const NotTheseWords: React.FC<{ delay: number; exit?: number }> = ({ delay, exit }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+    {NOT_THESE.map((w, i) => (
+      <StruckWord key={w} word={w} delay={delay + i * 13} exit={exit} />
+    ))}
+  </div>
+);
+
+const StruckWord: React.FC<{ word: string; delay: number; exit?: number }> = ({
+  word,
+  delay,
+  exit,
+}) => {
+  const frame = useCurrentFrame();
   const st = useReveal(delay, exit);
-  const strike = ramp(useCurrentFrame(), delay + 26, 16);
+  const strike = ramp(frame, delay + 7, 12);
+  const faded = ramp(frame, delay + 14, 10);
   return (
-    <div
-      style={{
-        ...st,
-        width: 980,
-        padding: '30px 36px',
-        borderRadius: 18,
-        background: F.panelAlt,
-        border: `1px dashed ${F.line}`,
-        textAlign: 'left',
-        position: 'relative',
-      }}
-    >
-      <Eyebrow>a chatbot on top of your dashboards</Eyebrow>
-      <div
+    <div style={{ ...st, position: 'relative', display: 'inline-block' }}>
+      <span
         style={{
-          fontFamily: FONT_UI,
-          fontSize: 27,
-          color: F.muted,
-          lineHeight: 1.5,
-          marginTop: 14,
+          fontFamily: FONT,
+          fontSize: 74,
+          fontWeight: 800,
+          letterSpacing: -2.4,
+          color: F.ink,
+          opacity: 1 - faded * 0.55,
         }}
       >
-        “Great news — engagement is up 18% month over month and your top-performing campaign
-        was <i>Summer Promo v2</i>. Consider increasing budget to capitalise on momentum.”
-      </div>
-      {/* the same numbers, restated with more confidence. struck out. */}
-      <div
+        {word}
+      </span>
+      <span
         style={{
           position: 'absolute',
-          left: 34,
-          right: `${34 + (1 - strike) * 900}px`,
-          top: '62%',
-          height: 3,
-          background: F.red,
+          left: '-2%',
+          right: `${(1 - strike) * 104 - 2}%`,
+          top: '54%',
+          height: 5,
           borderRadius: 99,
-          opacity: 0.9,
+          background: F.red,
         }}
       />
     </div>
@@ -555,54 +563,109 @@ export const AttributionPanel: React.FC<{ delay: number; exit?: number }> = ({ d
 
 /* ================================================================== *
  * outcomes
- * ================================================================== */
+ * ================================================================== *
+ *
+ * These were plain prose cards. They are the payoff of the whole film, so they
+ * now carry an icon, an accent rail that draws across the top as the card
+ * lands, and a headline sized to be read before the body.
+ */
+
+const ICONS: Record<string, React.ReactNode> = {
+  clarity: (
+    <>
+      <circle cx="14" cy="14" r="11" />
+      <circle cx="14" cy="14" r="5.4" />
+      <circle cx="14" cy="14" r="1.4" fill="currentColor" stroke="none" />
+    </>
+  ),
+  allocate: (
+    <>
+      <path d="M4 20.5 L11 13 L15.5 17.5 L24 8" />
+      <path d="M17.6 8 H24 V14.4" />
+    </>
+  ),
+  customers: (
+    <>
+      <path d="M5 24.5 V9.5 L14 4 L23 9.5 V24.5" />
+      <path d="M11 24.5 V16 H17 V24.5" />
+    </>
+  ),
+};
 
 export const OutcomeCard: React.FC<{
   n: string;
+  icon: keyof typeof ICONS | string;
   title: string;
   body: string;
   delay: number;
   exit?: number;
-}> = ({ n, title, body, delay, exit }) => {
+}> = ({ n, icon, title, body, delay, exit }) => {
+  const frame = useCurrentFrame();
   const st = useReveal(delay, exit);
+  const rail = ramp(frame, delay + 6, 22);
   return (
     <div
       style={{
         ...st,
         flex: 1,
-        padding: '36px 34px',
-        borderRadius: 18,
+        position: 'relative',
+        padding: '40px 36px 38px',
+        borderRadius: 20,
         background: F.panel,
         border: `1px solid ${F.line}`,
-        boxShadow: '0 26px 60px rgba(15,23,41,0.09)',
+        boxShadow: '0 30px 68px rgba(15,23,41,0.11)',
         textAlign: 'left',
+        overflow: 'hidden',
       }}
     >
+      <span
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: 5,
+          width: `${rail * 100}%`,
+          background: `linear-gradient(90deg, ${F.brand}, ${F.sky})`,
+        }}
+      />
       <div
         style={{
-          fontFamily: FONT_UI,
-          fontSize: 17,
-          fontWeight: 700,
-          letterSpacing: 3.4,
-          color: F.brand,
-          marginBottom: 20,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 60,
+          height: 60,
+          borderRadius: 16,
+          background: 'rgba(33,89,176,0.08)',
+          marginBottom: 26,
         }}
       >
-        {n}
+        <svg
+          viewBox="0 0 28 28"
+          width={30}
+          height={30}
+          fill="none"
+          stroke={F.brand}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {ICONS[icon] ?? ICONS.clarity}
+        </svg>
       </div>
       <div
         style={{
           fontFamily: FONT,
-          fontSize: 44,
+          fontSize: 46,
           fontWeight: 800,
-          letterSpacing: -1.5,
-          lineHeight: 1.16,
+          letterSpacing: -1.7,
+          lineHeight: 1.12,
           color: F.ink,
         }}
       >
         {title}
       </div>
-      <div style={{ fontFamily: FONT_UI, fontSize: 21, color: F.muted, lineHeight: 1.5, marginTop: 16 }}>
+      <div style={{ fontFamily: FONT_UI, fontSize: 21, color: F.muted, lineHeight: 1.55, marginTop: 18 }}>
         {body}
       </div>
     </div>

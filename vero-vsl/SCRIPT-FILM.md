@@ -43,32 +43,43 @@ bullet points.
 
 | # | key | in | dur | on screen |
 | --- | --- | --- | --- | --- |
-| 1 | `open` | 0:00 | 1.1s | Vero mark and wordmark |
+| 1 | `open` | 0:00 | 0.9s | Vero mark and wordmark |
 | | | | | **ACT 1 — what you don't know** |
-| 2 | `hook` | 0:01.1 | 3.2s | "**$40,000 a month.**" → "The only money you spend that nobody can account **for.**" |
-| 3 | `threeUnknowns` | 0:04.3 | 5.0s | the three questions, each with an empty answer slot → "Three questions. **No answers.**" |
-| 4 | `instinct` | 0:09.3 | 3.1s | "So you approve it. **And hope.**" → "You never find out whether you were right — so it never gets better." |
+| 2 | `hook` | 0:00.9 | 2.9s | "**$40,000 a month.**" → "The only money you spend that nobody can account **for.**" |
+| 3 | `threeUnknowns` | 0:03.8 | 4.7s | the three questions, each with an empty answer slot → "Three questions. **No answers.**" |
+| 4 | `instinct` | 0:08.5 | 2.5s | "And in thirty days, **you'll do it again.**" → "Knowing exactly as much as you do right now." |
 | | | | | **ACT 2 — why nobody can tell you** |
-| 5 | `graded` | 0:12.3 | 3.9s | Meta, Google, the agency — "None of your channels are lying. They just can't afford to tell you when it isn't working." |
-| 6 | `lastExpense` | 0:16.3 | 3.9s | rent ✓ food cost ✓ a bad hire ✓ **marketing ?** |
+| 5 | `graded` | 0:11 | 5.0s | Meta, Google, the agency — "None of your channels are lying. They just can't afford to tell you when it isn't working." |
+| 6 | `lastExpense` | 0:16 | 3.7s | rent ✓ food cost ✓ a bad hire ✓ **marketing ?** |
 | | | | | **ACT 3 — introducing Vero** |
-| 7 | `intro` | 0:20.1 | 1.5s | "Introducing **Vero**" |
-| 8 | `connectPos` | 0:21.6 | 4.1s | "It starts at your point of sale." — six POS logos checking in |
-| 9 | `connectChannels` | 0:25.7 | 3.9s | "Then every channel you buy." — ten marketing channels |
-| 10 | `attribute` | 0:29.6 | 5.3s | where they came from (channel split) and what they came for (item mix) |
+| 7 | `intro` | 0:19.6 | 2.3s | the **Vero signature** — glow bloom, orbital rings, the wordmark uncovering |
+| 8 | `connectPos` | 0:22 | 3.8s | "It starts at your point of sale." — six POS logos checking in |
+| 9 | `connectChannels` | 0:25.8 | 3.7s | "Then every channel you buy." — ten marketing channels |
+| 10 | `attribute` | 0:29.4 | 5.1s | where they came from, and what they came for |
 | | | | | **ACT 4 — what we are not** |
-| 11 | `notChatbot` | 0:34.9 | 5.0s | "Vero is not a chatbot. Not a widget. Not another dashboard." |
+| 11 | `notChatbot` | 0:34.5 | 4.7s | "A chatbot." "A widget." "Another dashboard." struck out in turn → "Vero is a measurement **system.**" |
 | | | | | **ACT 5 — how it actually works** |
-| 12 | `deterministic` | 0:39.9 | 5.7s | **01** "Ask it the same question twice. You get the same answer." |
-| 13 | `baseline` | 0:45.6 | 5.6s | **02** the floor — unmarketed vs marketed, the gap shaded |
-| 14 | `forecast` | 0:51.2 | 5.6s | **03** move $18K on screen, projection with its range |
+| 12 | `deterministic` | 0:39.2 | 5.7s | **01** "Ask it the same question twice. You get the same answer." |
+| 13 | `baseline` | 0:44.9 | 5.6s | **02** the floor — unmarketed vs marketed, the gap shaded |
+| 14 | `forecast` | 0:50.5 | 5.6s | **03** move $18K on screen, projection with its range |
 | | | | | **ACT 6 — an answer, and a refusal** |
-| 15 | `answerTrend` | 0:56.8 | 5.5s | "So you ask. And it **answers.**" — Destin's trend against its floor |
-| 16 | `whenItCant` | 1:02.3 | 4.8s | "And when it can't tell yet, **it says so.**" |
+| 15 | `answerTrend` | 0:56.1 | 5.5s | "So you ask. And it **answers.**" — Destin's trend against its floor |
+| 16 | `whenItCant` | 1:01.6 | 4.8s | "And when it can't tell yet, **it says so.**" |
 | | | | | **ACT 7 — outcomes and close** |
-| 17 | `outcomes` | 1:07.2 | 5.9s | clarity · better allocation · more customers through the door |
-| 18 | `tagline` | 1:13.1 | 1.9s | **"Decisions made simple."** |
-| 19 | `cta` | 1:15.0 | 3.3s | Vero mark + wordmark · vc-solutions.net · info@vc-solutions.net |
+| 17 | `outcomes` | 1:06.4 | 6.3s | three cards, each with an icon and an accent rail that draws as it lands |
+| 18 | `tagline` | 1:12.8 | 1.9s | **"Decisions made simple."** |
+| 19 | `cta` | 1:14.7 | 4.0s | the Vero signature · vc-solutions.net · info@vc-solutions.net |
+
+### The Vero signature
+
+`src/film/Signature.tsx` carries the brand moment used at the introduction and again at the
+close: a glow blooming out of the mark, two orbital rings drawing on and continuing to
+turn, a short turn-to-face on entry, and the wordmark uncovering from behind the mark.
+
+The mark is a raster droplet with a definite "up", so **spinning it outright looks broken** —
+the rotation on entry is a `rotateY` that reads as turning to face the viewer, and the
+continuous motion belongs to the rings, not the mark. The rings are wide and flat on
+purpose: near-circular ones read as clip-art atom rather than orbit.
 
 ### Pacing
 
@@ -114,8 +125,7 @@ Written to the existing timing — no frames move. Read it flat.
 1. "Forty thousand a month. The only money you spend that nobody can account for."
 2. "Is my marketing working? Which channels should I spend on? How much should I spend?
    Three questions, and nobody can answer any of them."
-3. "So you approve it. And hope. Same as last month, same as next month — and you never find
-   out whether you were right, so it never gets better."
+3. "And in thirty days, you'll do it again — knowing exactly as much as you do right now."
 4. "None of your channels are lying. They just can't afford to tell you when it isn't
    working."
 5. "You know what your rent buys. You know your food cost to the point. Marketing is the one
@@ -125,9 +135,8 @@ Written to the existing timing — no frames move. Read it flat.
    tills."
 8. "Then it connects every channel you buy."
 9. "So you can see where your customers came from, and what they came for."
-10. "Vero isn't a chatbot. It isn't a widget, and it isn't another dashboard. Those read the
-    same numbers you already couldn't trust and say them back with more confidence. Vero is
-    a measurement system — it starts at your revenue and works backwards."
+10. "Vero isn't a chatbot. It isn't a widget, and it isn't another dashboard. It's a
+    measurement system — it starts at your revenue and works backwards."
 11. "Ask it the same question twice and you get the same answer. That's what deterministic
     means: the number comes from counting your register rows, not from a model generating
     something that sounds right."

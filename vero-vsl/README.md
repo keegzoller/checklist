@@ -103,6 +103,7 @@ nothing). Capture at 2400px or wider, app window only.
 | `src/film/Panels.tsx` | designed Vero surfaces the recording never captured |
 | `src/film/Connect.tsx` | the POS and marketing-channel connection grids |
 | `src/film/Mechanism.tsx` | act 5: deterministic runs, the floor chart, the forecast |
+| `src/film/Signature.tsx` | the animated Vero brand moment, used at the intro and the close |
 | `ASSETS.md` | **what we still need from you** — logos and dashboard captures, ranked |
 
 Three rules the film depends on, all easy to undo: a statement is at most five words a line
