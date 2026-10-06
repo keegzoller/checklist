@@ -1,8 +1,6 @@
 import { initQuoteWizard } from './quote-wizard.js';
 import { initInquiryWizards } from './inquiry-wizard.js';
-// Netlify Forms is the durable source of truth. GHL remains a secondary integration.
-const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/Ysazlze58nVZM8Pk4GPw/webhook-trigger/e17cf22c-b9a7-4119-b719-095070068193';
-
+// Netlify Forms saves inquiries and sends the configured email notifications.
 export async function captureQuote(fields, fetcher = fetch) {
   const response = await fetcher('/', {
     method: 'POST',
@@ -12,33 +10,6 @@ export async function captureQuote(fields, fetcher = fetch) {
   });
   if (!response.ok) throw new Error('Quote could not be saved.');
   return true;
-}
-
-export function ghlPayload(fields) {
-  const get = key => String(fields.get(key) || '').trim();
-  const name = get('name');
-  const digits = get('phone').replace(/\D/g, '');
-  const phone = digits.length === 10 ? '+1' + digits : digits.length === 11 && digits.startsWith('1') ? '+' + digits : get('phone');
-  return {
-    first_name: name.split(/\s+/)[0], last_name: name.split(/\s+/).slice(1).join(' '), full_name: name,
-    email: get('email'), phone, address: get('town') || get('location'),
-    service: get('service') || get('scope'), inquiry_type: get('inquiry-type'), company: get('company'),
-    scope: get('scope'), timeline: get('timeline'),
-    message: ['message', 'company', 'scope', 'timeline', 'town', 'location', 'role', 'school'].map(key => get(key) ? `${key}: ${get(key)}` : '').filter(Boolean).join('\n'),
-    source: 'vermacconstruction.com ' + get('inquiry-type') + ' form', page_url: get('page-url'),
-    utm_source: get('utm_source'), utm_medium: get('utm_medium'), utm_campaign: get('utm_campaign'),
-  };
-}
-
-export async function forwardQuote(fields, fetcher = fetch) {
-  // A secondary-system failure must never turn a saved lead into an apparent failure.
-  try {
-    const response = await fetcher(GHL_WEBHOOK, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ghlPayload(fields)), signal: AbortSignal.timeout(4000), keepalive: true,
-    });
-    return response.ok;
-  } catch { return false; }
 }
 
 if (typeof document !== 'undefined') {
@@ -79,7 +50,6 @@ if (typeof document !== 'undefined') {
       }
       // Optional analytics integration: no personal contact data is sent to analytics.
       try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: form.getAttribute('name') }); } catch {}
-      await forwardQuote(fields);
       location.assign('/thank-you');
     });
   });
